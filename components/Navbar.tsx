@@ -16,12 +16,20 @@ export function Navbar() {
         >
           VARYN
         </Link>
-        <div className="flex items-center gap-6 text-sm text-muted">
+        <div className="flex items-center gap-4 text-sm text-muted sm:gap-6">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className="transition hover:text-foreground">
               {item.label}
             </Link>
           ))}
+          <Link
+            href="https://app.varyn.cloud"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-white/90"
+          >
+            Open App
+          </Link>
         </div>
       </nav>
     </header>

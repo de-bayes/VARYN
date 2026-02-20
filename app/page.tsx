@@ -11,11 +11,10 @@ export default function HomePage() {
           <div className="space-y-6">
             <Badge>Cloud-native statistical IDE</Badge>
             <h1 className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl">
-              Calm, serious modeling workflows built for real decisions.
+              Cloud statistical software with a calm Stata-like spirit.
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              Varyn gives teams a clean statistical workspace for regression, simulation, and scalable job execution—without
-              notebook chaos or gimmicks.
+              Varyn is cloud software for serious statistical work: Stata-like discipline, modern UX, and progressive cloud execution for regression and Monte Carlo simulation.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button href="/product">Explore Product</Button>
@@ -25,8 +24,8 @@ export default function HomePage() {
             </div>
           </div>
           <div className="text-sm text-muted lg:pb-4">
-            <p className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">A modern statistical workspace.</p>
-            <p className="mt-3">Progressive power from first model to cloud-scale simulation.</p>
+            <p className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">A modern cloud statistical IDE.</p>
+            <p className="mt-3">Progressive power from first model to cloud-scale simulation, without noise.</p>
           </div>
         </div>
         <AsciiWaveHero />
@@ -42,7 +41,7 @@ export default function HomePage() {
           <p className="mt-2 text-lg">Beginner-friendly at entry, expert-capable at scale.</p>
         </Reveal>
         <Reveal>
-          <p className="text-sm text-muted">Cloud execution, not clutter</p>
+          <p className="text-sm text-muted">Cloud execution with calm control</p>
           <p className="mt-2 text-lg">Parallel simulation and jobs when you need them, calm UI always.</p>
         </Reveal>
       </section>
