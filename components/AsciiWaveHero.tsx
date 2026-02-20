@@ -44,23 +44,23 @@ export function AsciiWaveHero() {
       const topPadding = 2;
       const bottomPadding = 3;
       const usableRows = rows - topPadding - bottomPadding;
-      const t = time * 0.001;
+      const t = time * 0.00055;
 
       if (histogram.length !== cols) {
         histogram = new Float32Array(cols);
       }
 
       for (let i = 0; i < cols; i += 1) {
-        histogram[i] *= 0.94;
+        histogram[i] *= 0.965;
       }
 
-      const phase = Math.sin(t * 0.7);
-      const mix = 0.5 + 0.25 * Math.sin(t * 0.36);
+      const phase = Math.sin(t * 0.42);
+      const mix = 0.5 + 0.25 * Math.sin(t * 0.24);
       const meanA = -0.75 + phase * 0.6;
-      const meanB = 0.95 + Math.cos(t * 0.48) * 0.55;
-      const sigmaA = 0.36 + 0.08 * Math.cos(t * 0.82);
-      const sigmaB = 0.44 + 0.1 * Math.sin(t * 0.61);
-      const sampleCount = reduceMotion ? 170 : 260;
+      const meanB = 0.95 + Math.cos(t * 0.33) * 0.55;
+      const sigmaA = 0.36 + 0.08 * Math.cos(t * 0.56);
+      const sigmaB = 0.44 + 0.1 * Math.sin(t * 0.4);
+      const sampleCount = reduceMotion ? 140 : 220;
 
       for (let i = 0; i < sampleCount; i += 1) {
         const chooseA = Math.random() < mix;
@@ -111,7 +111,7 @@ export function AsciiWaveHero() {
       const burstRadius = 2.2;
       const spokes = 14;
       for (let i = 0; i < spokes; i += 1) {
-        const angle = (i / spokes) * Math.PI * 2 + t * 0.9;
+        const angle = (i / spokes) * Math.PI * 2 + t * 0.52;
         const radius = burstRadius + Math.sin(t * 1.8 + i) * 0.9;
         const x = Math.round(centerCol + Math.cos(angle) * radius);
         const y = Math.round(centerRow + Math.sin(angle) * radius * 0.72);
@@ -123,11 +123,8 @@ export function AsciiWaveHero() {
       context.fillStyle = 'rgba(220, 235, 255, 0.88)';
       context.fillText('✶', centerCol * stepX, centerRow * stepY + stepY / 2);
       context.fillStyle = 'rgba(189, 206, 232, 0.46)';
-      context.fillText('Monte Carlo cloud', stepX, stepY * 2 + stepY / 2);
+      context.fillText('The Monte Carlo Cloud', stepX, stepY * 2 + stepY / 2);
 
-      context.fillStyle = 'rgba(189, 206, 232, 0.55)';
-      context.fillText('outcomes →', stepX, (rows - 1) * stepY + stepY / 2);
-      context.fillText('probability', stepX, stepY + stepY / 2);
     };
 
     const resize = () => {
