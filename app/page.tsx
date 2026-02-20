@@ -9,12 +9,13 @@ export default function HomePage() {
       <section className="container-shell">
         <div className="mb-10 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-end">
           <div className="space-y-6">
-            <Badge>Compute-native planning</Badge>
+            <Badge>Cloud-native statistical IDE</Badge>
             <h1 className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl">
-              Clear strategy software for simulation-heavy teams.
+              Calm, serious modeling workflows built for real decisions.
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              Varis keeps your forecasting pipeline, model runs, and final decisions in one calm space.
+              Varyn gives teams a clean statistical workspace for regression, simulation, and scalable job execution—without
+              notebook chaos or gimmicks.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button href="/product">Explore Product</Button>
@@ -24,8 +25,8 @@ export default function HomePage() {
             </div>
           </div>
           <div className="text-sm text-muted lg:pb-4">
-            <p className="font-[family-name:var(--font-serif)] text-2xl text-foreground">Built for calm operators.</p>
-            <p className="mt-3">Every run is easy to review, compare, and share.</p>
+            <p className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">A modern statistical workspace.</p>
+            <p className="mt-3">Progressive power from first model to cloud-scale simulation.</p>
           </div>
         </div>
         <AsciiWaveHero />
@@ -33,16 +34,16 @@ export default function HomePage() {
 
       <section className="container-shell grid gap-4 rounded-3xl border border-white/10 bg-white/[0.02] p-6 md:grid-cols-3">
         <Reveal>
-          <p className="text-sm text-muted">Fast scenario setup</p>
-          <p className="mt-2 text-lg">Build and run what-if plans in seconds.</p>
+          <p className="text-sm text-muted">Product-first workflow</p>
+          <p className="mt-2 text-lg">The 80% modeling path is clear, fast, and reviewable.</p>
         </Reveal>
         <Reveal>
-          <p className="text-sm text-muted">Traceable outputs</p>
-          <p className="mt-2 text-lg">Every decision includes context and export-ready notes.</p>
+          <p className="text-sm text-muted">Progressive complexity</p>
+          <p className="mt-2 text-lg">Beginner-friendly at entry, expert-capable at scale.</p>
         </Reveal>
         <Reveal>
-          <p className="text-sm text-muted">Team-friendly pace</p>
-          <p className="mt-2 text-lg">A focused interface with less noise on day one.</p>
+          <p className="text-sm text-muted">Cloud execution, not clutter</p>
+          <p className="mt-2 text-lg">Parallel simulation and jobs when you need them, calm UI always.</p>
         </Reveal>
       </section>
     </div>

@@ -8,8 +8,8 @@ const sans = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const serif = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-serif', weight: ['500'] });
 
 export const metadata: Metadata = {
-  title: 'Varis',
-  description: 'Quietly powerful compute workflows for modern teams.'
+  title: 'Varyn',
+  description: 'A cloud-native statistical IDE with progressive power scaling.'
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
