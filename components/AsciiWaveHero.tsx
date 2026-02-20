@@ -24,12 +24,20 @@ export function AsciiWaveHero() {
       context.font = '13px ui-monospace, SFMono-Regular, Menlo, monospace';
 
       for (let y = 24; y < height; y += 14) {
-        const crest = Math.sin(y * 0.07 + time * 0.0005);
+        const row = y / 14;
+        const rowFrequency = 0.02 + (row % 7) * 0.0026;
+        const rowVelocity = 0.00085 + (row % 5) * 0.00019;
+        const rowPhase = row * 0.46;
+        const rowSpread = 0.014 + (row % 6) * 0.0032;
+        const rowAmplitude = 0.54 + (row % 4) * 0.12;
 
         for (let x = 0; x < width; x += 9) {
-          const swell = Math.sin(x * 0.028 + time * 0.0012 + y * 0.02);
-          const ripple = Math.sin(x * 0.06 - time * 0.0015) * 0.35;
-          const wave = (swell + ripple + crest) / 2.35;
+          const distance = Math.max(0, x);
+          const wavefront = Math.sin(distance * rowFrequency - time * rowVelocity + rowPhase);
+          const diffusion = Math.sin(distance * rowSpread + time * (rowVelocity * 1.4) + row * 0.17) * 0.42;
+          const harmonic = Math.sin(distance * 0.0075 + row * 0.31 - time * 0.0004) * 0.36;
+          const envelope = Math.exp(-distance / (width * (0.72 + (row % 3) * 0.1)));
+          const wave = (wavefront * rowAmplitude + diffusion + harmonic) * envelope;
           const normalized = Math.max(0, Math.min(1, wave * 0.5 + 0.5));
           const idx = Math.floor(normalized * (chars.length - 1));
           const char = chars[idx];
@@ -62,8 +70,6 @@ export function AsciiWaveHero() {
   return (
     <div className="relative h-[74vh] min-h-[480px] overflow-hidden rounded-3xl border border-white/10 bg-background">
       <canvas ref={canvasRef} className="h-full w-full" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/70" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
     </div>
   );
 }
