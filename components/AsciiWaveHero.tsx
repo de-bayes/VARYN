@@ -44,7 +44,7 @@ export function AsciiWaveHero() {
       const topPadding = 2;
       const bottomPadding = 3;
       const usableRows = rows - topPadding - bottomPadding;
-      const t = time * 0.00055;
+      const t = time * 0.00034;
 
       if (histogram.length !== cols) {
         histogram = new Float32Array(cols);
