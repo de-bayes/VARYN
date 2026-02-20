@@ -10,8 +10,11 @@ export function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-background/85 backdrop-blur">
       <nav className="container-shell flex h-16 items-center justify-between">
-        <Link href="/" className="text-sm tracking-[0.2em] text-muted uppercase hover:text-foreground">
-          Varis
+        <Link
+          href="/"
+          className="text-xl font-semibold tracking-[-0.01em] text-foreground transition hover:opacity-85 sm:text-2xl"
+        >
+          VARYN
         </Link>
         <div className="flex items-center gap-6 text-sm text-muted">
           {navItems.map((item) => (

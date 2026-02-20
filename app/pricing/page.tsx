@@ -2,16 +2,16 @@ import { PricingTable } from '@/components/PricingTable';
 
 const faqs = [
   {
-    q: 'How is compute measured?',
-    a: 'Usage blends model context window size, inference time, and simulation parallelism into a transparent monthly meter.'
+    q: 'How do tiers scale?',
+    a: 'Plans scale by simulation volume, job concurrency, and data footprint so teams can match cost to modeling intensity.'
   },
   {
-    q: 'Can we start small and scale later?',
-    a: 'Yes. Teams commonly begin on Pro and migrate to Scale when governance and dedicated throughput become mandatory.'
+    q: 'Do users see CPU or infrastructure details?',
+    a: 'No. We keep pricing understandable with outcome-based tiers instead of exposing raw infrastructure metrics.'
   },
   {
-    q: 'Do you support procurement requirements?',
-    a: 'Scale plans include enterprise security documentation, invoicing support, and custom terms.'
+    q: 'Can we start lean and grow into cloud execution?',
+    a: 'Yes. Teams typically begin with core workflows and move up as simulation depth and organizational needs increase.'
   }
 ];
 
@@ -20,8 +20,10 @@ export default function PricingPage() {
     <div className="container-shell space-y-12 pb-16">
       <section className="space-y-4">
         <p className="text-sm tracking-[0.14em] text-accent uppercase">Pricing</p>
-        <h1 className="text-4xl font-medium sm:text-5xl">Pricing</h1>
-        <p className="max-w-2xl text-muted">Straightforward tiers for teams optimizing both output quality and compute spend.</p>
+        <h1 className="text-4xl font-medium sm:text-5xl">Simple tiers, progressive power.</h1>
+        <p className="max-w-2xl text-muted">
+          Varyn pricing grows with simulation scale and team throughput while keeping the product surface focused and calm.
+        </p>
       </section>
 
       <PricingTable />
