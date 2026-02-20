@@ -54,9 +54,9 @@ export function AsciiWaveHero() {
         histogram[i] *= 0.94;
       }
 
-      const wave = Math.sin(t * 0.7);
+      const phase = Math.sin(t * 0.7);
       const mix = 0.5 + 0.25 * Math.sin(t * 0.36);
-      const meanA = -0.75 + wave * 0.6;
+      const meanA = -0.75 + phase * 0.6;
       const meanB = 0.95 + Math.cos(t * 0.48) * 0.55;
       const sigmaA = 0.36 + 0.08 * Math.cos(t * 0.82);
       const sigmaB = 0.44 + 0.1 * Math.sin(t * 0.61);
@@ -76,9 +76,6 @@ export function AsciiWaveHero() {
       }
       peak = Math.max(peak, 1);
 
-      const waveCenter = topPadding + usableRows * 0.34;
-      const waveAmplitude = Math.max(2, usableRows * 0.11);
-
       for (let col = 0; col < cols; col += 1) {
         const xProgress = col / cols;
         const xN = xProgress * 6 - 3;
@@ -87,9 +84,6 @@ export function AsciiWaveHero() {
 
         const normalizedBar = Math.min(1, histogram[col] / peak);
         const barHeight = Math.floor(normalizedBar * usableRows);
-
-        const waveA = waveCenter + Math.sin(t * 1.45 + xProgress * 10.5) * waveAmplitude;
-        const waveB = waveCenter + Math.sin(t * 1.1 - xProgress * 7.8 + 1.2) * (waveAmplitude * 0.65);
 
         for (let y = 0; y < usableRows; y += 1) {
           const row = rows - bottomPadding - 1 - y;
@@ -103,14 +97,6 @@ export function AsciiWaveHero() {
           const distanceToCurve = Math.abs(row - curveRow);
           if (distanceToCurve === 0) intensity = Math.max(intensity, 0.96);
           if (distanceToCurve === 1) intensity = Math.max(intensity, 0.72);
-
-          const waveDistanceA = Math.abs(row - waveA);
-          const waveDistanceB = Math.abs(row - waveB);
-          if (waveDistanceA < 0.6 || waveDistanceB < 0.6) {
-            intensity = Math.max(intensity, 0.56);
-          } else if (waveDistanceA < 1.3 || waveDistanceB < 1.3) {
-            intensity = Math.max(intensity, 0.36);
-          }
 
           if (intensity < 0.1) continue;
 
