@@ -2,11 +2,10 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "cd ../.. && npx pnpm install --frozen-lockfile && npx pnpm --filter @varyn/web build",
-    "watchPatterns": ["apps/web/**", "packages/shared/**"]
+    "buildCommand": "pnpm --filter @varyn/web build"
   },
   "deploy": {
-    "startCommand": "cd apps/web && npx pnpm start",
+    "startCommand": "pnpm --filter @varyn/web start",
     "healthcheckPath": "/",
     "healthcheckTimeout": 180,
     "restartPolicyType": "ON_FAILURE",

@@ -17,7 +17,7 @@
     "db:generate": "pnpm --filter @varyn/api db:generate"
   },
   "engines": {
-    "node": ">=20 <23",
+    "node": ">=20",
     "pnpm": ">=9"
   },
   "packageManager": "pnpm@9.15.4"
