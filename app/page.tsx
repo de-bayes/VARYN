@@ -14,8 +14,7 @@ export default function HomePage() {
               Calm, serious modeling workflows built for real decisions.
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              Varyn gives teams a clean statistical workspace for regression, simulation, and scalable job execution—without
-              notebook chaos or gimmicks.
+              Varyn gives teams a clean statistical workspace for regression, simulation, and scalable job execution—without notebook chaos or gimmicks.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button href="/product">Explore Product</Button>
@@ -26,7 +25,7 @@ export default function HomePage() {
           </div>
           <div className="text-sm text-muted lg:pb-4">
             <p className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">A modern statistical workspace.</p>
-            <p className="mt-3">Progressive power from first model to cloud-scale simulation.</p>
+            <p className="mt-3">Progressive power from first model to cloud-scale simulation, without noise.</p>
           </div>
         </div>
         <AsciiWaveHero />
@@ -42,7 +41,7 @@ export default function HomePage() {
           <p className="mt-2 text-lg">Beginner-friendly at entry, expert-capable at scale.</p>
         </Reveal>
         <Reveal>
-          <p className="text-sm text-muted">Cloud execution, not clutter</p>
+          <p className="text-sm text-muted">Cloud execution with calm control</p>
           <p className="mt-2 text-lg">Parallel simulation and jobs when you need them, calm UI always.</p>
         </Reveal>
       </section>

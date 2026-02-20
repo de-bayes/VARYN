@@ -1,27 +1,29 @@
 const tiers = [
   {
-    name: 'Starter',
-    price: '$0',
-    description: 'For individuals validating core modeling workflows.',
-    bullets: ['1 active project', 'CSV + .dta upload', 'Core summarize + OLS tools']
-  },
-  {
     name: 'Pro',
-    price: '$89',
-    description: 'For teams running frequent analysis and simulation cycles.',
-    bullets: ['Unlimited projects', 'Robust + cluster SE workflows', 'Higher simulation and job concurrency']
+    price: '$20/mo',
+    description: 'For solo analysts and small teams who need a serious cloud statistical workspace every day.',
+    bullets: [
+      'Unlimited graphs and model runs',
+      'Up to 5,000,000 vCPU Monte Carlo simulations / month',
+      'Core regression, summarize, and cloud job execution'
+    ]
   },
   {
     name: 'Scale',
-    price: 'Custom',
-    description: 'For organizations operating cloud-scale statistical pipelines.',
-    bullets: ['Dedicated execution capacity', 'Advanced governance controls', 'Priority support + onboarding']
+    price: '$35/mo',
+    description: 'For heavy simulation teams that need higher throughput without sacrificing a calm interface.',
+    bullets: [
+      'Up to 100,000,000 vCPU Monte Carlo simulations / month',
+      'Unlimited independent variables',
+      'Unlimited graphs, projects, and parallel cloud jobs'
+    ]
   }
 ];
 
 export function PricingTable() {
   return (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-2">
       {tiers.map((tier) => (
         <article key={tier.name} className="glass-panel rounded-2xl p-6">
           <h3 className="text-xl font-medium">{tier.name}</h3>

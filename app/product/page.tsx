@@ -25,9 +25,9 @@ export default function ProductPage() {
     <div className="container-shell space-y-14 pb-16">
       <section className="space-y-4">
         <p className="text-sm tracking-[0.14em] text-accent uppercase">Product</p>
-        <h1 className="text-4xl font-medium sm:text-5xl">Built for serious statistical work.</h1>
+        <h1 className="text-4xl font-medium sm:text-5xl">Built for serious statistical work in the cloud.</h1>
         <p className="max-w-2xl text-muted">
-          Varyn is a cloud-native R workspace with progressive power scaling: calm for new analysts, uncompromising for advanced modeling teams.
+          Varyn is cloud software for statisticians and researchers who want a Stata-like workflow with modern cloud execution and progressive power scaling.
         </p>
       </section>
 
