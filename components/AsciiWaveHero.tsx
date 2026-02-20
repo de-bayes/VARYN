@@ -106,22 +106,6 @@ export function AsciiWaveHero() {
         }
       }
 
-      const centerCol = 8;
-      const centerRow = 4;
-      const burstRadius = 2.2;
-      const spokes = 14;
-      for (let i = 0; i < spokes; i += 1) {
-        const angle = (i / spokes) * Math.PI * 2 + t * 0.52;
-        const radius = burstRadius + Math.sin(t * 1.8 + i) * 0.9;
-        const x = Math.round(centerCol + Math.cos(angle) * radius);
-        const y = Math.round(centerRow + Math.sin(angle) * radius * 0.72);
-        const sparkle = i % 3 === 0 ? '*' : '.';
-        context.fillStyle = 'rgba(196, 216, 244, 0.72)';
-        context.fillText(sparkle, x * stepX, y * stepY + stepY / 2);
-      }
-
-      context.fillStyle = 'rgba(220, 235, 255, 0.88)';
-      context.fillText('✶', centerCol * stepX, centerRow * stepY + stepY / 2);
       context.fillStyle = 'rgba(189, 206, 232, 0.46)';
       context.fillText('The Monte Carlo Cloud', stepX, stepY * 2 + stepY / 2);
 
