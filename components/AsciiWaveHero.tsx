@@ -2,7 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 
-const chars = ' .~≈-';
+const chars = ' .:-=+*#%@';
+
+const pseudoRandom = (seed: number) => {
+  const x = Math.sin(seed * 12.9898) * 43758.5453123;
+  return x - Math.floor(x);
+};
 
 export function AsciiWaveHero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -22,32 +27,62 @@ export function AsciiWaveHero() {
       context.fillStyle = '#0d0d0f';
       context.fillRect(0, 0, width, height);
       context.font = '13px ui-monospace, SFMono-Regular, Menlo, monospace';
+      context.textBaseline = 'middle';
 
-      for (let y = 24; y < height; y += 14) {
-        const row = y / 14;
-        const rowFrequency = 0.02 + (row % 7) * 0.0026;
-        const rowVelocity = 0.00085 + (row % 5) * 0.00019;
-        const rowPhase = row * 0.46;
-        const rowSpread = 0.014 + (row % 6) * 0.0032;
-        const rowAmplitude = 0.54 + (row % 4) * 0.12;
+      const stepX = 9;
+      const stepY = 14;
+      const cols = Math.max(1, Math.floor(width / stepX));
+      const rows = Math.max(1, Math.floor(height / stepY));
+      const density = Array.from({ length: rows }, () => new Float32Array(cols));
+      const centerRow = rows * 0.52;
+      const traces = Math.max(220, Math.floor(rows * 9));
+      const t = time * 0.001;
 
-        for (let x = 0; x < width; x += 9) {
-          const distance = Math.max(0, x);
-          const wavefront = Math.sin(distance * rowFrequency - time * rowVelocity + rowPhase);
-          const diffusion = Math.sin(distance * rowSpread + time * (rowVelocity * 1.4) + row * 0.17) * 0.42;
-          const harmonic = Math.sin(distance * 0.0075 + row * 0.31 - time * 0.0004) * 0.36;
-          const envelope = Math.exp(-distance / (width * (0.72 + (row % 3) * 0.1)));
-          const wave = (wavefront * rowAmplitude + diffusion + harmonic) * envelope;
-          const normalized = Math.max(0, Math.min(1, wave * 0.5 + 0.5));
-          const idx = Math.floor(normalized * (chars.length - 1));
-          const char = chars[idx];
-          context.fillStyle = `rgba(244, 244, 241, ${0.1 + normalized * 0.32})`;
-          context.fillText(char, x, y);
+      for (let i = 0; i < traces; i += 1) {
+        let y = centerRow + (pseudoRandom(i * 1.17) - 0.5) * 1.5;
+        let velocity = (pseudoRandom(i * 2.31) - 0.5) * 0.18;
+        const bias = (pseudoRandom(i * 0.73) - 0.5) * 0.035;
+        const noiseRate = 0.12 + pseudoRandom(i * 3.91) * 0.2;
+
+        for (let x = 0; x < cols; x += 1) {
+          const progress = x / cols;
+          const variance = 0.01 + progress * 0.08;
+          const jitter = (pseudoRandom(i * 13.1 + x * 2.7 + t * noiseRate) - 0.5) * variance;
+
+          velocity += jitter + bias;
+          velocity *= 0.985;
+          y += velocity;
+
+          if (y < 0) {
+            y = 0;
+            velocity *= -0.4;
+          } else if (y > rows - 1) {
+            y = rows - 1;
+            velocity *= -0.4;
+          }
+
+          const yInt = Math.floor(y);
+          const frac = y - yInt;
+          const intensity = 0.55 + progress * 0.9;
+
+          density[yInt][x] += intensity * (1 - frac);
+          if (yInt + 1 < rows) density[yInt + 1][x] += intensity * frac;
         }
       }
 
-      if (!reduceMotion) {
-        frameId = window.requestAnimationFrame(draw);
+      for (let row = 0; row < rows; row += 1) {
+        const y = row * stepY + stepY / 2;
+
+        for (let col = 0; col < cols; col += 1) {
+          const raw = density[row][col];
+          if (raw < 0.15) continue;
+
+          const normalized = Math.min(1, raw / 10.5);
+          const charIndex = Math.min(chars.length - 1, Math.floor(normalized * (chars.length - 1)));
+          const char = chars[charIndex];
+          context.fillStyle = `rgba(244, 244, 241, ${0.08 + normalized * 0.56})`;
+          context.fillText(char, col * stepX, y);
+        }
       }
     };
 
@@ -59,7 +94,10 @@ export function AsciiWaveHero() {
 
     resize();
     window.addEventListener('resize', resize);
-    if (!reduceMotion) frameId = window.requestAnimationFrame(draw);
+    if (!reduceMotion) frameId = window.requestAnimationFrame(function loop(now) {
+      draw(now);
+      frameId = window.requestAnimationFrame(loop);
+    });
 
     return () => {
       window.removeEventListener('resize', resize);

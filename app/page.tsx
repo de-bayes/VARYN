@@ -24,7 +24,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="text-sm text-muted lg:pb-4">
-            <p className="font-[family-name:var(--font-serif)] text-2xl text-foreground">Built for calm operators.</p>
+            <p className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">Built for calm operators.</p>
             <p className="mt-3">Every run is easy to review, compare, and share.</p>
           </div>
         </div>
