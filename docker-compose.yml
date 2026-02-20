@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: varyn
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./apps/api/drizzle/0000_init.sql:/docker-entrypoint-initdb.d/0000_init.sql
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+
+  # Create the default bucket on startup
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+        sleep 3 &&
+        mc alias set local http://minio:9000 minioadmin minioadmin &&
+        mc mb --ignore-existing local/varyn
+      "
+
+  runner:
+    build:
+      context: .
+      dockerfile: docker/runner.Dockerfile
+    ports:
+      - "6274:6274"
+    environment:
+      PORT: 6274
+    # Block outbound network for sandboxing (allow only internal + S3)
+    networks:
+      - internal
+
+networks:
+  default:
+  internal:
+    internal: true
+
+volumes:
+  pgdata:
+  miniodata:

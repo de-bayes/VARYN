@@ -1,31 +1,24 @@
 {
-  "name": "varis-site",
+  "name": "varyn",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start -H 0.0.0.0 -p ${PORT:-3000}",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "14.2.35",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
-  },
-  "devDependencies": {
-    "@types/node": "20.14.10",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "autoprefixer": "10.4.19",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.35",
-    "postcss": "8.4.39",
-    "tailwindcss": "3.4.7",
-    "typescript": "5.5.3"
+    "dev:marketing": "pnpm --filter @varyn/marketing dev",
+    "dev:web": "pnpm --filter @varyn/web dev",
+    "dev:api": "pnpm --filter @varyn/api dev",
+    "dev:runner": "docker compose up runner",
+    "dev": "pnpm run --parallel '/^dev:(marketing|web|api)$/'",
+    "build:marketing": "pnpm --filter @varyn/marketing build",
+    "build:web": "pnpm --filter @varyn/web build",
+    "build:api": "pnpm --filter @varyn/api build",
+    "typecheck": "pnpm -r run typecheck",
+    "lint": "pnpm -r run lint",
+    "db:migrate": "pnpm --filter @varyn/api db:migrate",
+    "db:generate": "pnpm --filter @varyn/api db:generate"
   },
   "engines": {
     "node": ">=20 <23",
-    "npm": ">=10"
-  }
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.15.4"
 }
