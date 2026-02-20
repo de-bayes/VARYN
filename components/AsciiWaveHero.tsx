@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-const chars = '.:-=+*#%@/\\|';
+const chars = ' .~≈-';
 
 export function AsciiWaveHero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -19,16 +19,21 @@ export function AsciiWaveHero() {
 
     const draw = (time = 0) => {
       const { width, height } = canvas;
-      context.fillStyle = '#101113';
+      context.fillStyle = '#0d0d0f';
       context.fillRect(0, 0, width, height);
-      context.font = '12px ui-monospace, SFMono-Regular, Menlo, monospace';
+      context.font = '13px ui-monospace, SFMono-Regular, Menlo, monospace';
 
-      for (let y = 0; y < height; y += 14) {
+      for (let y = 24; y < height; y += 14) {
+        const crest = Math.sin(y * 0.07 + time * 0.0005);
+
         for (let x = 0; x < width; x += 9) {
-          const wave = Math.sin((x + y) * 0.02 + time * 0.00035) * 0.5 + 0.5;
-          const idx = Math.floor(wave * (chars.length - 1));
+          const swell = Math.sin(x * 0.028 + time * 0.0012 + y * 0.02);
+          const ripple = Math.sin(x * 0.06 - time * 0.0015) * 0.35;
+          const wave = (swell + ripple + crest) / 2.35;
+          const normalized = Math.max(0, Math.min(1, wave * 0.5 + 0.5));
+          const idx = Math.floor(normalized * (chars.length - 1));
           const char = chars[idx];
-          context.fillStyle = `rgba(185, 164, 123, ${0.08 + wave * 0.18})`;
+          context.fillStyle = `rgba(244, 244, 241, ${0.1 + normalized * 0.32})`;
           context.fillText(char, x, y);
         }
       }
