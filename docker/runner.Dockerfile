@@ -20,4 +20,6 @@ COPY apps/runner/ /app/
 # No outbound network at runtime — block in docker-compose / Railway
 EXPOSE 6274
 
-CMD ["Rscript", "server.R"]
+# Use ENTRYPOINT with shell wrapper so Railway cannot override the start command.
+# Railway sometimes injects pnpm as CMD in monorepo contexts; this ignores it.
+ENTRYPOINT ["/bin/sh", "-c", "exec Rscript /app/server.R"]
