@@ -3,9 +3,9 @@ import { z } from 'zod';
 import { eq, and } from 'drizzle-orm';
 import { db } from '../db/index.js';
 import { projects } from '../db/schema.js';
-import { authMiddleware } from '../lib/middleware.js';
+import { authMiddleware, type AppEnv } from '../lib/middleware.js';
 
-const projectRoutes = new Hono();
+const projectRoutes = new Hono<AppEnv>();
 projectRoutes.use('*', authMiddleware);
 
 const createSchema = z.object({ name: z.string().min(1).max(200) });

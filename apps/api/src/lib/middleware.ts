@@ -1,7 +1,9 @@
-import { Context, Next } from 'hono';
+import { createMiddleware } from 'hono/factory';
 import { verifyToken } from './auth.js';
 
-export async function authMiddleware(c: Context, next: Next) {
+export type AppEnv = { Variables: { userId: string } };
+
+export const authMiddleware = createMiddleware<AppEnv>(async (c, next) => {
   const header = c.req.header('Authorization');
   if (!header?.startsWith('Bearer ')) {
     return c.json({ error: 'unauthorized', message: 'Missing or invalid token' }, 401);
@@ -13,4 +15,4 @@ export async function authMiddleware(c: Context, next: Next) {
   } catch {
     return c.json({ error: 'unauthorized', message: 'Invalid or expired token' }, 401);
   }
-}
+});

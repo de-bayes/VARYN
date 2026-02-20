@@ -3,17 +3,17 @@ import { eq, and } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from '../db/index.js';
 import { datasets, projects } from '../db/schema.js';
-import { authMiddleware } from '../lib/middleware.js';
+import { authMiddleware, type AppEnv } from '../lib/middleware.js';
 import { uploadBuffer, getDownloadUrl } from '../lib/storage.js';
 import { STORAGE_PREFIX, MAX_DATASET_SIZE_MB } from '@varyn/shared';
 
-const datasetRoutes = new Hono();
+const datasetRoutes = new Hono<AppEnv>();
 datasetRoutes.use('*', authMiddleware);
 
 // POST /projects/:projectId/datasets — upload a dataset
 datasetRoutes.post('/', async (c) => {
-  const userId = c.get('userId') as string;
-  const projectId = c.req.param('projectId');
+  const userId = c.get('userId');
+  const projectId = c.req.param('projectId')!;
 
   // Verify project ownership
   const [project] = await db.select({ id: projects.id }).from(projects)
@@ -54,8 +54,8 @@ datasetRoutes.post('/', async (c) => {
 
 // GET /projects/:projectId/datasets (list)
 datasetRoutes.get('/', async (c) => {
-  const userId = c.get('userId') as string;
-  const projectId = c.req.param('projectId');
+  const userId = c.get('userId');
+  const projectId = c.req.param('projectId')!;
 
   const [project] = await db.select({ id: projects.id }).from(projects)
     .where(and(eq(projects.id, projectId), eq(projects.userId, userId))).limit(1);
@@ -67,8 +67,8 @@ datasetRoutes.get('/', async (c) => {
 
 // GET /projects/:projectId/datasets/:datasetId/preview
 datasetRoutes.get('/:datasetId/preview', async (c) => {
-  const userId = c.get('userId') as string;
-  const projectId = c.req.param('projectId');
+  const userId = c.get('userId');
+  const projectId = c.req.param('projectId')!;
   const datasetId = c.req.param('datasetId');
 
   const [project] = await db.select({ id: projects.id }).from(projects)

@@ -2,10 +2,10 @@ import { Hono } from 'hono';
 import { eq } from 'drizzle-orm';
 import { db } from '../db/index.js';
 import { artifacts } from '../db/schema.js';
-import { authMiddleware } from '../lib/middleware.js';
+import { authMiddleware, type AppEnv } from '../lib/middleware.js';
 import { getDownloadUrl } from '../lib/storage.js';
 
-const artifactRoutes = new Hono();
+const artifactRoutes = new Hono<AppEnv>();
 artifactRoutes.use('*', authMiddleware);
 
 // GET /artifacts/:id — returns a signed download URL

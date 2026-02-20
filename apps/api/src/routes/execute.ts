@@ -4,12 +4,12 @@ import { eq, and } from 'drizzle-orm';
 import { nanoid } from 'nanoid';
 import { db } from '../db/index.js';
 import { projects, datasets, runs, artifacts } from '../db/schema.js';
-import { authMiddleware } from '../lib/middleware.js';
+import { authMiddleware, type AppEnv } from '../lib/middleware.js';
 import { getDownloadUrl, uploadBuffer } from '../lib/storage.js';
 import { RUNNER_TIMEOUT_SECONDS, STORAGE_PREFIX } from '@varyn/shared';
 import type { RunnerRequest, RunnerResponse } from '@varyn/shared';
 
-const executeRoutes = new Hono();
+const executeRoutes = new Hono<AppEnv>();
 executeRoutes.use('*', authMiddleware);
 
 const executeSchema = z.object({
@@ -21,8 +21,8 @@ const RUNNER_URL = process.env.RUNNER_URL || 'http://localhost:6274';
 
 // POST /projects/:projectId/execute
 executeRoutes.post('/', async (c) => {
-  const userId = c.get('userId') as string;
-  const projectId = c.req.param('projectId');
+  const userId = c.get('userId');
+  const projectId = c.req.param('projectId')!;
   const body = executeSchema.safeParse(await c.req.json());
   if (!body.success) return c.json({ error: 'validation', message: body.error.message }, 400);
 
