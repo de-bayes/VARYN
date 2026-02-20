@@ -39,31 +39,30 @@ export function AsciiWaveHero() {
       const t = time * 0.001;
 
       for (let i = 0; i < traces; i += 1) {
-        let y = centerRow + (pseudoRandom(i * 1.17) - 0.5) * 1.5;
-        let velocity = (pseudoRandom(i * 2.31) - 0.5) * 0.18;
-        const bias = (pseudoRandom(i * 0.73) - 0.5) * 0.035;
+        let y = centerRow;
+        let drift = (pseudoRandom(i * 2.31) - 0.5) * 0.06;
+        const branchBias = (pseudoRandom(i * 0.73) - 0.5) * 0.018;
         const noiseRate = 0.12 + pseudoRandom(i * 3.91) * 0.2;
 
         for (let x = 0; x < cols; x += 1) {
           const progress = x / cols;
-          const variance = 0.01 + progress * 0.08;
-          const jitter = (pseudoRandom(i * 13.1 + x * 2.7 + t * noiseRate) - 0.5) * variance;
+          const spread = 0.011 + Math.sqrt(progress) * 0.06;
+          const stochastic = (pseudoRandom(i * 13.1 + x * 2.7 + t * noiseRate) - 0.5) * spread;
+          const pulse = (pseudoRandom(i * 5.37 + x * 0.61 + t * 0.17) - 0.5) * (0.006 + progress * 0.014);
 
-          velocity += jitter + bias;
-          velocity *= 0.985;
-          y += velocity;
+          drift += branchBias * 0.03;
+          drift *= 0.996;
+          y += drift + stochastic + pulse;
 
-          if (y < 0) {
-            y = 0;
-            velocity *= -0.4;
-          } else if (y > rows - 1) {
-            y = rows - 1;
-            velocity *= -0.4;
-          }
+          // Mild mean reversion keeps trajectories sock-like instead of exploding quadratically.
+          y += (centerRow - y) * 0.004;
+
+          if (y < 0) y = 0;
+          if (y > rows - 1) y = rows - 1;
 
           const yInt = Math.floor(y);
           const frac = y - yInt;
-          const intensity = 0.55 + progress * 0.9;
+          const intensity = 0.58 + progress * 0.78;
 
           density[yInt][x] += intensity * (1 - frac);
           if (yInt + 1 < rows) density[yInt + 1][x] += intensity * frac;
