@@ -1,11 +1,19 @@
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(broom)
-library(base64enc)
+# Heavy packages are loaded on first use to keep startup fast
+.loaded <- FALSE
+ensure_libs <- function() {
+  if (!.loaded) {
+    library(dplyr)
+    library(tidyr)
+    library(ggplot2)
+    library(broom)
+    library(base64enc)
+    .loaded <<- TRUE
+  }
+}
 
 # ── Command dispatcher ─────────────────────────────────
 execute_command <- function(command, df) {
+  ensure_libs()
   cmd  <- trimws(command)
   verb <- tolower(strsplit(cmd, "\\s+")[[1]][1])
 
@@ -215,7 +223,7 @@ cmd_scatter <- function(cmd, df) {
     theme(
       plot.background  = element_rect(fill = "#0d0d0f", color = NA),
       panel.background = element_rect(fill = "#151518", color = NA),
-      panel.grid       = element_line(color = "rgba(255,255,255,0.05)"),
+      panel.grid       = element_line(color = "#0d0d0f"),
       text             = element_text(color = "#f5f5f2"),
       axis.text        = element_text(color = "#b8b8b1")
     )
