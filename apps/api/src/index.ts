@@ -1,3 +1,4 @@
+import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
@@ -26,9 +27,7 @@ app.route('/projects/:projectId/execute', executeRoutes);
 app.route('/artifacts', artifactRoutes);
 
 const port = Number(process.env.PORT) || 4000;
-console.log(`Varyn API listening on :${port}`);
 
-export default {
-  port,
-  fetch: app.fetch,
-};
+serve({ fetch: app.fetch, port }, () => {
+  console.log(`Varyn API listening on :${port}`);
+});
