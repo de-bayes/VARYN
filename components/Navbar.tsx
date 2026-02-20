@@ -14,7 +14,7 @@ export function Navbar() {
           href="/"
           className="text-xl font-semibold tracking-[-0.01em] text-foreground transition hover:opacity-85 sm:text-2xl"
         >
-          VARIS
+          VARYN
         </Link>
         <div className="flex items-center gap-6 text-sm text-muted">
           {navItems.map((item) => (

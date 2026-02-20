@@ -9,8 +9,8 @@ export function AppMock({ showCallouts = false }: AppMockProps) {
     <div className="glass-panel relative overflow-hidden rounded-3xl p-4 shadow-premium sm:p-6">
       <div className="grid gap-4 lg:grid-cols-[180px_1fr_220px]">
         <aside className="rounded-xl border border-white/10 bg-background/50 p-4 text-xs text-muted">
-          <p className="mb-3 text-[11px] tracking-[0.14em] uppercase text-accent">Collections</p>
-          {['Data Pipeline', 'Model Drafts', 'Scenario Bank', 'Export Tasks'].map((item) => (
+          <p className="mb-3 text-[11px] tracking-[0.14em] uppercase text-accent">Workspace</p>
+          {['Datasets', 'Models', 'Jobs', 'Exports'].map((item) => (
             <div key={item} className="mb-2 rounded-md border border-white/10 p-2 hover:border-accent/40">
               {item}
             </div>
@@ -18,29 +18,33 @@ export function AppMock({ showCallouts = false }: AppMockProps) {
         </aside>
 
         <main className="space-y-3 rounded-xl border border-white/10 bg-background/40 p-4">
-          {['Load telemetry + normalize streams', 'Calibrate policy constraints by region', 'Run resilience simulation across demand shock'].map((item) => (
+          {[
+            'summarize wage tenure education',
+            'regress wage education tenure i.region, robust',
+            'simulate 2500: regress turnout age income ideology'
+          ].map((item) => (
             <div key={item} className="rounded-xl border border-white/10 bg-panel/80 p-3 text-sm text-foreground">
               {item}
             </div>
           ))}
           <div className="rounded-xl border border-accent/35 bg-accent/10 p-3 text-xs text-muted">
-            <span className="text-accent">$</span> varis run forecast --window 90d --stress medium --export report
+            <span className="text-accent">$</span> varyn run model --dataset panel_q3 --cluster state --save project
           </div>
         </main>
 
         <aside className="rounded-xl border border-white/10 bg-background/50 p-4 text-sm text-muted">
-          <p className="mb-3 text-xs tracking-[0.14em] uppercase text-accent">Preview</p>
+          <p className="mb-3 text-xs tracking-[0.14em] uppercase text-accent">Output preview</p>
           <div className="mb-3 h-24 rounded-md border border-white/10 bg-gradient-to-r from-accent/15 to-transparent" />
-          <p>Confidence interval: 97.2%</p>
-          <p className="mt-2">Total compute: 18 GPU hrs</p>
+          <p>OLS R²: 0.81</p>
+          <p className="mt-2">Simulation jobs: 2,500</p>
         </aside>
       </div>
 
       {showCallouts && (
         <div className="mt-4 flex flex-wrap gap-2">
-          <Badge>Traceable prompts</Badge>
-          <Badge>Versioned runs</Badge>
-          <Badge>One-click exports</Badge>
+          <Badge>Regression-first UX</Badge>
+          <Badge>Progressive complexity</Badge>
+          <Badge>Cloud-ready jobs</Badge>
         </div>
       )}
     </div>

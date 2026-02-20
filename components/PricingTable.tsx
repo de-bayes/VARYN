@@ -1,21 +1,21 @@
 const tiers = [
   {
-    name: 'Free',
+    name: 'Starter',
     price: '$0',
-    description: 'Ideal for early exploration with light compute budgets.',
-    bullets: ['3 projects', 'Community model catalog', 'Weekly exports']
+    description: 'For individuals validating core modeling workflows.',
+    bullets: ['1 active project', 'CSV + .dta upload', 'Core summarize + OLS tools']
   },
   {
     name: 'Pro',
-    price: '$79',
-    description: 'For analysts shipping production-ready simulations weekly.',
-    bullets: ['Unlimited projects', 'Priority GPU queue', 'Daily exports + API']
+    price: '$89',
+    description: 'For teams running frequent analysis and simulation cycles.',
+    bullets: ['Unlimited projects', 'Robust + cluster SE workflows', 'Higher simulation and job concurrency']
   },
   {
     name: 'Scale',
     price: 'Custom',
-    description: 'For cross-functional teams requiring governance and throughput.',
-    bullets: ['Dedicated infra', 'Advanced controls', 'Enterprise support']
+    description: 'For organizations operating cloud-scale statistical pipelines.',
+    bullets: ['Dedicated execution capacity', 'Advanced governance controls', 'Priority support + onboarding']
   }
 ];
 
