@@ -9,7 +9,7 @@ export default function HomePage() {
       <section className="container-shell">
         <div className="mb-10 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-end">
           <div className="space-y-6">
-            <Badge>Cloud-native statistical IDE</Badge>
+            <Badge>Serious statistical workflows</Badge>
             <h1 className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl">
               Calm, serious modeling workflows built for real decisions.
             </h1>
@@ -23,10 +23,7 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
-          <div className="text-sm text-muted lg:pb-4">
-            <p className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">A modern statistical workspace.</p>
-            <p className="mt-3">Progressive power from first model to cloud-scale simulation, without noise.</p>
-          </div>
+          <div aria-hidden className="hidden lg:block" />
         </div>
         <AsciiWaveHero />
       </section>
