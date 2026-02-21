@@ -1,37 +1,67 @@
-# Varis Marketing Site
+# Varyn -- Project Summary
 
-Next.js 14 App Router project with TypeScript + Tailwind CSS.
+## The Goal
 
-## Run locally
+Varyn is a modern, cloud-native statistical workspace built on R.
 
-```bash
-npm install
-npm run dev
-```
+It is designed primarily for political analysts, econometrics students, and serious modelers who understand statistical software -- but find raw R too technical, messy, or intimidating.
 
-Then open <http://localhost:3000>.
+---
 
-## Scripts
+## The Big Idea
 
-- `npm run dev` - local development server
-- `npm run build` - production build
-- `npm run start` - run built app (binds `0.0.0.0` and uses `PORT`)
-- `npm run lint` - Next.js lint checks
+There are powerful tools for modeling:
 
-## UI continuity documentation
+- Stata -- expensive and dated
+- R -- powerful but overly technical for many users
+- Notebooks -- flexible but messy and unstructured
 
-To keep UI decisions consistent through the full project lifecycle (planning, implementation, review, and release), see:
+Varyn bridges that gap.
 
-- [`docs/UI_CONTINUITY.md`](docs/UI_CONTINUITY.md)
+It provides:
 
-Use the checklist in that doc for any PR that includes perceptible UI changes.
+> A calm, structured statistical IDE for running serious models -- without the friction of raw R.
 
-## Deploying to Railway
+---
 
-This repo is ready for Railway with Nixpacks:
+## Primary Audience
 
-- `railway.json` defines build (`npm ci && npm run build`) and deploy (`npm run start`) commands.
-- The app reads `PORT` from Railway and binds to `0.0.0.0`.
-- `.nvmrc` and `package.json#engines` pin Node.js 20+ for consistent deploys.
+Varyn is built for:
 
-You can deploy directly from the GitHub repo in Railway without additional changes.
+- Political analysts
+- Election modelers
+- Econometrics students
+- Public policy researchers
+- Analysts who understand regression and modeling concepts
+- Users who know what they want to run, but don't want to fight syntax or tooling
+
+It is **not** designed for total beginners.
+It is designed for capable users who want a better workspace.
+
+---
+
+## Core Vision
+
+Varyn combines:
+
+- The simplicity of Stata's workflow
+- The power and flexibility of R
+- The polish of modern SaaS tools (Linear / Cursor-level design)
+- The scalability of cloud compute
+
+It is:
+
+- Cloud-first
+- Workspace-based (not notebook-based)
+- Structured around output cards, not console spam
+- Progressive in complexity (simple when needed, advanced when desired)
+
+---
+
+## What Varyn Is
+
+> A cloud-native statistical IDE built for modern political and economic modeling.
+
+Or more simply:
+
+> Run serious models. Beautifully.
