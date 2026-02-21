@@ -21,14 +21,43 @@ function parseCsv(text: string): { columns: string[]; rows: Record<string, strin
   return { columns, rows };
 }
 
-export default function SpreadsheetTab({ tabId, datasetId }: TabComponentProps) {
+export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabComponentProps) {
   const { currentProject, datasets, uploadDataset } = useWorkspace();
   const [columns, setColumns] = useState<string[]>([]);
   const [rows, setRows] = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load data if we have a datasetId
+  // Load data from a direct URL (e.g. sample data)
+  useEffect(() => {
+    if (!sourceUrl) return;
+
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+
+    fetch(sourceUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch data');
+        return res.text();
+      })
+      .then((text) => {
+        if (cancelled) return;
+        const parsed = parseCsv(text);
+        setColumns(parsed.columns);
+        setRows(parsed.rows);
+        setLoading(false);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setError(err.message);
+        setLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [sourceUrl]);
+
+  // Load data if we have a datasetId (from API)
   useEffect(() => {
     if (!datasetId || !currentProject) return;
     const dataset = datasets.find((d) => d.id === datasetId);

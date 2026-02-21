@@ -25,7 +25,7 @@ export function TabPanel() {
                 </div>
               }
             >
-              <Component tabId={tab.id} datasetId={tab.datasetId} />
+              <Component tabId={tab.id} datasetId={tab.datasetId} sourceUrl={tab.sourceUrl} />
             </Suspense>
           </div>
         );

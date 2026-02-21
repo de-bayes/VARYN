@@ -4,6 +4,7 @@ import type { TabType } from '@/lib/types/tabs';
 export interface TabComponentProps {
   tabId: string;
   datasetId?: string;
+  sourceUrl?: string;
 }
 
 type TabComponent = ComponentType<TabComponentProps>;

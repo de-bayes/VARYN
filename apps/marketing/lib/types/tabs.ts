@@ -12,6 +12,8 @@ export interface Tab {
   title: string;
   /** Dataset ID if this tab is associated with a specific dataset */
   datasetId?: string;
+  /** Direct URL to load data from (e.g. sample data in /public) */
+  sourceUrl?: string;
   closable: boolean;
 }
 

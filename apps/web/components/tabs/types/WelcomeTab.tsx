@@ -27,17 +27,11 @@ export default function WelcomeTab({ tabId }: TabComponentProps) {
     }
   };
 
-  const handleLoadExample = async () => {
-    try {
-      const res = await fetch('/sample-data/gdp_pcap.csv');
-      const text = await res.text();
-      const blob = new Blob([text], { type: 'text/csv' });
-      const file = new File([blob], 'gdp_pcap.csv', { type: 'text/csv' });
-      await uploadDataset(file);
-      addTab('spreadsheet', { title: 'gdp_pcap.csv' });
-    } catch {
-      // Silently fail if sample data unavailable
-    }
+  const handleLoadExample = () => {
+    addTab('spreadsheet', {
+      title: 'gdp_pcap.csv',
+      sourceUrl: '/sample-data/gdp_pcap.csv',
+    });
   };
 
   const actions = [

@@ -104,7 +104,7 @@ interface TabContextValue {
   activeTabId: string;
   activeTab: Tab | undefined;
   dispatch: Dispatch<TabAction>;
-  addTab: (type: TabType, options?: { title?: string; datasetId?: string }) => Tab;
+  addTab: (type: TabType, options?: { title?: string; datasetId?: string; sourceUrl?: string }) => Tab;
   closeTab: (tabId: string) => void;
   setActiveTab: (tabId: string) => void;
 }
@@ -120,12 +120,13 @@ export function TabProvider({ children }: { children: ReactNode }) {
   });
 
   const addTab = useCallback(
-    (type: TabType, options?: { title?: string; datasetId?: string }): Tab => {
+    (type: TabType, options?: { title?: string; datasetId?: string; sourceUrl?: string }): Tab => {
       const tab: Tab = {
         id: generateTabId(type),
         type,
         title: options?.title ?? typeToDefaultTitle(type),
         datasetId: options?.datasetId,
+        sourceUrl: options?.sourceUrl,
         closable: true,
       };
       dispatch({ type: 'ADD_TAB', tab });
