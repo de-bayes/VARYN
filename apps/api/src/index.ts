@@ -12,8 +12,7 @@ const app = new Hono();
 
 app.use('*', logger());
 app.use('*', cors({
-  origin: (process.env.CORS_ORIGINS || 'http://localhost:3001').split(','),
-  credentials: true,
+  origin: '*',
 }));
 
 // Health check
