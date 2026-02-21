@@ -10,16 +10,11 @@ import type {
   ArtifactDownload,
 } from '@varyn/shared';
 
-function getBase(): string {
-  const env = process.env.NEXT_PUBLIC_API_URL ?? '';
-  // Ensure the URL has a protocol — handle cases where it was set without https://
-  if (env && !env.startsWith('http')) {
-    return `https://${env}`;
-  }
-  return env || 'http://localhost:4000';
-}
-
-const BASE = getBase();
+const BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+    ? 'https://api-production-5af3.up.railway.app'
+    : 'http://localhost:4000');
 
 function token(): string | null {
   if (typeof window === 'undefined') return null;
