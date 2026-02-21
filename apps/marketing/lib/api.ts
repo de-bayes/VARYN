@@ -10,11 +10,8 @@ import type {
   ArtifactDownload,
 } from '@varyn/shared';
 
-const BASE =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window !== 'undefined' && window.location.hostname !== 'localhost'
-    ? 'https://api-production-5af3.up.railway.app'
-    : 'http://localhost:4000');
+// All API calls go through /api proxy (same origin, no CORS issues)
+const BASE = '/api';
 
 function token(): string | null {
   if (typeof window === 'undefined') return null;
