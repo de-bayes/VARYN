@@ -27,7 +27,27 @@ export default function WelcomeTab({ tabId }: TabComponentProps) {
     }
   };
 
+  const handleLoadExample = async () => {
+    try {
+      const res = await fetch('/sample-data/gdp_pcap.csv');
+      const text = await res.text();
+      const blob = new Blob([text], { type: 'text/csv' });
+      const file = new File([blob], 'gdp_pcap.csv', { type: 'text/csv' });
+      await uploadDataset(file);
+      addTab('spreadsheet', { title: 'gdp_pcap.csv' });
+    } catch {
+      // Silently fail if sample data unavailable
+    }
+  };
+
   const actions = [
+    {
+      label: isFriendly ? 'Try an example' : 'Load example dataset',
+      description: isFriendly
+        ? 'Explore GDP per capita data for 20 countries (1960–2020)'
+        : 'GDP per capita, population, life expectancy — 20 countries, 7 decades',
+      action: handleLoadExample,
+    },
     {
       label: isFriendly ? 'Upload a file' : 'Upload dataset',
       description: isFriendly

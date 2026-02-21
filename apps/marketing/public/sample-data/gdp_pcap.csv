@@ -1,0 +1,134 @@
+country,year,gdp_per_capita,population_m,continent,life_expectancy
+United States,1960,17036,180.7,North America,69.8
+United States,1970,23958,205.1,North America,70.8
+United States,1980,29421,227.2,North America,73.7
+United States,1990,36298,249.6,North America,75.2
+United States,2000,45085,282.2,North America,76.6
+United States,2010,49374,309.3,North America,78.5
+United States,2020,53749,331.0,North America,77.0
+China,1960,662,667.1,Asia,43.7
+China,1970,949,818.3,Asia,59.0
+China,1980,1573,981.2,Asia,66.8
+China,1990,2982,1135.2,Asia,69.3
+China,2000,5966,1262.6,Asia,71.4
+China,2010,12134,1337.7,Asia,75.0
+China,2020,17312,1402.1,Asia,77.1
+India,1960,690,449.5,Asia,41.4
+India,1970,870,555.2,Asia,47.7
+India,1980,1125,698.9,Asia,54.2
+India,1990,1740,873.3,Asia,58.3
+India,2000,2730,1056.6,Asia,62.6
+India,2010,4580,1234.3,Asia,66.5
+India,2020,6454,1380.0,Asia,69.7
+Germany,1960,11186,72.8,Europe,69.1
+Germany,1970,16598,78.2,Europe,70.4
+Germany,1980,22261,78.3,Europe,72.7
+Germany,1990,27106,79.4,Europe,75.2
+Germany,2000,33305,82.2,Europe,77.9
+Germany,2010,40631,81.8,Europe,79.9
+Germany,2020,46253,83.2,Europe,80.9
+Japan,1960,7652,93.4,Asia,67.7
+Japan,1970,16887,104.3,Asia,72.0
+Japan,1980,24024,116.8,Asia,76.1
+Japan,1990,33752,123.5,Asia,78.9
+Japan,2000,35867,126.8,Asia,81.1
+Japan,2010,39435,128.1,Asia,82.8
+Japan,2020,40232,126.3,Asia,84.6
+Brazil,1960,3930,72.2,South America,54.7
+Brazil,1970,5421,95.1,South America,57.6
+Brazil,1980,8651,121.3,South America,62.5
+Brazil,1990,9866,149.6,South America,65.3
+Brazil,2000,11217,174.8,South America,70.3
+Brazil,2010,14519,195.7,South America,73.1
+Brazil,2020,14064,212.6,South America,72.8
+United Kingdom,1960,13846,52.4,Europe,70.8
+United Kingdom,1970,16722,55.6,Europe,71.7
+United Kingdom,1980,19362,56.3,Europe,73.7
+United Kingdom,1990,24486,57.2,Europe,75.7
+United Kingdom,2000,31049,58.9,Europe,77.4
+United Kingdom,2010,36743,62.8,Europe,80.4
+United Kingdom,2020,39532,67.2,Europe,80.4
+Nigeria,1960,1104,45.1,Africa,37.2
+Nigeria,1970,1414,55.3,Africa,41.5
+Nigeria,1980,2035,73.4,Africa,45.5
+Nigeria,1990,1761,95.2,Africa,46.1
+Nigeria,2000,2205,122.3,Africa,46.6
+Nigeria,2010,4674,158.3,Africa,51.3
+Nigeria,2020,4916,206.1,Africa,54.7
+South Korea,1960,1656,25.0,Asia,53.0
+South Korea,1970,3261,32.2,Asia,62.2
+South Korea,1980,6126,38.1,Asia,66.1
+South Korea,1990,13448,42.9,Asia,71.3
+South Korea,2000,22434,47.0,Asia,75.9
+South Korea,2010,32901,49.4,Asia,80.2
+South Korea,2020,42336,51.8,Asia,83.5
+Mexico,1960,5050,38.2,North America,57.1
+Mexico,1970,7022,52.8,North America,61.0
+Mexico,1980,10853,67.6,North America,66.8
+Mexico,1990,11410,83.2,North America,70.8
+Mexico,2000,14082,98.9,North America,74.4
+Mexico,2010,15063,112.3,North America,75.6
+Mexico,2020,16362,128.9,North America,75.1
+Australia,1960,15270,10.3,Oceania,70.8
+Australia,1970,20741,12.5,Oceania,70.8
+Australia,1980,25154,14.7,Oceania,74.6
+Australia,1990,29720,17.1,Oceania,77.0
+Australia,2000,36138,19.2,Oceania,79.0
+Australia,2010,42867,22.0,Oceania,81.7
+Australia,2020,48698,25.7,Oceania,83.0
+South Africa,1960,5315,17.4,Africa,49.0
+South Africa,1970,6743,22.7,Africa,53.7
+South Africa,1980,8232,28.5,Africa,56.9
+South Africa,1990,8040,36.7,Africa,62.1
+South Africa,2000,7732,44.0,Africa,55.2
+South Africa,2010,10934,50.5,Africa,54.4
+South Africa,2020,11466,59.3,Africa,64.1
+France,1960,11825,45.7,Europe,70.3
+France,1970,18026,50.8,Europe,72.2
+France,1980,23826,53.9,Europe,74.3
+France,1990,29174,56.7,Europe,77.0
+France,2000,33959,59.0,Europe,79.0
+France,2010,38355,62.9,Europe,81.7
+France,2020,39030,67.4,Europe,82.3
+Indonesia,1960,1270,97.1,Asia,44.6
+Indonesia,1970,1600,119.2,Asia,51.6
+Indonesia,1980,2832,148.2,Asia,57.6
+Indonesia,1990,4370,181.4,Asia,62.3
+Indonesia,2000,5808,211.5,Asia,66.2
+Indonesia,2010,9254,242.5,Asia,69.3
+Indonesia,2020,11444,273.5,Asia,71.7
+Canada,1960,14122,17.9,North America,71.1
+Canada,1970,19724,21.3,North America,72.5
+Canada,1980,26065,24.5,North America,75.3
+Canada,1990,31056,27.7,North America,77.4
+Canada,2000,37055,30.8,North America,79.0
+Canada,2010,41842,34.0,North America,81.1
+Canada,2020,43242,38.0,North America,81.7
+Egypt,1960,1556,27.9,Africa,46.1
+Egypt,1970,1860,35.6,Africa,51.5
+Egypt,1980,3295,44.9,Africa,56.2
+Egypt,1990,4548,56.8,Africa,63.5
+Egypt,2000,6290,68.8,Africa,68.6
+Egypt,2010,10194,82.0,Africa,70.2
+Egypt,2020,12261,102.3,Africa,71.8
+Sweden,1960,15134,7.5,Europe,73.1
+Sweden,1970,21264,8.0,Europe,74.7
+Sweden,1980,24806,8.3,Europe,75.8
+Sweden,1990,30149,8.6,Europe,77.6
+Sweden,2000,35574,8.9,Europe,79.7
+Sweden,2010,43006,9.4,Europe,81.5
+Sweden,2020,47945,10.4,Europe,82.4
+Argentina,1960,8148,20.6,South America,65.2
+Argentina,1970,10017,24.0,South America,65.5
+Argentina,1980,12150,28.1,South America,69.7
+Argentina,1990,10398,32.6,South America,71.7
+Argentina,2000,13230,36.9,South America,73.8
+Argentina,2010,18718,40.4,South America,75.5
+Argentina,2020,17930,45.4,South America,75.9
+Ethiopia,1960,440,22.2,Africa,36.7
+Ethiopia,1970,492,29.0,Africa,40.8
+Ethiopia,1980,563,35.4,Africa,44.5
+Ethiopia,1990,478,47.9,Africa,46.4
+Ethiopia,2000,545,65.6,Africa,51.8
+Ethiopia,2010,1195,87.6,Africa,61.5
+Ethiopia,2020,2424,115.0,Africa,66.6
