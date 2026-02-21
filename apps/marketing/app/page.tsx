@@ -9,12 +9,12 @@ export default function HomePage() {
       <section className="container-shell">
         <div className="mb-10 grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
           <div className="space-y-6 lg:-translate-y-4">
-            <Badge>Serious statistical workflows</Badge>
+            <Badge>The modern, cloud-powered Stata</Badge>
             <h1 className="text-4xl font-medium leading-tight sm:text-5xl lg:text-6xl">
               Calm, serious modeling workflows built for real decisions.
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              Varyn gives teams a clean statistical workspace for regression, simulation, and scalable job execution—without notebook chaos or gimmicks.
+              Varyn gives teams a clean statistical workspace for regression, simulation, and scalable job execution--without notebook chaos or gimmicks.
             </p>
             <div className="flex flex-wrap gap-3">
               <Button href="/product">Explore Product</Button>
