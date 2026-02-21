@@ -23,9 +23,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="https://app.varyn.cloud"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/app/workspace"
             className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-white/90"
           >
             Open App
