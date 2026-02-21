@@ -5,9 +5,10 @@ import { useState, useRef } from 'react';
 interface CommandBarProps {
   onExecute: (command: string) => void;
   isLoading: boolean;
+  activeDatasetName?: string | null;
 }
 
-export function CommandBar({ onExecute, isLoading }: CommandBarProps) {
+export function CommandBar({ onExecute, isLoading, activeDatasetName }: CommandBarProps) {
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,6 +26,11 @@ export function CommandBar({ onExecute, isLoading }: CommandBarProps) {
       className="flex items-center gap-2 border-t border-white/10 bg-panel px-4 py-2.5"
     >
       <span className="text-accent/60 text-sm select-none">$</span>
+      {activeDatasetName && (
+        <span className="rounded border border-white/10 px-1.5 py-0.5 text-[10px] text-muted/50 shrink-0">
+          {activeDatasetName}
+        </span>
+      )}
       <input
         ref={inputRef}
         type="text"
