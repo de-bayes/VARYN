@@ -8,7 +8,6 @@ import { Inspector } from '@/components/Inspector';
 import { CommandBar } from '@/components/CommandBar';
 import { LogPanel } from '@/components/LogPanel';
 import { useWorkspace } from '@/lib/workspace-context';
-import { useAuth } from '@/lib/auth-context';
 
 export default function WorkspacePage() {
   const [activeSection, setActiveSection] = useState('Datasets');
@@ -26,7 +25,6 @@ export default function WorkspacePage() {
     executeCommand,
     uploadDataset,
   } = useWorkspace();
-  const { logout } = useAuth();
 
   const handleExecute = async (command: string) => {
     closeDataView();
@@ -59,12 +57,6 @@ export default function WorkspacePage() {
             {currentProject?.name ?? ''}
             {activeDataset ? ` / ${activeDataset.filename}` : ''}
           </span>
-          <button
-            onClick={logout}
-            className="rounded border border-white/10 px-2 py-0.5 text-[10px] text-muted/50 hover:text-foreground transition"
-          >
-            Sign out
-          </button>
         </div>
       </header>
 

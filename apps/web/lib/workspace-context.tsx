@@ -15,7 +15,6 @@ import type {
   ArtifactRef,
 } from '@varyn/shared';
 import * as api from './api';
-import { useAuth } from './auth-context';
 import type { CardData } from '@/components/Canvas';
 
 interface WorkspaceContextValue {
@@ -48,7 +47,6 @@ interface WorkspaceContextValue {
 const WorkspaceContext = createContext<WorkspaceContextValue | null>(null);
 
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
@@ -165,8 +163,8 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
 
   // Auto-load projects on mount
   useEffect(() => {
-    if (user) loadProjects();
-  }, [user, loadProjects]);
+    loadProjects().catch(() => {});
+  }, [loadProjects]);
 
   // Auto-load datasets when project changes
   useEffect(() => {
