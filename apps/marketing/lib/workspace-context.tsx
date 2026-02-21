@@ -15,23 +15,50 @@ import type {
 } from '@varyn/shared';
 import * as api from './api';
 import { useAuth } from './auth-context';
-import type { CardData } from '@/components/Canvas';
+
+// --- Card Data ---
+
+export interface CardData {
+  id: string;
+  kind: 'table' | 'plot';
+  title: string;
+  columns?: string[];
+  rows?: Record<string, unknown>[];
+  imageUrl?: string;
+}
+
+// --- Log Entry ---
+
+export interface LogEntry {
+  type: 'command' | 'output' | 'error';
+  text: string;
+  timestamp: number;
+  durationMs?: number;
+}
+
+// --- Context ---
 
 interface WorkspaceContextValue {
+  // Project
   currentProject: Project | null;
   projects: Project[];
+  // Datasets
   datasets: DatasetMeta[];
   activeDataset: DatasetMeta | null;
   setActiveDataset: (ds: DatasetMeta | null) => void;
+  // Data view (kept for compatibility)
   dataViewUrl: string | null;
   showDataView: boolean;
   openDataView: () => void;
   closeDataView: () => void;
-  cards: CardData[];
-  logs: string | null;
-  logStatus: 'success' | 'error' | undefined;
-  logDuration: number | undefined;
+  // Execution output — tab-aware
+  cards: Record<string, CardData[]>;
+  activeOutputTabId: string | null;
+  setActiveOutputTabId: (id: string | null) => void;
+  // Logs — session history
+  logs: LogEntry[];
   isExecuting: boolean;
+  // Actions
   loadProjects: () => Promise<void>;
   loadDatasets: () => Promise<void>;
   uploadDataset: (file: File) => Promise<void>;
@@ -50,10 +77,9 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const [activeDataset, setActiveDataset] = useState<DatasetMeta | null>(null);
   const [dataViewUrl, setDataViewUrl] = useState<string | null>(null);
   const [showDataView, setShowDataView] = useState(false);
-  const [cards, setCards] = useState<CardData[]>([]);
-  const [logs, setLogs] = useState<string | null>(null);
-  const [logStatus, setLogStatus] = useState<'success' | 'error' | undefined>(undefined);
-  const [logDuration, setLogDuration] = useState<number | undefined>(undefined);
+  const [cards, setCards] = useState<Record<string, CardData[]>>({});
+  const [activeOutputTabId, setActiveOutputTabId] = useState<string | null>(null);
+  const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isExecuting, setIsExecuting] = useState(false);
 
   const loadProjects = useCallback(async () => {
@@ -74,23 +100,29 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     setDatasets(list);
   }, [currentProject]);
 
-  const uploadDataset = useCallback(async (file: File) => {
-    if (!currentProject) return;
-    const ds = await api.uploadDataset(currentProject.id, file);
-    setDatasets((prev) => [...prev, ds]);
-    setActiveDataset(ds);
-  }, [currentProject]);
+  const uploadDataset = useCallback(
+    async (file: File) => {
+      if (!currentProject) return;
+      const ds = await api.uploadDataset(currentProject.id, file);
+      setDatasets((prev) => [...prev, ds]);
+      setActiveDataset(ds);
+    },
+    [currentProject],
+  );
 
   const selectDataset = useCallback(
     (id: string) => {
       const ds = datasets.find((d) => d.id === id) ?? null;
       setActiveDataset(ds);
       if (ds && currentProject) {
-        api.getDatasetPreview(currentProject.id, ds.id).then(({ downloadUrl }) => {
-          setDataViewUrl(downloadUrl);
-        }).catch(() => {
-          setDataViewUrl(null);
-        });
+        api
+          .getDatasetPreview(currentProject.id, ds.id)
+          .then(({ downloadUrl }) => {
+            setDataViewUrl(downloadUrl);
+          })
+          .catch(() => {
+            setDataViewUrl(null);
+          });
       } else {
         setDataViewUrl(null);
         setShowDataView(false);
@@ -102,63 +134,90 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const openDataView = useCallback(() => setShowDataView(true), []);
   const closeDataView = useCallback(() => setShowDataView(false), []);
 
-  const executeCommand = useCallback(async (command: string) => {
-    if (!currentProject) return;
-    setIsExecuting(true);
-    setLogs(null);
-    setLogStatus(undefined);
-    setLogDuration(undefined);
+  const executeCommand = useCallback(
+    async (command: string) => {
+      if (!currentProject) return;
+      setIsExecuting(true);
 
-    try {
-      const res: ExecuteResponse = await api.execute(currentProject.id, {
-        command,
-        datasetId: activeDataset?.id,
-      });
+      // Add command to log history
+      setLogs((prev) => [
+        ...prev,
+        { type: 'command', text: command, timestamp: Date.now() },
+      ]);
 
-      setLogs(res.logs || null);
-      setLogStatus(res.status);
-      setLogDuration(res.durationMs);
+      try {
+        const res: ExecuteResponse = await api.execute(currentProject.id, {
+          command,
+          datasetId: activeDataset?.id,
+        });
 
-      const newCards: CardData[] = [];
-      for (const art of res.artifacts) {
-        const { url } = await api.getArtifactUrl(art.id);
-        if (art.kind === 'table') {
-          try {
-            const tableRes = await fetch(url);
-            const tableData = await tableRes.json();
+        // Add output to log history
+        if (res.logs) {
+          setLogs((prev) => [
+            ...prev,
+            {
+              type: res.status === 'error' ? 'error' : 'output',
+              text: res.logs,
+              timestamp: Date.now(),
+              durationMs: res.durationMs,
+            },
+          ]);
+        }
+
+        // Process artifacts into cards, keyed by active output tab
+        const newCards: CardData[] = [];
+        for (const art of res.artifacts) {
+          const { url } = await api.getArtifactUrl(art.id);
+          if (art.kind === 'table') {
+            try {
+              const tableRes = await fetch(url);
+              const tableData = await tableRes.json();
+              newCards.push({
+                id: art.id,
+                kind: 'table',
+                title: art.title,
+                columns: tableData.columns,
+                rows: tableData.rows,
+              });
+            } catch {
+              // Skip failed artifact loads
+            }
+          } else if (art.kind === 'plot') {
             newCards.push({
               id: art.id,
-              kind: 'table',
+              kind: 'plot',
               title: art.title,
-              columns: tableData.columns,
-              rows: tableData.rows,
+              imageUrl: url,
             });
-          } catch {
-            // Skip failed artifact loads
           }
-        } else if (art.kind === 'plot') {
-          newCards.push({
-            id: art.id,
-            kind: 'plot',
-            title: art.title,
-            imageUrl: url,
+        }
+
+        if (newCards.length > 0) {
+          setCards((prev) => {
+            const tabId = activeOutputTabId ?? '_default';
+            const existing = prev[tabId] ?? [];
+            return { ...prev, [tabId]: [...existing, ...newCards] };
           });
         }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : 'Execution failed';
+        setLogs((prev) => [
+          ...prev,
+          { type: 'error', text: msg, timestamp: Date.now() },
+        ]);
+      } finally {
+        setIsExecuting(false);
       }
-      setCards((prev) => [...prev, ...newCards]);
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Execution failed';
-      setLogs(msg);
-      setLogStatus('error');
-    } finally {
-      setIsExecuting(false);
-    }
-  }, [currentProject, activeDataset]);
+    },
+    [currentProject, activeDataset, activeOutputTabId],
+  );
 
+  // Auto-load projects when user is available
   useEffect(() => {
     if (user) loadProjects();
   }, [user, loadProjects]);
 
+  // Auto-load datasets when project changes
   useEffect(() => {
     if (currentProject) loadDatasets();
   }, [currentProject, loadDatasets]);
@@ -176,9 +235,9 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         openDataView,
         closeDataView,
         cards,
+        activeOutputTabId,
+        setActiveOutputTabId,
         logs,
-        logStatus,
-        logDuration,
         isExecuting,
         loadProjects,
         loadDatasets,
