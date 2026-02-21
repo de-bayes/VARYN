@@ -6,7 +6,7 @@
   },
   "deploy": {
     "startCommand": "cp -r apps/web/.next/static apps/web/.next/standalone/apps/web/.next/static && HOSTNAME=0.0.0.0 node apps/web/.next/standalone/apps/web/server.js",
-    "healthcheckPath": "/",
+    "healthcheckPath": "/workspace",
     "healthcheckTimeout": 180,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
