@@ -10,7 +10,16 @@ import type {
   ArtifactDownload,
 } from '@varyn/shared';
 
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000';
+function getBase(): string {
+  const env = process.env.NEXT_PUBLIC_API_URL ?? '';
+  // Ensure the URL has a protocol — handle cases where it was set without https://
+  if (env && !env.startsWith('http')) {
+    return `https://${env}`;
+  }
+  return env || 'http://localhost:4000';
+}
+
+const BASE = getBase();
 
 function token(): string | null {
   if (typeof window === 'undefined') return null;
@@ -25,10 +34,19 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     headers['Content-Type'] = 'application/json';
   }
 
-  const res = await fetch(`${BASE}${path}`, { ...init, headers });
+  const url = `${BASE}${path}`;
+
+  let res: Response;
+  try {
+    res = await fetch(url, { ...init, headers });
+  } catch {
+    throw new Error(`Cannot reach server at ${BASE}. Check your connection.`);
+  }
+
   if (!res.ok) {
-    const body = await res.json().catch(() => ({ message: res.statusText }));
-    throw new ApiError(res.status, body.message ?? body.error ?? 'Request failed');
+    const body = await res.json().catch(() => null);
+    const msg = body?.message ?? body?.error ?? `Request failed (${res.status})`;
+    throw new ApiError(res.status, msg);
   }
   return res.json() as Promise<T>;
 }

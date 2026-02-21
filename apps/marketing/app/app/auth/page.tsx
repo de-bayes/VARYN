@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
+import Link from 'next/link';
 
 export default function AuthPage() {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
@@ -20,9 +21,19 @@ export default function AuthPage() {
     e.preventDefault();
     setError(null);
 
-    if (mode === 'signup' && password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
+    if (mode === 'signup') {
+      if (!name.trim()) {
+        setError('Name is required');
+        return;
+      }
+      if (password.length < 8) {
+        setError('Password must be at least 8 characters');
+        return;
+      }
+      if (password !== confirmPassword) {
+        setError('Passwords do not match');
+        return;
+      }
     }
 
     setLoading(true);
@@ -41,11 +52,21 @@ export default function AuthPage() {
     }
   };
 
+  const switchMode = () => {
+    setMode(mode === 'login' ? 'signup' : 'login');
+    setError(null);
+    setConfirmPassword('');
+  };
+
   const inputClass =
     'w-full rounded-lg border border-white/10 bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted/60 focus:border-accent/50 focus:outline-none';
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen flex-col items-center justify-center">
+      <Link href="/" className="mb-8 text-2xl font-semibold tracking-tight text-foreground">
+        VARYN
+      </Link>
+
       <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4 rounded-2xl border border-white/10 bg-panel p-8">
         <h1 className="text-xl font-medium">{mode === 'login' ? 'Sign in' : 'Create account'}</h1>
 
@@ -62,6 +83,7 @@ export default function AuthPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className={inputClass}
+            autoComplete="name"
           />
         )}
         <input
@@ -70,6 +92,8 @@ export default function AuthPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className={inputClass}
+          autoComplete="email"
+          required
         />
         <div className="relative">
           <input
@@ -77,12 +101,14 @@ export default function AuthPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={inputClass}
+            className={`${inputClass} pr-14`}
+            autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+            required
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-muted/50 hover:text-foreground transition"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] text-muted/50 hover:text-foreground transition select-none"
           >
             {showPassword ? 'Hide' : 'Show'}
           </button>
@@ -94,6 +120,8 @@ export default function AuthPage() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className={inputClass}
+            autoComplete="new-password"
+            required
           />
         )}
 
@@ -107,11 +135,7 @@ export default function AuthPage() {
 
         <p className="text-center text-xs text-muted">
           {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}{' '}
-          <button
-            type="button"
-            onClick={() => { setMode(mode === 'login' ? 'signup' : 'login'); setError(null); }}
-            className="text-accent underline"
-          >
+          <button type="button" onClick={switchMode} className="text-accent underline">
             {mode === 'login' ? 'Sign up' : 'Sign in'}
           </button>
         </p>
