@@ -28,7 +28,7 @@ auth.post('/signup', async (c) => {
   if (existing.length > 0) return c.json({ error: 'conflict', message: 'Email already registered' }, 409);
 
   const passwordHash = await hashPassword(password);
-  const [user] = await db.insert(users).values({ email, name, passwordHash }).returning({ id: users.id, email: users.email, name: users.name });
+  const [user] = await db.insert(users).values({ email, name, passwordHash }).returning({ id: users.id, email: users.email, name: users.name, role: users.role });
   const token = await signToken(user.id);
 
   return c.json({ token, user }, 201);
@@ -47,7 +47,7 @@ auth.post('/login', async (c) => {
   if (!valid) return c.json({ error: 'unauthorized', message: 'Invalid credentials' }, 401);
 
   const token = await signToken(user.id);
-  return c.json({ token, user: { id: user.id, email: user.email, name: user.name } });
+  return c.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
 });
 
 export { auth };
