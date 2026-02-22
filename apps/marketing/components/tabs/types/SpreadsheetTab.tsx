@@ -247,7 +247,19 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
           </span>
         </button>
         <button
-          onClick={() => addTab('graph-builder', { title: `Graph` })}
+          onClick={() => addTab('summary', { title: 'Summary' })}
+          className="rounded border border-white/10 px-2 py-0.5 text-[10px] text-muted/60 hover:border-accent/30 hover:text-foreground transition"
+        >
+          <span className="flex items-center gap-1">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" className="opacity-60">
+              <rect x="2" y="2" width="12" height="12" rx="1.5" />
+              <path d="M5 5h6M5 8h4M5 11h5" />
+            </svg>
+            Summary
+          </span>
+        </button>
+        <button
+          onClick={() => addTab('graph-builder', { title: 'Graph' })}
           className="rounded border border-white/10 px-2 py-0.5 text-[10px] text-muted/60 hover:border-accent/30 hover:text-foreground transition"
         >
           <span className="flex items-center gap-1">

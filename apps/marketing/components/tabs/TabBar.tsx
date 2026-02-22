@@ -48,6 +48,13 @@ function TabIcon({ type, size = 12 }: { type: TabType; size?: number }) {
           <path d="M5 6l2 2-2 2" />
         </svg>
       );
+    case 'summary':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="12" height="12" rx="1.5" />
+          <path d="M5 5h6M5 8h4M5 11h5" />
+        </svg>
+      );
     case 'welcome':
       return (
         <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
@@ -77,8 +84,9 @@ export function TabBar() {
 
   const availableTypes: { type: TabType; label: string }[] = [
     { type: 'spreadsheet', label: 'Spreadsheet' },
-    { type: 'output', label: 'Output' },
     { type: 'graph-builder', label: 'Graph Builder' },
+    { type: 'summary', label: 'Data Summary' },
+    { type: 'output', label: 'Output' },
   ];
 
   if (features.showTabMonteCarlo) {

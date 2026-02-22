@@ -173,6 +173,7 @@ function typeToDefaultTitle(type: TabType): string {
     spreadsheet: 'Spreadsheet',
     output: 'Output',
     'graph-builder': 'Graph Builder',
+    summary: 'Summary',
     'monte-carlo': 'Monte Carlo',
     'r-console': 'R Console',
     welcome: 'Welcome',

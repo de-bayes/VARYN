@@ -2,6 +2,7 @@ export type TabType =
   | 'spreadsheet'
   | 'output'
   | 'graph-builder'
+  | 'summary'
   | 'monte-carlo'
   | 'r-console'
   | 'welcome';
@@ -21,6 +22,7 @@ export const TAB_TYPE_LABELS: Record<TabType, string> = {
   spreadsheet: 'Spreadsheet',
   output: 'Output',
   'graph-builder': 'Graph Builder',
+  summary: 'Summary',
   'monte-carlo': 'Monte Carlo',
   'r-console': 'R Console',
   welcome: 'Welcome',
