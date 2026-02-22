@@ -1,46 +1,81 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { useWorkspace } from '@/lib/workspace-context';
 import { useSkillLevel } from '@/lib/skill-level-context';
 import { useTabs } from '@/lib/tab-context';
-
-interface Section {
-  label: string;
-  icon: string;
-  key: string;
-}
+import { useSpreadsheetData } from '@/lib/spreadsheet-data-store';
 
 interface WorkspaceSidebarProps {
   activeSection: string;
   onSelect: (section: string) => void;
 }
 
+const SAMPLE_FILES = [
+  { name: 'us_elections.csv', file: '/sample-data/us_elections.csv', color: '#6366f1' },
+  { name: 'democracy_index.csv', file: '/sample-data/democracy_index.csv', color: '#10b981' },
+  { name: 'inequality.csv', file: '/sample-data/inequality.csv', color: '#f59e0b' },
+  { name: 'congress_votes.csv', file: '/sample-data/congress_votes.csv', color: '#ef4444' },
+  { name: 'polling.csv', file: '/sample-data/polling.csv', color: '#8b5cf6' },
+  { name: 'gdp_pcap.csv', file: '/sample-data/gdp_pcap.csv', color: '#14b8a6' },
+];
+
+function FileIcon({ color = '#6b6b76' }: { color?: string }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path
+        d="M3 1.5h5l3 3v8a1 1 0 01-1 1H3a1 1 0 01-1-1v-10a1 1 0 011-1z"
+        stroke={color}
+        strokeWidth="1"
+        fill="none"
+      />
+      <path d="M8 1.5v3h3" stroke={color} strokeWidth="1" fill="none" />
+    </svg>
+  );
+}
+
+function FolderIcon({ open = false }: { open?: boolean }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+      {open ? (
+        <>
+          <path d="M2 4v7a1 1 0 001 1h8a1 1 0 001-1V6a1 1 0 00-1-1H7L5.5 3.5H3A1 1 0 002 4.5" />
+          <path d="M2 7h10" opacity="0.3" />
+        </>
+      ) : (
+        <path d="M2 4.5A1 1 0 013 3.5h2.5L7 5h4a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1V4.5z" />
+      )}
+    </svg>
+  );
+}
+
 export function WorkspaceSidebar({ activeSection, onSelect }: WorkspaceSidebarProps) {
-  const { datasets, activeDataset, selectDataset, uploadDataset, openDataView } =
-    useWorkspace();
+  const { datasets, activeDataset, selectDataset, uploadDataset } = useWorkspace();
   const { features } = useSkillLevel();
-  const { addTab } = useTabs();
+  const { addTab, tabs } = useTabs();
+  const { data: sharedData } = useSpreadsheetData();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const sections: Section[] = [
-    { label: 'Datasets', icon: 'D', key: 'datasets' },
-  ];
-  if (features.showSidebarModels) {
-    sections.push({ label: 'Models', icon: 'M', key: 'models' });
-  }
-  if (features.showSidebarHistory) {
-    sections.push({ label: 'History', icon: 'H', key: 'history' });
-  }
+  const isFriendly = features.terminology === 'friendly';
 
-  const handleUpload = () => {
-    fileInputRef.current?.click();
-  };
+  // Track which files are currently open as tabs
+  const openFiles = useMemo(() => {
+    return tabs
+      .filter((t) => t.type === 'spreadsheet')
+      .map((t) => ({
+        tabId: t.id,
+        title: t.title,
+        hasData: sharedData[t.id]?.columns.length > 0,
+      }));
+  }, [tabs, sharedData]);
+
+  const handleUpload = () => fileInputRef.current?.click();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       uploadDataset(file);
+      addTab('spreadsheet', { title: file.name });
       e.target.value = '';
     }
   };
@@ -53,81 +88,141 @@ export function WorkspaceSidebar({ activeSection, onSelect }: WorkspaceSidebarPr
     }
   };
 
+  const handleSampleClick = (sample: (typeof SAMPLE_FILES)[0]) => {
+    addTab('spreadsheet', { title: sample.name, sourceUrl: sample.file });
+  };
+
   return (
     <aside className="flex h-full flex-col bg-panel text-sm">
-      <div className="px-4 py-3 text-[11px] tracking-[0.14em] text-muted/70 uppercase">
-        Explorer
+      <div className="flex items-center justify-between px-4 py-3">
+        <span className="text-[11px] tracking-[0.14em] text-muted/70 uppercase">
+          Explorer
+        </span>
+        <button
+          onClick={handleUpload}
+          className="rounded border border-white/10 px-1.5 py-0.5 text-[10px] text-muted/50 hover:border-accent/30 hover:text-foreground transition"
+          title="Upload file"
+        >
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+            <path d="M8 12V4M5 7l3-3 3 3" />
+            <path d="M3 13h10" />
+          </svg>
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".csv,.dta"
+          onChange={handleFileChange}
+          className="hidden"
+        />
       </div>
-      <nav className="flex-1 space-y-0.5 px-2 overflow-y-auto">
-        {sections.map((s) => (
-          <button
-            key={s.key}
-            onClick={() => onSelect(s.key)}
-            className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left transition
-              ${
-                activeSection === s.key
-                  ? 'bg-white/[0.06] text-foreground'
-                  : 'text-muted hover:bg-white/[0.03] hover:text-foreground'
-              }`}
-          >
-            <span className="flex h-5 w-5 items-center justify-center rounded border border-white/10 text-[10px] text-muted">
-              {s.icon}
-            </span>
-            {s.label}
-          </button>
-        ))}
 
-        {/* Dataset list */}
-        {activeSection === 'datasets' && (
-          <div className="mt-3 space-y-0.5">
-            <div className="flex items-center justify-between px-3 py-1">
-              <span className="text-[10px] uppercase tracking-wider text-muted/50">
-                Files
-              </span>
-              <button
-                onClick={handleUpload}
-                className="rounded border border-white/10 px-1.5 py-0.5 text-[10px] text-muted hover:border-accent/40 hover:text-foreground transition"
-              >
-                + Upload
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".csv,.dta"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+      <nav className="flex-1 overflow-y-auto px-2 space-y-3">
+        {/* Open Files section */}
+        {openFiles.length > 0 && (
+          <div>
+            <button
+              onClick={() => onSelect('open')}
+              className="flex w-full items-center gap-1.5 px-2 py-1 text-[10px] uppercase tracking-wider text-muted/50 hover:text-muted/70"
+            >
+              <FolderIcon open={activeSection === 'open'} />
+              Open Files
+            </button>
+            <div className="mt-0.5 space-y-px">
+              {openFiles.map((f) => (
+                <div
+                  key={f.tabId}
+                  className="flex items-center gap-2 rounded-md px-3 py-1 text-xs text-muted/60"
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${f.hasData ? 'bg-emerald-400/60' : 'bg-white/10'}`} />
+                  <span className="truncate">{f.title}</span>
+                </div>
+              ))}
             </div>
-            {datasets.length === 0 && (
-              <p className="px-3 py-2 text-[10px] text-muted/40">No datasets yet</p>
-            )}
-            {datasets.map((ds) => (
-              <button
-                key={ds.id}
-                onClick={() => handleDatasetClick(ds.id)}
-                className={`flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-left text-xs transition
-                  ${
+          </div>
+        )}
+
+        {/* Uploaded Datasets (from API) */}
+        {datasets.length > 0 && (
+          <div>
+            <button
+              onClick={() => onSelect('datasets')}
+              className="flex w-full items-center gap-1.5 px-2 py-1 text-[10px] uppercase tracking-wider text-muted/50 hover:text-muted/70"
+            >
+              <FolderIcon open={activeSection === 'datasets'} />
+              {isFriendly ? 'Your Files' : 'Datasets'}
+            </button>
+            <div className="mt-0.5 space-y-px">
+              {datasets.map((ds) => (
+                <button
+                  key={ds.id}
+                  onClick={() => handleDatasetClick(ds.id)}
+                  className={`flex w-full items-center gap-2 rounded-md px-3 py-1 text-left text-xs transition ${
                     activeDataset?.id === ds.id
                       ? 'bg-accent/10 text-accent'
-                      : 'text-muted/70 hover:bg-white/[0.03] hover:text-foreground'
+                      : 'text-muted/60 hover:bg-white/[0.03] hover:text-foreground'
                   }`}
+                >
+                  <FileIcon />
+                  <span className="truncate">{ds.filename}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Sample Datasets */}
+        <div>
+          <button
+            onClick={() => onSelect('samples')}
+            className="flex w-full items-center gap-1.5 px-2 py-1 text-[10px] uppercase tracking-wider text-muted/50 hover:text-muted/70"
+          >
+            <FolderIcon open={activeSection === 'samples'} />
+            {isFriendly ? 'Example Data' : 'Sample Datasets'}
+          </button>
+          <div className="mt-0.5 space-y-px">
+            {SAMPLE_FILES.map((sample) => (
+              <button
+                key={sample.name}
+                onClick={() => handleSampleClick(sample)}
+                className="flex w-full items-center gap-2 rounded-md px-3 py-1 text-left text-xs text-muted/50 hover:bg-white/[0.03] hover:text-foreground transition"
               >
-                <span className="text-[10px]">&#9679;</span>
-                <span className="truncate">{ds.filename}</span>
+                <FileIcon color={sample.color} />
+                <span className="truncate">{sample.name}</span>
               </button>
             ))}
           </div>
-        )}
+        </div>
 
-        {activeSection === 'models' && (
-          <div className="mt-3 px-3 py-2 text-[10px] text-muted/40">
-            No models yet
+        {/* Models section (skill-gated) */}
+        {features.showSidebarModels && (
+          <div>
+            <button
+              onClick={() => onSelect('models')}
+              className="flex w-full items-center gap-1.5 px-2 py-1 text-[10px] uppercase tracking-wider text-muted/50 hover:text-muted/70"
+            >
+              <FolderIcon open={activeSection === 'models'} />
+              Models
+            </button>
+            {activeSection === 'models' && (
+              <p className="px-3 py-2 text-[10px] text-muted/30">No models yet</p>
+            )}
           </div>
         )}
 
-        {activeSection === 'history' && (
-          <div className="mt-3 px-3 py-2 text-[10px] text-muted/40">
-            No history yet
+        {/* History section (skill-gated) */}
+        {features.showSidebarHistory && (
+          <div>
+            <button
+              onClick={() => onSelect('history')}
+              className="flex w-full items-center gap-1.5 px-2 py-1 text-[10px] uppercase tracking-wider text-muted/50 hover:text-muted/70"
+            >
+              <FolderIcon open={activeSection === 'history'} />
+              History
+            </button>
+            {activeSection === 'history' && (
+              <p className="px-3 py-2 text-[10px] text-muted/30">No history yet</p>
+            )}
           </div>
         )}
       </nav>
