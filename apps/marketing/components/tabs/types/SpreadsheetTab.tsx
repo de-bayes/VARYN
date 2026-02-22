@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useWorkspace } from '@/lib/workspace-context';
+import { useSpreadsheetData } from '@/lib/spreadsheet-data-store';
+import { useTabs } from '@/lib/tab-context';
 import type { TabComponentProps } from '../tab-registry';
 
 function parseCsv(text: string): { columns: string[]; rows: Record<string, string>[] } {
@@ -21,17 +23,30 @@ function parseCsv(text: string): { columns: string[]; rows: Record<string, strin
   return { columns, rows };
 }
 
+type SortDir = 'asc' | 'desc' | null;
+
 export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabComponentProps) {
   const { currentProject, datasets, uploadDataset } = useWorkspace();
+  const { setTabData } = useSpreadsheetData();
+  const { addTab } = useTabs();
   const [columns, setColumns] = useState<string[]>([]);
   const [rows, setRows] = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sortCol, setSortCol] = useState<string | null>(null);
+  const [sortDir, setSortDir] = useState<SortDir>(null);
+  const [filterText, setFilterText] = useState('');
+
+  // Register data in the shared store when it changes
+  useEffect(() => {
+    if (columns.length > 0 && rows.length > 0) {
+      setTabData(tabId, columns, rows);
+    }
+  }, [tabId, columns, rows, setTabData]);
 
   // Load data from a direct URL (e.g. sample data)
   useEffect(() => {
     if (!sourceUrl) return;
-
     let cancelled = false;
     setLoading(true);
     setError(null);
@@ -87,9 +102,7 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
         setLoading(false);
       });
 
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [datasetId, currentProject, datasets]);
 
   // Handle paste
@@ -97,7 +110,6 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
     (e: ClipboardEvent) => {
       const text = e.clipboardData?.getData('text/plain');
       if (!text) return;
-
       const lines = text.trim().split('\n');
       if (lines.length < 2) return;
       const hasTabs = lines[0].includes('\t');
@@ -109,7 +121,6 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
       setColumns(parsed.columns);
       setRows(parsed.rows);
 
-      // Also upload as dataset
       const blob = new Blob([text], { type: 'text/csv' });
       const file = new File([blob], `pasted-${Date.now()}.csv`, { type: 'text/csv' });
       uploadDataset(file);
@@ -122,10 +133,67 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
     return () => document.removeEventListener('paste', handlePaste);
   }, [handlePaste]);
 
+  // Sorting
+  const handleSort = (col: string) => {
+    if (sortCol === col) {
+      if (sortDir === 'asc') setSortDir('desc');
+      else if (sortDir === 'desc') { setSortCol(null); setSortDir(null); }
+      else setSortDir('asc');
+    } else {
+      setSortCol(col);
+      setSortDir('asc');
+    }
+  };
+
+  // Filtered + sorted rows
+  const displayRows = useMemo(() => {
+    let result = rows;
+
+    // Filter
+    if (filterText) {
+      const lower = filterText.toLowerCase();
+      result = result.filter((row) =>
+        columns.some((col) => (row[col] ?? '').toLowerCase().includes(lower)),
+      );
+    }
+
+    // Sort
+    if (sortCol && sortDir) {
+      const col = sortCol;
+      result = [...result].sort((a, b) => {
+        const aVal = a[col] ?? '';
+        const bVal = b[col] ?? '';
+        const aNum = parseFloat(aVal.replace(/,/g, ''));
+        const bNum = parseFloat(bVal.replace(/,/g, ''));
+        const isNum = !isNaN(aNum) && !isNaN(bNum);
+
+        let cmp: number;
+        if (isNum) {
+          cmp = aNum - bNum;
+        } else {
+          cmp = aVal.localeCompare(bVal);
+        }
+        return sortDir === 'desc' ? -cmp : cmp;
+      });
+    }
+
+    return result;
+  }, [rows, columns, sortCol, sortDir, filterText]);
+
+  const sortIcon = (col: string) => {
+    if (sortCol !== col) return '';
+    if (sortDir === 'asc') return ' ↑';
+    if (sortDir === 'desc') return ' ↓';
+    return '';
+  };
+
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center text-sm text-muted/40">
-        Loading data...
+        <div className="flex items-center gap-2">
+          <span className="inline-block h-3 w-3 animate-spin rounded-full border border-muted/30 border-t-accent/60" />
+          Loading data...
+        </div>
       </div>
     );
   }
@@ -153,29 +221,61 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between border-b border-white/5 px-4 py-2">
-        <span className="text-[10px] text-muted/50">{rows.length} rows</span>
+      {/* Toolbar */}
+      <div className="flex items-center gap-3 border-b border-white/5 px-4 py-1.5">
+        <span className="text-[10px] text-muted/50">
+          {displayRows.length === rows.length
+            ? `${rows.length} rows`
+            : `${displayRows.length} of ${rows.length} rows`}
+        </span>
+        <span className="text-white/10">|</span>
+        <span className="text-[10px] text-muted/50">{columns.length} cols</span>
+        <div className="flex-1" />
+        <button
+          onClick={() => addTab('graph-builder', { title: `Graph` })}
+          className="rounded border border-white/10 px-2 py-0.5 text-[10px] text-muted/60 hover:border-accent/30 hover:text-foreground transition"
+        >
+          <span className="flex items-center gap-1">
+            <svg width="10" height="10" viewBox="0 0 18 18" fill="none" className="opacity-60">
+              <rect x="2" y="10" width="3" height="6" rx="0.5" fill="currentColor" />
+              <rect x="7" y="5" width="3" height="11" rx="0.5" fill="currentColor" />
+              <rect x="12" y="7" width="3" height="9" rx="0.5" fill="currentColor" />
+            </svg>
+            Graph
+          </span>
+        </button>
+        <input
+          type="text"
+          value={filterText}
+          onChange={(e) => setFilterText(e.target.value)}
+          placeholder="Filter rows..."
+          className="w-40 rounded border border-white/10 bg-transparent px-2 py-0.5 text-[11px] text-foreground placeholder:text-muted/30 focus:border-accent/40 focus:outline-none"
+        />
       </div>
+
+      {/* Table */}
       <div className="flex-1 overflow-auto">
         <table className="w-full text-xs">
-          <thead className="sticky top-0 bg-panel">
+          <thead className="sticky top-0 z-10 bg-panel">
             <tr className="border-b border-white/5">
               <th className="px-3 py-2 text-left font-medium text-muted/60 w-12">#</th>
               {columns.map((col) => (
                 <th
                   key={col}
-                  className="px-3 py-2 text-left font-medium text-muted/80 whitespace-nowrap"
+                  onClick={() => handleSort(col)}
+                  className="px-3 py-2 text-left font-medium text-muted/80 whitespace-nowrap cursor-pointer hover:text-foreground select-none transition"
                 >
                   {col}
+                  <span className="text-accent/60 ml-0.5">{sortIcon(col)}</span>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {rows.map((row, i) => (
+            {displayRows.map((row, i) => (
               <tr
                 key={i}
-                className="border-b border-white/[0.03] hover:bg-white/[0.02]"
+                className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors"
               >
                 <td className="px-3 py-1.5 text-muted/40 tabular-nums">{i + 1}</td>
                 {columns.map((col) => (

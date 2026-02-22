@@ -1,0 +1,523 @@
+year,state,candidate,party,popular_votes,total_votes,vote_share,winner,electoral_votes
+1976,California,Jimmy Carter,Democrat,3742284,7867117,0.4757,true,45
+1976,California,Gerald Ford,Republican,3882244,7867117,0.4935,false,0
+1976,Texas,Jimmy Carter,Democrat,2082319,4071884,0.5114,true,26
+1976,Texas,Gerald Ford,Republican,1953300,4071884,0.4797,false,0
+1976,New York,Jimmy Carter,Democrat,3389558,6534170,0.5188,true,41
+1976,New York,Gerald Ford,Republican,3100791,6534170,0.4746,false,0
+1976,Pennsylvania,Jimmy Carter,Democrat,2328677,4620787,0.5039,true,27
+1976,Pennsylvania,Gerald Ford,Republican,2205604,4620787,0.4773,false,0
+1976,Illinois,Jimmy Carter,Democrat,2271295,4718914,0.4814,false,0
+1976,Illinois,Gerald Ford,Republican,2364269,4718914,0.5010,true,26
+1976,Ohio,Jimmy Carter,Democrat,2011621,4111873,0.4892,true,25
+1976,Ohio,Gerald Ford,Republican,2000505,4111873,0.4865,false,0
+1976,Florida,Jimmy Carter,Democrat,1636000,3150631,0.5193,true,17
+1976,Florida,Gerald Ford,Republican,1469531,3150631,0.4664,false,0
+1976,Michigan,Jimmy Carter,Democrat,1696714,3653749,0.4642,false,0
+1976,Michigan,Gerald Ford,Republican,1893742,3653749,0.5181,true,21
+1976,New Jersey,Jimmy Carter,Democrat,1444653,3014472,0.4793,true,17
+1976,New Jersey,Gerald Ford,Republican,1509688,3014472,0.5009,false,0
+1976,Massachusetts,Jimmy Carter,Democrat,1429475,2547558,0.5611,true,14
+1976,Massachusetts,Gerald Ford,Republican,1030276,2547558,0.4044,false,0
+1976,Georgia,Jimmy Carter,Democrat,979409,1467458,0.6673,true,12
+1976,Georgia,Gerald Ford,Republican,483743,1467458,0.3296,false,0
+1976,Virginia,Jimmy Carter,Democrat,813896,1697094,0.4796,false,0
+1976,Virginia,Gerald Ford,Republican,836554,1697094,0.4929,true,12
+1976,Wisconsin,Jimmy Carter,Democrat,1040232,2104175,0.4943,false,0
+1976,Wisconsin,Gerald Ford,Republican,1004987,2104175,0.4776,true,11
+1980,California,Ronald Reagan,Republican,4524858,8587063,0.5269,true,45
+1980,California,Jimmy Carter,Democrat,3083661,8587063,0.3591,false,0
+1980,Texas,Ronald Reagan,Republican,2510705,4541636,0.5528,true,26
+1980,Texas,Jimmy Carter,Democrat,1881147,4541636,0.4142,false,0
+1980,New York,Ronald Reagan,Republican,2893831,6201959,0.4666,true,41
+1980,New York,Jimmy Carter,Democrat,2728372,6201959,0.4399,false,0
+1980,Pennsylvania,Ronald Reagan,Republican,2261872,4561501,0.4959,true,27
+1980,Pennsylvania,Jimmy Carter,Democrat,1937540,4561501,0.4248,false,0
+1980,Illinois,Ronald Reagan,Republican,2358049,4749721,0.4964,true,26
+1980,Illinois,Jimmy Carter,Democrat,1981413,4749721,0.4172,false,0
+1980,Ohio,Ronald Reagan,Republican,2206545,4283603,0.5152,true,25
+1980,Ohio,Jimmy Carter,Democrat,1752414,4283603,0.4091,false,0
+1980,Florida,Ronald Reagan,Republican,2046951,3686930,0.5551,true,17
+1980,Florida,Jimmy Carter,Democrat,1419475,3686930,0.3850,false,0
+1980,Michigan,Ronald Reagan,Republican,1915225,3909725,0.4898,true,21
+1980,Michigan,Jimmy Carter,Democrat,1661532,3909725,0.4249,false,0
+1980,New Jersey,Ronald Reagan,Republican,1546557,3099553,0.4990,true,17
+1980,New Jersey,Jimmy Carter,Democrat,1147364,3099553,0.3702,false,0
+1980,Georgia,Ronald Reagan,Republican,654168,1596695,0.4097,false,0
+1980,Georgia,Jimmy Carter,Democrat,890955,1596695,0.5578,true,12
+1980,Massachusetts,Ronald Reagan,Republican,1057631,2524298,0.4190,false,0
+1980,Massachusetts,Jimmy Carter,Democrat,1053802,2524298,0.4175,true,14
+1984,California,Ronald Reagan,Republican,5467009,9505423,0.5751,true,47
+1984,California,Walter Mondale,Democrat,3922519,9505423,0.4127,false,0
+1984,Texas,Ronald Reagan,Republican,3433428,5397571,0.6361,true,29
+1984,Texas,Walter Mondale,Democrat,1949276,5397571,0.3612,false,0
+1984,New York,Ronald Reagan,Republican,3664763,6806810,0.5384,true,36
+1984,New York,Walter Mondale,Democrat,3119609,6806810,0.4583,false,0
+1984,Pennsylvania,Ronald Reagan,Republican,2584323,4844903,0.5334,true,25
+1984,Pennsylvania,Walter Mondale,Democrat,2228131,4844903,0.4599,false,0
+1984,Illinois,Ronald Reagan,Republican,2707103,4819088,0.5618,true,24
+1984,Illinois,Walter Mondale,Democrat,2086499,4819088,0.4330,false,0
+1984,Ohio,Ronald Reagan,Republican,2678560,4547619,0.5890,true,23
+1984,Ohio,Walter Mondale,Democrat,1825440,4547619,0.4015,false,0
+1984,Florida,Ronald Reagan,Republican,2730350,4180051,0.6532,true,21
+1984,Florida,Walter Mondale,Democrat,1448816,4180051,0.3465,false,0
+1984,Michigan,Ronald Reagan,Republican,2251571,3848844,0.5850,true,20
+1984,Michigan,Walter Mondale,Democrat,1529638,3848844,0.3974,false,0
+1984,Minnesota,Walter Mondale,Democrat,1036364,2084449,0.4972,true,10
+1984,Minnesota,Ronald Reagan,Republican,1032603,2084449,0.4954,false,0
+1984,Massachusetts,Walter Mondale,Democrat,1239606,2559453,0.4843,true,13
+1984,Massachusetts,Ronald Reagan,Republican,1310936,2559453,0.5122,false,0
+1988,California,George H.W. Bush,Republican,5054917,9887065,0.5113,true,47
+1988,California,Michael Dukakis,Democrat,4702233,9887065,0.4757,false,0
+1988,Texas,George H.W. Bush,Republican,3036829,5427410,0.5596,true,29
+1988,Texas,Michael Dukakis,Democrat,2352748,5427410,0.4336,false,0
+1988,New York,Michael Dukakis,Democrat,3347882,6485683,0.5162,true,36
+1988,New York,George H.W. Bush,Republican,3081871,6485683,0.4751,false,0
+1988,Pennsylvania,George H.W. Bush,Republican,2300087,4536251,0.5071,true,25
+1988,Pennsylvania,Michael Dukakis,Democrat,2194944,4536251,0.4838,false,0
+1988,Illinois,George H.W. Bush,Republican,2310939,4559120,0.5069,true,24
+1988,Illinois,Michael Dukakis,Democrat,2215940,4559120,0.4861,false,0
+1988,Ohio,George H.W. Bush,Republican,2416549,4393699,0.5500,true,23
+1988,Ohio,Michael Dukakis,Democrat,1939629,4393699,0.4414,false,0
+1988,Florida,George H.W. Bush,Republican,2618885,4302313,0.6087,true,21
+1988,Florida,Michael Dukakis,Democrat,1656129,4302313,0.3850,false,0
+1988,Michigan,George H.W. Bush,Republican,1965486,3669163,0.5357,true,20
+1988,Michigan,Michael Dukakis,Democrat,1675783,3669163,0.4568,false,0
+1988,Massachusetts,Michael Dukakis,Democrat,1401416,2632805,0.5323,true,13
+1988,Massachusetts,George H.W. Bush,Republican,1194635,2632805,0.4538,false,0
+1988,Georgia,George H.W. Bush,Republican,1081331,1809672,0.5977,true,12
+1988,Georgia,Michael Dukakis,Democrat,714792,1809672,0.3950,false,0
+1992,California,Bill Clinton,Democrat,5121325,11131721,0.4602,true,54
+1992,California,George H.W. Bush,Republican,3630574,11131721,0.3262,false,0
+1992,Texas,George H.W. Bush,Republican,2496071,6154018,0.4057,true,32
+1992,Texas,Bill Clinton,Democrat,2281815,6154018,0.3708,false,0
+1992,New York,Bill Clinton,Democrat,3444450,6926925,0.4973,true,33
+1992,New York,George H.W. Bush,Republican,2346649,6926925,0.3388,false,0
+1992,Pennsylvania,Bill Clinton,Democrat,2239164,4959810,0.4514,true,23
+1992,Pennsylvania,George H.W. Bush,Republican,1791841,4959810,0.3613,false,0
+1992,Illinois,Bill Clinton,Democrat,2453350,5050157,0.4858,true,22
+1992,Illinois,George H.W. Bush,Republican,1734096,5050157,0.3434,false,0
+1992,Ohio,Bill Clinton,Democrat,1984942,4939967,0.4019,true,21
+1992,Ohio,George H.W. Bush,Republican,1894310,4939967,0.3835,false,0
+1992,Florida,George H.W. Bush,Republican,2173310,5314392,0.4091,true,25
+1992,Florida,Bill Clinton,Democrat,2072698,5314392,0.3900,false,0
+1992,Michigan,Bill Clinton,Democrat,1871182,4274673,0.4376,true,18
+1992,Michigan,George H.W. Bush,Republican,1554940,4274673,0.3638,false,0
+1992,Georgia,Bill Clinton,Democrat,1008966,2321125,0.4347,true,13
+1992,Georgia,George H.W. Bush,Republican,995252,2321125,0.4288,false,0
+1996,California,Bill Clinton,Democrat,5119835,10019484,0.5110,true,54
+1996,California,Bob Dole,Republican,3828380,10019484,0.3821,false,0
+1996,Texas,Bob Dole,Republican,2736167,5611644,0.4877,true,32
+1996,Texas,Bill Clinton,Democrat,2459683,5611644,0.4383,false,0
+1996,New York,Bill Clinton,Democrat,3756177,6316129,0.5949,true,33
+1996,New York,Bob Dole,Republican,1933492,6316129,0.3062,false,0
+1996,Pennsylvania,Bill Clinton,Democrat,2215819,4506118,0.4918,true,23
+1996,Pennsylvania,Bob Dole,Republican,1801169,4506118,0.3998,false,0
+1996,Florida,Bill Clinton,Democrat,2546870,5303794,0.4802,true,25
+1996,Florida,Bob Dole,Republican,2244536,5303794,0.4232,false,0
+1996,Illinois,Bill Clinton,Democrat,2341744,4311391,0.5432,true,22
+1996,Illinois,Bob Dole,Republican,1587021,4311391,0.3681,false,0
+1996,Ohio,Bill Clinton,Democrat,2148222,4534434,0.4737,true,21
+1996,Ohio,Bob Dole,Republican,1859883,4534434,0.4101,false,0
+1996,Michigan,Bill Clinton,Democrat,1989653,3848844,0.5169,true,18
+1996,Michigan,Bob Dole,Republican,1481212,3848844,0.3849,false,0
+1996,Georgia,Bob Dole,Republican,1080843,2299071,0.4701,true,13
+1996,Georgia,Bill Clinton,Democrat,1053849,2299071,0.4584,false,0
+2000,Florida,George W. Bush,Republican,2912790,5963110,0.4887,true,25
+2000,Florida,Al Gore,Democrat,2912253,5963110,0.4886,false,0
+2000,California,Al Gore,Democrat,5861203,10965856,0.5345,true,54
+2000,California,George W. Bush,Republican,4567429,10965856,0.4165,false,0
+2000,Texas,George W. Bush,Republican,3799639,6407637,0.5930,true,32
+2000,Texas,Al Gore,Democrat,2433746,6407637,0.3798,false,0
+2000,New York,Al Gore,Democrat,4107697,6821999,0.6022,true,33
+2000,New York,George W. Bush,Republican,2403374,6821999,0.3523,false,0
+2000,Pennsylvania,Al Gore,Democrat,2485967,4913119,0.5060,true,23
+2000,Pennsylvania,George W. Bush,Republican,2281127,4913119,0.4643,false,0
+2000,Ohio,George W. Bush,Republican,2350363,4701998,0.4999,true,21
+2000,Ohio,Al Gore,Democrat,2183628,4701998,0.4643,false,0
+2000,Illinois,Al Gore,Democrat,2589026,4742123,0.5460,true,22
+2000,Illinois,George W. Bush,Republican,2019421,4742123,0.4259,false,0
+2000,Michigan,Al Gore,Democrat,2170418,4232711,0.5127,true,18
+2000,Michigan,George W. Bush,Republican,1953139,4232711,0.4614,false,0
+2000,Georgia,George W. Bush,Republican,1419720,2596645,0.5469,true,13
+2000,Georgia,Al Gore,Democrat,1116230,2596645,0.4298,false,0
+2000,Virginia,George W. Bush,Republican,1437490,2739447,0.5248,true,13
+2000,Virginia,Al Gore,Democrat,1217290,2739447,0.4444,false,0
+2000,Wisconsin,Al Gore,Democrat,1242987,2598607,0.4784,true,11
+2000,Wisconsin,George W. Bush,Republican,1237279,2598607,0.4762,false,0
+2004,California,John Kerry,Democrat,6745485,12421852,0.5430,true,55
+2004,California,George W. Bush,Republican,5509826,12421852,0.4435,false,0
+2004,Texas,George W. Bush,Republican,4526917,7410765,0.6109,true,34
+2004,Texas,John Kerry,Democrat,2832704,7410765,0.3822,false,0
+2004,New York,John Kerry,Democrat,4314280,7391036,0.5837,true,31
+2004,New York,George W. Bush,Republican,2962567,7391036,0.4009,false,0
+2004,Florida,George W. Bush,Republican,3964522,7609810,0.5210,true,27
+2004,Florida,John Kerry,Democrat,3583544,7609810,0.4709,false,0
+2004,Pennsylvania,John Kerry,Democrat,2938095,5769590,0.5091,true,21
+2004,Pennsylvania,George W. Bush,Republican,2793847,5769590,0.4841,false,0
+2004,Ohio,George W. Bush,Republican,2859768,5627903,0.5081,true,20
+2004,Ohio,John Kerry,Democrat,2741167,5627903,0.4870,false,0
+2004,Illinois,John Kerry,Democrat,2891550,5274322,0.5483,true,21
+2004,Illinois,George W. Bush,Republican,2345946,5274322,0.4448,false,0
+2004,Michigan,John Kerry,Democrat,2479183,4839252,0.5122,true,17
+2004,Michigan,George W. Bush,Republican,2313746,4839252,0.4781,false,0
+2004,Georgia,George W. Bush,Republican,1914254,3301875,0.5798,true,15
+2004,Georgia,John Kerry,Democrat,1366149,3301875,0.4138,false,0
+2004,Virginia,George W. Bush,Republican,1716959,3198367,0.5367,true,13
+2004,Virginia,John Kerry,Democrat,1454742,3198367,0.4548,false,0
+2004,Wisconsin,John Kerry,Democrat,1489504,2997007,0.4972,true,10
+2004,Wisconsin,George W. Bush,Republican,1478120,2997007,0.4934,false,0
+2008,California,Barack Obama,Democrat,8274473,13561900,0.6101,true,55
+2008,California,John McCain,Republican,5011781,13561900,0.3695,false,0
+2008,Texas,John McCain,Republican,4479328,8077795,0.5545,true,34
+2008,Texas,Barack Obama,Democrat,3528633,8077795,0.4368,false,0
+2008,New York,Barack Obama,Democrat,4804945,7640931,0.6289,true,31
+2008,New York,John McCain,Republican,2752771,7640931,0.3603,false,0
+2008,Florida,Barack Obama,Democrat,4282074,8390744,0.5103,true,27
+2008,Florida,John McCain,Republican,4045624,8390744,0.4822,false,0
+2008,Pennsylvania,Barack Obama,Democrat,3276363,6013272,0.5448,true,21
+2008,Pennsylvania,John McCain,Republican,2655885,6013272,0.4416,false,0
+2008,Ohio,Barack Obama,Democrat,2940044,5708350,0.5151,true,20
+2008,Ohio,John McCain,Republican,2677820,5708350,0.4691,false,0
+2008,Illinois,Barack Obama,Democrat,3419348,5522422,0.6193,true,21
+2008,Illinois,John McCain,Republican,2031179,5522422,0.3678,false,0
+2008,Michigan,Barack Obama,Democrat,2872579,5001766,0.5743,true,17
+2008,Michigan,John McCain,Republican,2048639,5001766,0.4096,false,0
+2008,Georgia,John McCain,Republican,2048759,3924486,0.5221,true,15
+2008,Georgia,Barack Obama,Democrat,1844123,3924486,0.4699,false,0
+2008,Virginia,Barack Obama,Democrat,1959532,3723260,0.5263,true,13
+2008,Virginia,John McCain,Republican,1725005,3723260,0.4633,false,0
+2008,North Carolina,Barack Obama,Democrat,2142651,4310789,0.4971,true,15
+2008,North Carolina,John McCain,Republican,2128474,4310789,0.4938,false,0
+2008,Wisconsin,Barack Obama,Democrat,1677211,2983417,0.5622,true,10
+2008,Wisconsin,John McCain,Republican,1262393,2983417,0.4231,false,0
+2012,California,Barack Obama,Democrat,7854285,13038547,0.6025,true,55
+2012,California,Mitt Romney,Republican,4839958,13038547,0.3713,false,0
+2012,Texas,Mitt Romney,Republican,4569843,7993851,0.5716,true,38
+2012,Texas,Barack Obama,Democrat,3308124,7993851,0.4138,false,0
+2012,New York,Barack Obama,Democrat,4485741,7081084,0.6336,true,29
+2012,New York,Mitt Romney,Republican,2490431,7081084,0.3517,false,0
+2012,Florida,Barack Obama,Democrat,4237756,8474179,0.5001,true,29
+2012,Florida,Mitt Romney,Republican,4163447,8474179,0.4914,false,0
+2012,Pennsylvania,Barack Obama,Democrat,2990274,5742040,0.5207,true,20
+2012,Pennsylvania,Mitt Romney,Republican,2680434,5742040,0.4668,false,0
+2012,Ohio,Barack Obama,Democrat,2827621,5580822,0.5067,true,18
+2012,Ohio,Mitt Romney,Republican,2661407,5580822,0.4769,false,0
+2012,Illinois,Barack Obama,Democrat,3019512,5242014,0.5760,true,20
+2012,Illinois,Mitt Romney,Republican,2135216,5242014,0.4073,false,0
+2012,Michigan,Barack Obama,Democrat,2564569,4730961,0.5422,true,16
+2012,Michigan,Mitt Romney,Republican,2115256,4730961,0.4472,false,0
+2012,Georgia,Mitt Romney,Republican,2078688,3900050,0.5330,true,16
+2012,Georgia,Barack Obama,Democrat,1773827,3900050,0.4548,false,0
+2012,Virginia,Barack Obama,Democrat,1971820,3854489,0.5116,true,13
+2012,Virginia,Mitt Romney,Republican,1822522,3854489,0.4728,false,0
+2012,North Carolina,Mitt Romney,Republican,2270395,4505372,0.5039,true,15
+2012,North Carolina,Barack Obama,Democrat,2178391,4505372,0.4835,false,0
+2012,Wisconsin,Barack Obama,Democrat,1620985,3068434,0.5283,true,10
+2012,Wisconsin,Mitt Romney,Republican,1407966,3068434,0.4589,false,0
+2016,Alabama,Donald Trump,Republican,1318255,2123372,0.6209,true,9
+2016,Alabama,Hillary Clinton,Democrat,729547,2123372,0.3436,false,0
+2016,Alaska,Donald Trump,Republican,163387,318608,0.5128,true,3
+2016,Alaska,Hillary Clinton,Democrat,116454,318608,0.3656,false,0
+2016,Arizona,Donald Trump,Republican,1252401,2573165,0.4867,true,11
+2016,Arizona,Hillary Clinton,Democrat,1161167,2573165,0.4512,false,0
+2016,Arkansas,Donald Trump,Republican,684872,1130635,0.6058,true,6
+2016,Arkansas,Hillary Clinton,Democrat,380494,1130635,0.3365,false,0
+2016,California,Hillary Clinton,Democrat,8753792,14181595,0.6173,true,55
+2016,California,Donald Trump,Republican,4483814,14181595,0.3162,false,0
+2016,Colorado,Hillary Clinton,Democrat,1338870,2780220,0.4816,true,9
+2016,Colorado,Donald Trump,Republican,1202484,2780220,0.4325,false,0
+2016,Connecticut,Hillary Clinton,Democrat,897572,1644920,0.5457,true,7
+2016,Connecticut,Donald Trump,Republican,673215,1644920,0.4093,false,0
+2016,Delaware,Hillary Clinton,Democrat,235603,443814,0.5310,true,3
+2016,Delaware,Donald Trump,Republican,185127,443814,0.4171,false,0
+2016,District of Columbia,Hillary Clinton,Democrat,282830,311268,0.9087,true,3
+2016,District of Columbia,Donald Trump,Republican,12723,311268,0.0409,false,0
+2016,Florida,Donald Trump,Republican,4617886,9420039,0.4902,true,29
+2016,Florida,Hillary Clinton,Democrat,4504975,9420039,0.4782,false,0
+2016,Georgia,Donald Trump,Republican,2089104,4114732,0.5077,true,16
+2016,Georgia,Hillary Clinton,Democrat,1877963,4114732,0.4564,false,0
+2016,Hawaii,Hillary Clinton,Democrat,266891,428937,0.6222,true,4
+2016,Hawaii,Donald Trump,Republican,128847,428937,0.3003,false,0
+2016,Idaho,Donald Trump,Republican,409055,690255,0.5926,true,4
+2016,Idaho,Hillary Clinton,Democrat,189765,690255,0.2749,false,0
+2016,Illinois,Hillary Clinton,Democrat,2977498,5536424,0.5380,true,20
+2016,Illinois,Donald Trump,Republican,2146015,5536424,0.3877,false,0
+2016,Indiana,Donald Trump,Republican,1557286,2734958,0.5694,true,11
+2016,Indiana,Hillary Clinton,Democrat,1033126,2734958,0.3778,false,0
+2016,Iowa,Donald Trump,Republican,800983,1566031,0.5116,true,6
+2016,Iowa,Hillary Clinton,Democrat,653669,1566031,0.4174,false,0
+2016,Kansas,Donald Trump,Republican,671018,1184402,0.5665,true,6
+2016,Kansas,Hillary Clinton,Democrat,427005,1184402,0.3605,false,0
+2016,Kentucky,Donald Trump,Republican,1202971,1924149,0.6252,true,8
+2016,Kentucky,Hillary Clinton,Democrat,628854,1924149,0.3268,false,0
+2016,Louisiana,Donald Trump,Republican,1178638,2029032,0.5808,true,8
+2016,Louisiana,Hillary Clinton,Democrat,780154,2029032,0.3845,false,0
+2016,Maine,Hillary Clinton,Democrat,357735,747927,0.4783,true,4
+2016,Maine,Donald Trump,Republican,335593,747927,0.4487,false,0
+2016,Maryland,Hillary Clinton,Democrat,1677928,2781446,0.6033,true,10
+2016,Maryland,Donald Trump,Republican,943169,2781446,0.3391,false,0
+2016,Massachusetts,Hillary Clinton,Democrat,1995196,3325046,0.6001,true,11
+2016,Massachusetts,Donald Trump,Republican,1090893,3325046,0.3281,false,0
+2016,Michigan,Donald Trump,Republican,2279543,4799284,0.4750,true,16
+2016,Michigan,Hillary Clinton,Democrat,2268839,4799284,0.4727,false,0
+2016,Minnesota,Hillary Clinton,Democrat,1367716,2944813,0.4644,true,10
+2016,Minnesota,Donald Trump,Republican,1322951,2944813,0.4492,false,0
+2016,Mississippi,Donald Trump,Republican,700714,1209357,0.5794,true,6
+2016,Mississippi,Hillary Clinton,Democrat,485131,1209357,0.4012,false,0
+2016,Missouri,Donald Trump,Republican,1594511,2808605,0.5677,true,10
+2016,Missouri,Hillary Clinton,Democrat,1071068,2808605,0.3814,false,0
+2016,Montana,Donald Trump,Republican,279240,497147,0.5617,true,3
+2016,Montana,Hillary Clinton,Democrat,177709,497147,0.3574,false,0
+2016,Nebraska,Donald Trump,Republican,495961,844227,0.5876,true,5
+2016,Nebraska,Hillary Clinton,Democrat,284494,844227,0.3370,false,0
+2016,Nevada,Hillary Clinton,Democrat,539260,1125385,0.4792,true,6
+2016,Nevada,Donald Trump,Republican,512058,1125385,0.4550,false,0
+2016,New Hampshire,Hillary Clinton,Democrat,348526,744296,0.4682,true,4
+2016,New Hampshire,Donald Trump,Republican,345790,744296,0.4645,false,0
+2016,New Jersey,Hillary Clinton,Democrat,2148278,3874046,0.5545,true,14
+2016,New Jersey,Donald Trump,Republican,1601933,3874046,0.4136,false,0
+2016,New Mexico,Hillary Clinton,Democrat,385234,798319,0.4826,true,5
+2016,New Mexico,Donald Trump,Republican,319667,798319,0.4004,false,0
+2016,New York,Hillary Clinton,Democrat,4556124,7721453,0.5901,true,29
+2016,New York,Donald Trump,Republican,2819533,7721453,0.3652,false,0
+2016,North Carolina,Donald Trump,Republican,2362631,4741564,0.4983,true,15
+2016,North Carolina,Hillary Clinton,Democrat,2189316,4741564,0.4618,false,0
+2016,North Dakota,Donald Trump,Republican,216794,344360,0.6296,true,3
+2016,North Dakota,Hillary Clinton,Democrat,93758,344360,0.2723,false,0
+2016,Ohio,Donald Trump,Republican,2841005,5496487,0.5169,true,18
+2016,Ohio,Hillary Clinton,Democrat,2394164,5496487,0.4356,false,0
+2016,Oklahoma,Donald Trump,Republican,949136,1452992,0.6531,true,7
+2016,Oklahoma,Hillary Clinton,Democrat,420375,1452992,0.2893,false,0
+2016,Oregon,Hillary Clinton,Democrat,1002106,2001336,0.5008,true,7
+2016,Oregon,Donald Trump,Republican,782403,2001336,0.3910,false,0
+2016,Pennsylvania,Donald Trump,Republican,2970733,6165478,0.4817,true,20
+2016,Pennsylvania,Hillary Clinton,Democrat,2926441,6165478,0.4746,false,0
+2016,Rhode Island,Hillary Clinton,Democrat,252525,464144,0.5441,true,4
+2016,Rhode Island,Donald Trump,Republican,180543,464144,0.3890,false,0
+2016,South Carolina,Donald Trump,Republican,1155389,2103027,0.5492,true,9
+2016,South Carolina,Hillary Clinton,Democrat,855373,2103027,0.4067,false,0
+2016,South Dakota,Donald Trump,Republican,227721,370093,0.6153,true,3
+2016,South Dakota,Hillary Clinton,Democrat,117458,370093,0.3174,false,0
+2016,Tennessee,Donald Trump,Republican,1522925,2508027,0.6072,true,11
+2016,Tennessee,Hillary Clinton,Democrat,870695,2508027,0.3472,false,0
+2016,Texas,Donald Trump,Republican,4685047,8969226,0.5224,true,38
+2016,Texas,Hillary Clinton,Democrat,3877868,8969226,0.4325,false,0
+2016,Utah,Donald Trump,Republican,515231,1131430,0.4554,true,6
+2016,Utah,Hillary Clinton,Democrat,310676,1131430,0.2746,false,0
+2016,Vermont,Hillary Clinton,Democrat,178573,315067,0.5667,true,3
+2016,Vermont,Donald Trump,Republican,95369,315067,0.3027,false,0
+2016,Virginia,Hillary Clinton,Democrat,1981473,3984631,0.4972,true,13
+2016,Virginia,Donald Trump,Republican,1769443,3984631,0.4440,false,0
+2016,Washington,Hillary Clinton,Democrat,1742718,3317019,0.5253,true,12
+2016,Washington,Donald Trump,Republican,1221747,3317019,0.3684,false,0
+2016,West Virginia,Donald Trump,Republican,489371,714423,0.6852,true,5
+2016,West Virginia,Hillary Clinton,Democrat,188794,714423,0.2643,false,0
+2016,Wisconsin,Donald Trump,Republican,1405284,2976150,0.4722,true,10
+2016,Wisconsin,Hillary Clinton,Democrat,1382536,2976150,0.4646,false,0
+2016,Wyoming,Donald Trump,Republican,174419,255849,0.6817,true,3
+2016,Wyoming,Hillary Clinton,Democrat,55973,255849,0.2188,false,0
+2020,Alabama,Donald Trump,Republican,1441170,2323282,0.6204,true,9
+2020,Alabama,Joe Biden,Democrat,849624,2323282,0.3657,false,0
+2020,Alaska,Donald Trump,Republican,189951,359530,0.5283,true,3
+2020,Alaska,Joe Biden,Democrat,153778,359530,0.4278,false,0
+2020,Arizona,Joe Biden,Democrat,1672143,3387326,0.4936,true,11
+2020,Arizona,Donald Trump,Republican,1661686,3387326,0.4905,false,0
+2020,Arkansas,Donald Trump,Republican,760647,1219069,0.6239,true,6
+2020,Arkansas,Joe Biden,Democrat,423932,1219069,0.3478,false,0
+2020,California,Joe Biden,Democrat,11110250,17500881,0.6349,true,55
+2020,California,Donald Trump,Republican,6006429,17500881,0.3432,false,0
+2020,Colorado,Joe Biden,Democrat,1804352,3256980,0.5541,true,9
+2020,Colorado,Donald Trump,Republican,1364607,3256980,0.4190,false,0
+2020,Connecticut,Joe Biden,Democrat,1080680,1824238,0.5925,true,7
+2020,Connecticut,Donald Trump,Republican,714717,1824238,0.3918,false,0
+2020,Delaware,Joe Biden,Democrat,296268,504346,0.5875,true,3
+2020,Delaware,Donald Trump,Republican,200603,504346,0.3978,false,0
+2020,District of Columbia,Joe Biden,Democrat,317323,344356,0.9215,true,3
+2020,District of Columbia,Donald Trump,Republican,18586,344356,0.0540,false,0
+2020,Florida,Donald Trump,Republican,5668731,11067456,0.5122,true,30
+2020,Florida,Joe Biden,Democrat,5297045,11067456,0.4788,false,0
+2020,Georgia,Joe Biden,Democrat,2473633,4999960,0.4947,true,16
+2020,Georgia,Donald Trump,Republican,2461854,4999960,0.4924,false,0
+2020,Hawaii,Joe Biden,Democrat,366130,574469,0.6373,true,4
+2020,Hawaii,Donald Trump,Republican,196864,574469,0.3427,false,0
+2020,Idaho,Donald Trump,Republican,554119,868014,0.6384,true,4
+2020,Idaho,Joe Biden,Democrat,287021,868014,0.3307,false,0
+2020,Illinois,Joe Biden,Democrat,3471915,6033744,0.5754,true,20
+2020,Illinois,Donald Trump,Republican,2446891,6033744,0.4055,false,0
+2020,Indiana,Donald Trump,Republican,1729519,3033121,0.5702,true,11
+2020,Indiana,Joe Biden,Democrat,1242416,3033121,0.4097,false,0
+2020,Iowa,Donald Trump,Republican,897672,1690871,0.5310,true,6
+2020,Iowa,Joe Biden,Democrat,759061,1690871,0.4490,false,0
+2020,Kansas,Donald Trump,Republican,771406,1372303,0.5622,true,6
+2020,Kansas,Joe Biden,Democrat,570323,1372303,0.4156,false,0
+2020,Kentucky,Donald Trump,Republican,1326646,2136768,0.6208,true,8
+2020,Kentucky,Joe Biden,Democrat,772474,2136768,0.3615,false,0
+2020,Louisiana,Donald Trump,Republican,1255776,2148062,0.5846,true,8
+2020,Louisiana,Joe Biden,Democrat,856034,2148062,0.3985,false,0
+2020,Maine,Joe Biden,Democrat,435072,819461,0.5309,true,4
+2020,Maine,Donald Trump,Republican,360737,819461,0.4402,false,0
+2020,Maryland,Joe Biden,Democrat,1985023,3037030,0.6536,true,10
+2020,Maryland,Donald Trump,Republican,976414,3037030,0.3215,false,0
+2020,Massachusetts,Joe Biden,Democrat,2382202,3631402,0.6560,true,11
+2020,Massachusetts,Donald Trump,Republican,1167202,3631402,0.3214,false,0
+2020,Michigan,Joe Biden,Democrat,2804040,5539302,0.5062,true,16
+2020,Michigan,Donald Trump,Republican,2649852,5539302,0.4784,false,0
+2020,Minnesota,Joe Biden,Democrat,1717077,3277171,0.5240,true,10
+2020,Minnesota,Donald Trump,Republican,1484065,3277171,0.4529,false,0
+2020,Mississippi,Donald Trump,Republican,756764,1313759,0.5760,true,6
+2020,Mississippi,Joe Biden,Democrat,539398,1313759,0.4106,false,0
+2020,Missouri,Donald Trump,Republican,1718736,3025962,0.5680,true,10
+2020,Missouri,Joe Biden,Democrat,1253014,3025962,0.4141,false,0
+2020,Montana,Donald Trump,Republican,343602,603674,0.5693,true,4
+2020,Montana,Joe Biden,Democrat,244786,603674,0.4055,false,0
+2020,Nebraska,Donald Trump,Republican,556846,956383,0.5823,true,5
+2020,Nebraska,Joe Biden,Democrat,374583,956383,0.3917,false,0
+2020,Nevada,Joe Biden,Democrat,703486,1405376,0.5006,true,6
+2020,Nevada,Donald Trump,Republican,669890,1405376,0.4767,false,0
+2020,New Hampshire,Joe Biden,Democrat,424937,806205,0.5270,true,4
+2020,New Hampshire,Donald Trump,Republican,365660,806205,0.4535,false,0
+2020,New Jersey,Joe Biden,Democrat,2608335,4549353,0.5733,true,14
+2020,New Jersey,Donald Trump,Republican,1883274,4549353,0.4140,false,0
+2020,New Mexico,Joe Biden,Democrat,501614,923965,0.5429,true,5
+2020,New Mexico,Donald Trump,Republican,401894,923965,0.4349,false,0
+2020,New York,Joe Biden,Democrat,5244886,8594826,0.6103,true,29
+2020,New York,Donald Trump,Republican,3251997,8594826,0.3783,false,0
+2020,North Carolina,Donald Trump,Republican,2758775,5524804,0.4994,true,15
+2020,North Carolina,Joe Biden,Democrat,2684292,5524804,0.4859,false,0
+2020,North Dakota,Donald Trump,Republican,235595,361819,0.6512,true,3
+2020,North Dakota,Joe Biden,Democrat,114902,361819,0.3175,false,0
+2020,Ohio,Donald Trump,Republican,3154834,5922202,0.5327,true,18
+2020,Ohio,Joe Biden,Democrat,2679165,5922202,0.4524,false,0
+2020,Oklahoma,Donald Trump,Republican,1020280,1560699,0.6537,true,7
+2020,Oklahoma,Joe Biden,Democrat,503890,1560699,0.3229,false,0
+2020,Oregon,Joe Biden,Democrat,1340383,2374321,0.5645,true,7
+2020,Oregon,Donald Trump,Republican,958448,2374321,0.4037,false,0
+2020,Pennsylvania,Joe Biden,Democrat,3458229,6915283,0.5002,true,20
+2020,Pennsylvania,Donald Trump,Republican,3377674,6915283,0.4885,false,0
+2020,Rhode Island,Joe Biden,Democrat,307486,517757,0.5940,true,4
+2020,Rhode Island,Donald Trump,Republican,199922,517757,0.3862,false,0
+2020,South Carolina,Donald Trump,Republican,1385103,2513329,0.5511,true,9
+2020,South Carolina,Joe Biden,Democrat,1091541,2513329,0.4343,false,0
+2020,South Dakota,Donald Trump,Republican,261043,422609,0.6178,true,3
+2020,South Dakota,Joe Biden,Democrat,150471,422609,0.3562,false,0
+2020,Tennessee,Donald Trump,Republican,1852475,3053851,0.6066,true,11
+2020,Tennessee,Joe Biden,Democrat,1143711,3053851,0.3745,false,0
+2020,Texas,Donald Trump,Republican,5890347,11315056,0.5206,true,38
+2020,Texas,Joe Biden,Democrat,5259126,11315056,0.4649,false,0
+2020,Utah,Donald Trump,Republican,865140,1488289,0.5813,true,6
+2020,Utah,Joe Biden,Democrat,560282,1488289,0.3765,false,0
+2020,Vermont,Joe Biden,Democrat,242820,367428,0.6608,true,3
+2020,Vermont,Donald Trump,Republican,112704,367428,0.3067,false,0
+2020,Virginia,Joe Biden,Democrat,2413568,4460524,0.5411,true,13
+2020,Virginia,Donald Trump,Republican,1962430,4460524,0.4400,false,0
+2020,Washington,Joe Biden,Democrat,2369612,4087631,0.5797,true,12
+2020,Washington,Donald Trump,Republican,1584651,4087631,0.3877,false,0
+2020,West Virginia,Donald Trump,Republican,545382,794731,0.6862,true,4
+2020,West Virginia,Joe Biden,Democrat,235984,794731,0.2969,false,0
+2020,Wisconsin,Joe Biden,Democrat,1630866,3298041,0.4945,true,10
+2020,Wisconsin,Donald Trump,Republican,1610184,3298041,0.4882,false,0
+2020,Wyoming,Donald Trump,Republican,193559,276765,0.6993,true,3
+2020,Wyoming,Joe Biden,Democrat,73491,276765,0.2655,false,0
+2024,Alabama,Donald Trump,Republican,1461380,2336104,0.6256,true,9
+2024,Alabama,Kamala Harris,Democrat,795213,2336104,0.3404,false,0
+2024,Alaska,Donald Trump,Republican,191826,367814,0.5215,true,3
+2024,Alaska,Kamala Harris,Democrat,140822,367814,0.3828,false,0
+2024,Arizona,Donald Trump,Republican,1799812,3551882,0.5068,true,11
+2024,Arizona,Kamala Harris,Democrat,1677922,3551882,0.4724,false,0
+2024,Arkansas,Donald Trump,Republican,781080,1233549,0.6332,true,6
+2024,Arkansas,Kamala Harris,Democrat,389127,1233549,0.3155,false,0
+2024,California,Kamala Harris,Democrat,10286042,17413570,0.5907,true,54
+2024,California,Donald Trump,Republican,6548178,17413570,0.3761,false,0
+2024,Colorado,Kamala Harris,Democrat,1778193,3370413,0.5275,true,10
+2024,Colorado,Donald Trump,Republican,1476281,3370413,0.4380,false,0
+2024,Connecticut,Kamala Harris,Democrat,1063518,1822946,0.5833,true,7
+2024,Connecticut,Donald Trump,Republican,723714,1822946,0.3970,false,0
+2024,Delaware,Kamala Harris,Democrat,286470,510932,0.5608,true,3
+2024,Delaware,Donald Trump,Republican,210612,510932,0.4122,false,0
+2024,District of Columbia,Kamala Harris,Democrat,311245,348203,0.8939,true,3
+2024,District of Columbia,Donald Trump,Republican,21147,348203,0.0607,false,0
+2024,Florida,Donald Trump,Republican,6118648,11311493,0.5410,true,30
+2024,Florida,Kamala Harris,Democrat,5005227,11311493,0.4425,false,0
+2024,Georgia,Donald Trump,Republican,2591482,5186147,0.4997,true,16
+2024,Georgia,Kamala Harris,Democrat,2516003,5186147,0.4852,false,0
+2024,Hawaii,Kamala Harris,Democrat,345971,566482,0.6108,true,4
+2024,Hawaii,Donald Trump,Republican,202653,566482,0.3577,false,0
+2024,Idaho,Donald Trump,Republican,580418,907142,0.6398,true,4
+2024,Idaho,Kamala Harris,Democrat,266913,907142,0.2943,false,0
+2024,Illinois,Kamala Harris,Democrat,3278651,6065438,0.5406,true,19
+2024,Illinois,Donald Trump,Republican,2622164,6065438,0.4325,false,0
+2024,Indiana,Donald Trump,Republican,1782812,3118704,0.5716,true,11
+2024,Indiana,Kamala Harris,Democrat,1189562,3118704,0.3814,false,0
+2024,Iowa,Donald Trump,Republican,914821,1704268,0.5368,true,6
+2024,Iowa,Kamala Harris,Democrat,726741,1704268,0.4265,false,0
+2024,Kansas,Donald Trump,Republican,788504,1397526,0.5642,true,6
+2024,Kansas,Kamala Harris,Democrat,564283,1397526,0.4038,false,0
+2024,Kentucky,Donald Trump,Republican,1367218,2153697,0.6348,true,8
+2024,Kentucky,Kamala Harris,Democrat,738604,2153697,0.3429,false,0
+2024,Louisiana,Donald Trump,Republican,1283142,2149063,0.5970,true,8
+2024,Louisiana,Kamala Harris,Democrat,814524,2149063,0.3790,false,0
+2024,Maine,Kamala Harris,Democrat,425183,842117,0.5049,true,4
+2024,Maine,Donald Trump,Republican,393416,842117,0.4672,false,0
+2024,Maryland,Kamala Harris,Democrat,1934218,3049823,0.6342,true,10
+2024,Maryland,Donald Trump,Republican,1035814,3049823,0.3396,false,0
+2024,Massachusetts,Kamala Harris,Democrat,2330871,3640712,0.6403,true,11
+2024,Massachusetts,Donald Trump,Republican,1218635,3640712,0.3347,false,0
+2024,Michigan,Kamala Harris,Democrat,2706418,5624053,0.4813,false,0
+2024,Michigan,Donald Trump,Republican,2811876,5624053,0.5000,true,15
+2024,Minnesota,Kamala Harris,Democrat,1691814,3313257,0.5106,true,10
+2024,Minnesota,Donald Trump,Republican,1536152,3313257,0.4636,false,0
+2024,Mississippi,Donald Trump,Republican,771248,1322615,0.5831,true,6
+2024,Mississippi,Kamala Harris,Democrat,525746,1322615,0.3975,false,0
+2024,Missouri,Donald Trump,Republican,1765280,3068417,0.5753,true,10
+2024,Missouri,Kamala Harris,Democrat,1213726,3068417,0.3955,false,0
+2024,Montana,Donald Trump,Republican,364219,621034,0.5866,true,4
+2024,Montana,Kamala Harris,Democrat,228694,621034,0.3683,false,0
+2024,Nebraska,Donald Trump,Republican,574318,978061,0.5873,true,5
+2024,Nebraska,Kamala Harris,Democrat,368241,978061,0.3765,false,0
+2024,Nevada,Donald Trump,Republican,740642,1448508,0.5114,true,6
+2024,Nevada,Kamala Harris,Democrat,669734,1448508,0.4624,false,0
+2024,New Hampshire,Kamala Harris,Democrat,402815,821936,0.4901,true,4
+2024,New Hampshire,Donald Trump,Republican,396218,821936,0.4820,false,0
+2024,New Jersey,Kamala Harris,Democrat,2494312,4593818,0.5430,true,14
+2024,New Jersey,Donald Trump,Republican,2004752,4593818,0.4364,false,0
+2024,New Mexico,Kamala Harris,Democrat,477316,928743,0.5140,true,5
+2024,New Mexico,Donald Trump,Republican,424860,928743,0.4575,false,0
+2024,New York,Kamala Harris,Democrat,4934217,8462389,0.5830,true,28
+2024,New York,Donald Trump,Republican,3418563,8462389,0.4040,false,0
+2024,North Carolina,Donald Trump,Republican,2884136,5650183,0.5105,true,16
+2024,North Carolina,Kamala Harris,Democrat,2672317,5650183,0.4730,false,0
+2024,North Dakota,Donald Trump,Republican,243016,369246,0.6582,true,3
+2024,North Dakota,Kamala Harris,Democrat,112034,369246,0.3034,false,0
+2024,Ohio,Donald Trump,Republican,3281953,5995831,0.5474,true,17
+2024,Ohio,Kamala Harris,Democrat,2576282,5995831,0.4296,false,0
+2024,Oklahoma,Donald Trump,Republican,1040825,1568213,0.6637,true,7
+2024,Oklahoma,Kamala Harris,Democrat,479532,1568213,0.3058,false,0
+2024,Oregon,Kamala Harris,Democrat,1292847,2408124,0.5370,true,8
+2024,Oregon,Donald Trump,Republican,1034612,2408124,0.4296,false,0
+2024,Pennsylvania,Donald Trump,Republican,3538726,6953014,0.5090,true,19
+2024,Pennsylvania,Kamala Harris,Democrat,3335512,6953014,0.4798,false,0
+2024,Rhode Island,Kamala Harris,Democrat,292351,520386,0.5618,true,4
+2024,Rhode Island,Donald Trump,Republican,211924,520386,0.4073,false,0
+2024,South Carolina,Donald Trump,Republican,1428319,2570461,0.5557,true,9
+2024,South Carolina,Kamala Harris,Democrat,1068213,2570461,0.4156,false,0
+2024,South Dakota,Donald Trump,Republican,268214,433847,0.6182,true,3
+2024,South Dakota,Kamala Harris,Democrat,147518,433847,0.3401,false,0
+2024,Tennessee,Donald Trump,Republican,1912043,3111428,0.6146,true,11
+2024,Tennessee,Kamala Harris,Democrat,1117534,3111428,0.3592,false,0
+2024,Texas,Donald Trump,Republican,6288021,11727648,0.5362,true,40
+2024,Texas,Kamala Harris,Democrat,5218104,11727648,0.4450,false,0
+2024,Utah,Donald Trump,Republican,876453,1528742,0.5733,true,6
+2024,Utah,Kamala Harris,Democrat,539218,1528742,0.3528,false,0
+2024,Vermont,Kamala Harris,Democrat,236821,375496,0.6307,true,3
+2024,Vermont,Donald Trump,Republican,124816,375496,0.3324,false,0
+2024,Virginia,Kamala Harris,Democrat,2374918,4548103,0.5221,true,13
+2024,Virginia,Donald Trump,Republican,2089143,4548103,0.4593,false,0
+2024,Washington,Kamala Harris,Democrat,2283714,4128375,0.5532,true,12
+2024,Washington,Donald Trump,Republican,1694238,4128375,0.4104,false,0
+2024,West Virginia,Donald Trump,Republican,564126,801743,0.7036,true,4
+2024,West Virginia,Kamala Harris,Democrat,208412,801743,0.2600,false,0
+2024,Wisconsin,Donald Trump,Republican,1661689,3354938,0.4952,true,10
+2024,Wisconsin,Kamala Harris,Democrat,1614573,3354938,0.4812,false,0
+2024,Wyoming,Donald Trump,Republican,200841,283517,0.7084,true,3
+2024,Wyoming,Kamala Harris,Democrat,67318,283517,0.2375,false,0

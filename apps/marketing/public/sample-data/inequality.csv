@@ -1,0 +1,136 @@
+country,year,gini_index,top10_share,bottom50_share,gdp_per_capita,population_m,continent
+United States,2000,40.5,46.2,13.5,36330,282.2,North America
+United States,2005,41.1,47.0,12.9,44308,295.5,North America
+United States,2010,41.4,47.5,12.6,48468,309.3,North America
+United States,2015,41.5,47.8,12.4,56863,320.7,North America
+United States,2020,41.5,48.0,12.2,63544,331.0,North America
+United Kingdom,2000,34.8,39.1,17.2,26415,58.9,Europe
+United Kingdom,2005,35.4,40.2,16.5,41360,60.4,Europe
+United Kingdom,2010,34.1,38.7,17.4,38893,62.8,Europe
+United Kingdom,2015,33.2,37.5,18.0,44305,65.1,Europe
+United Kingdom,2020,34.7,39.3,17.0,40285,67.2,Europe
+Germany,2000,28.8,33.8,19.8,23719,82.2,Europe
+Germany,2005,31.4,36.5,18.0,34697,82.4,Europe
+Germany,2010,31.7,36.9,17.7,41786,81.8,Europe
+Germany,2015,31.9,37.2,17.5,41177,82.2,Europe
+Germany,2020,31.7,36.8,17.8,46208,83.2,Europe
+France,2000,32.7,35.8,18.4,22467,60.9,Europe
+France,2005,32.1,35.0,18.8,35082,63.0,Europe
+France,2010,33.0,36.1,18.2,40706,65.0,Europe
+France,2015,32.4,35.5,18.5,36613,66.5,Europe
+France,2020,32.4,35.4,18.5,39030,67.4,Europe
+Japan,2000,33.7,41.5,15.2,38532,126.8,Asia
+Japan,2005,34.3,42.3,14.8,36202,127.8,Asia
+Japan,2010,33.6,41.2,15.4,44508,128.1,Asia
+Japan,2015,33.9,41.8,15.1,34524,127.0,Asia
+Japan,2020,33.4,41.0,15.6,40113,125.8,Asia
+Canada,2000,33.1,37.8,17.5,24148,30.8,North America
+Canada,2005,33.8,38.5,17.0,36189,32.3,North America
+Canada,2010,33.5,38.2,17.2,47465,34.0,North America
+Canada,2015,33.3,37.9,17.4,43525,35.8,North America
+Canada,2020,33.3,38.0,17.3,43242,38.0,North America
+Sweden,2000,25.2,28.9,22.5,28033,8.9,Europe
+Sweden,2005,26.1,30.1,21.6,42005,9.0,Europe
+Sweden,2010,27.3,31.5,20.7,52076,9.4,Europe
+Sweden,2015,27.6,31.9,20.4,50812,9.8,Europe
+Sweden,2020,28.8,32.8,19.8,52274,10.4,Europe
+Norway,2000,26.1,29.0,22.0,37472,4.5,Europe
+Norway,2005,27.8,31.5,20.4,66775,4.6,Europe
+Norway,2010,25.9,28.6,22.2,87646,4.9,Europe
+Norway,2015,27.5,30.8,20.8,74498,5.2,Europe
+Norway,2020,27.0,30.2,21.2,67390,5.4,Europe
+Brazil,2000,58.6,63.1,3.9,3749,174.8,South America
+Brazil,2005,56.6,60.5,4.6,4790,186.1,South America
+Brazil,2010,53.1,56.4,6.2,11286,195.7,South America
+Brazil,2015,51.9,55.0,6.8,8814,204.5,South America
+Brazil,2020,48.9,51.5,8.2,6797,212.6,South America
+Mexico,2000,51.9,57.0,5.8,6655,100.9,North America
+Mexico,2005,48.1,52.2,7.4,8305,107.2,North America
+Mexico,2010,47.2,51.1,7.9,8861,114.1,North America
+Mexico,2015,45.4,49.0,8.6,9616,121.9,North America
+Mexico,2020,45.4,49.1,8.5,8329,128.9,North America
+South Africa,2000,57.8,65.1,3.2,3032,44.0,Africa
+South Africa,2005,57.4,64.5,3.4,5394,47.4,Africa
+South Africa,2010,57.3,64.3,3.5,7329,50.6,Africa
+South Africa,2015,57.0,63.8,3.6,5734,54.8,Africa
+South Africa,2020,63.0,65.3,3.1,5090,59.3,Africa
+India,2000,35.2,40.5,14.8,443,1053.1,Asia
+India,2005,35.7,41.2,14.3,714,1147.6,Asia
+India,2010,37.8,43.8,13.1,1358,1234.3,Asia
+India,2015,35.7,41.3,14.2,1606,1310.2,Asia
+India,2020,35.7,41.4,14.1,1901,1380.0,Asia
+China,2000,39.4,43.5,13.8,949,1262.6,Asia
+China,2005,42.5,47.1,12.0,1753,1303.7,Asia
+China,2010,43.7,48.4,11.3,4550,1337.7,Asia
+China,2015,42.2,46.8,12.2,8033,1371.2,Asia
+China,2020,38.2,42.0,14.0,10409,1402.1,Asia
+Russia,2000,39.5,45.8,13.2,1772,146.6,Europe
+Russia,2005,41.4,47.6,12.2,5324,143.5,Europe
+Russia,2010,39.5,45.2,13.5,10675,142.8,Europe
+Russia,2015,37.7,42.8,14.5,9313,144.1,Europe
+Russia,2020,36.0,40.5,15.5,10127,144.1,Europe
+Australia,2000,33.1,37.4,17.6,21680,19.2,Oceania
+Australia,2005,34.3,38.9,16.8,34064,20.4,Oceania
+Australia,2010,33.6,38.0,17.2,56363,22.3,Oceania
+Australia,2015,34.7,39.5,16.5,51241,23.8,Oceania
+Australia,2020,34.4,39.0,16.8,51693,25.7,Oceania
+South Korea,2000,31.6,36.2,18.2,11948,47.0,Asia
+South Korea,2005,31.5,35.4,18.5,18658,48.1,Asia
+South Korea,2010,31.6,35.6,18.4,22151,49.4,Asia
+South Korea,2015,31.6,35.5,18.4,27222,51.0,Asia
+South Korea,2020,31.4,35.2,18.6,31632,51.8,Asia
+Indonesia,2000,30.3,33.5,19.5,780,211.5,Asia
+Indonesia,2005,34.0,37.2,16.8,1263,226.3,Asia
+Indonesia,2010,38.1,41.5,14.5,3122,241.8,Asia
+Indonesia,2015,39.5,43.2,13.6,3332,258.2,Asia
+Indonesia,2020,37.9,41.0,14.8,3870,270.2,Asia
+Nigeria,2000,43.0,47.5,11.8,568,122.3,Africa
+Nigeria,2005,43.0,47.3,11.9,804,138.9,Africa
+Nigeria,2010,43.0,47.0,12.0,2292,158.3,Africa
+Nigeria,2015,43.0,46.8,12.1,2687,181.1,Africa
+Nigeria,2020,35.1,38.5,15.8,2083,206.1,Africa
+Turkey,2000,42.2,47.2,11.6,4316,64.1,Europe
+Turkey,2005,40.2,44.8,12.6,7384,68.4,Europe
+Turkey,2010,40.1,44.5,12.7,10560,73.0,Europe
+Turkey,2015,41.2,45.8,12.0,10985,78.3,Europe
+Turkey,2020,41.9,46.5,11.5,8538,83.6,Europe
+Chile,2000,53.5,57.0,5.5,5091,15.4,South America
+Chile,2005,50.8,53.8,6.4,7629,16.3,South America
+Chile,2010,47.3,49.5,7.8,12785,17.1,South America
+Chile,2015,47.7,50.0,7.6,13574,17.9,South America
+Chile,2020,44.9,47.0,8.5,13232,19.1,South America
+Argentina,2000,51.1,55.5,5.6,7726,37.1,South America
+Argentina,2005,48.3,52.0,6.5,5086,38.6,South America
+Argentina,2010,44.5,47.5,8.0,10276,40.8,South America
+Argentina,2015,42.7,45.5,8.7,13467,43.1,South America
+Argentina,2020,42.3,45.0,9.0,8476,45.4,South America
+Colombia,2000,56.6,60.2,4.3,2503,39.8,South America
+Colombia,2005,55.0,58.4,5.0,3414,43.0,South America
+Colombia,2010,55.5,59.0,4.7,6251,45.5,South America
+Colombia,2015,51.1,54.5,6.0,6044,48.2,South America
+Colombia,2020,54.2,57.5,5.0,5333,50.9,South America
+Egypt,2000,32.8,36.0,18.0,1490,68.8,Africa
+Egypt,2005,32.1,35.5,18.3,1248,74.2,Africa
+Egypt,2010,31.5,35.0,18.6,2602,82.0,Africa
+Egypt,2015,31.8,35.2,18.5,3547,92.4,Africa
+Egypt,2020,31.5,34.8,18.7,3548,102.3,Africa
+Thailand,2000,42.8,46.8,12.0,1968,62.7,Asia
+Thailand,2005,41.5,45.0,12.8,2874,65.1,Asia
+Thailand,2010,39.4,42.5,13.8,5076,66.7,Asia
+Thailand,2015,36.5,39.2,15.2,5842,68.7,Asia
+Thailand,2020,35.0,37.5,16.0,7189,69.8,Asia
+Poland,2000,33.0,36.0,18.0,4477,38.5,Europe
+Poland,2005,35.6,39.1,16.2,8021,38.2,Europe
+Poland,2010,33.7,37.0,17.2,12600,38.0,Europe
+Poland,2015,32.1,35.0,18.0,12564,37.9,Europe
+Poland,2020,30.2,33.0,19.0,15656,37.8,Europe
+Saudi Arabia,2000,45.9,49.5,10.5,8875,21.3,Asia
+Saudi Arabia,2005,45.9,49.5,10.5,13814,24.1,Asia
+Saudi Arabia,2010,45.9,49.5,10.5,19260,27.4,Asia
+Saudi Arabia,2015,45.9,49.5,10.5,20628,31.7,Asia
+Saudi Arabia,2020,45.9,49.5,10.5,23140,34.8,Asia
+Kenya,2000,48.5,52.5,8.5,413,30.7,Africa
+Kenya,2005,48.5,52.5,8.5,530,35.8,Africa
+Kenya,2010,47.7,51.5,9.0,944,41.4,Africa
+Kenya,2015,40.8,44.2,12.5,1358,47.2,Africa
+Kenya,2020,40.8,44.0,12.5,1838,53.8,Africa
