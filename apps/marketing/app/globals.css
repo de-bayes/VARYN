@@ -58,23 +58,31 @@ a {
 
 /* react-resizable-panels handles */
 [data-panel-group-direction="horizontal"] > [data-resize-handle] {
-  width: 1px;
-  background: var(--border);
-  transition: background 150ms;
+  width: 3px;
+  background: transparent;
+  border-left: 1px solid var(--border);
+  transition: background 150ms, border-color 150ms;
+  cursor: col-resize;
+  position: relative;
 }
 [data-panel-group-direction="horizontal"] > [data-resize-handle]:hover,
 [data-panel-group-direction="horizontal"] > [data-resize-handle][data-resize-handle-active] {
-  background: var(--accent);
+  background: rgba(99, 102, 241, 0.15);
+  border-left-color: rgba(99, 102, 241, 0.5);
 }
 [data-panel-group-direction="vertical"] > [data-resize-handle] {
   width: 100%;
-  height: 1px;
-  background: var(--border);
-  transition: background 150ms;
+  height: 3px;
+  background: transparent;
+  border-top: 1px solid var(--border);
+  transition: background 150ms, border-color 150ms;
+  cursor: row-resize;
+  position: relative;
 }
 [data-panel-group-direction="vertical"] > [data-resize-handle]:hover,
 [data-panel-group-direction="vertical"] > [data-resize-handle][data-resize-handle-active] {
-  background: var(--accent);
+  background: rgba(99, 102, 241, 0.15);
+  border-top-color: rgba(99, 102, 241, 0.5);
 }
 
 /* Scrollbar styling */
