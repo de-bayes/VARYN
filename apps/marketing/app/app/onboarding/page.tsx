@@ -1,8 +1,30 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSkillLevel } from '@/lib/skill-level-context';
 import { SkillLevelPicker } from '@/components/onboarding/SkillLevelPicker';
 
 export default function OnboardingPage() {
+  const { skillLevel, isLoaded } = useSkillLevel();
+  const router = useRouter();
+
+  // If user already has a skill level, skip onboarding
+  useEffect(() => {
+    if (isLoaded && skillLevel) {
+      router.replace('/app/workspace');
+    }
+  }, [isLoaded, skillLevel, router]);
+
+  // Don't flash onboarding if we're about to redirect
+  if (!isLoaded || skillLevel) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <span className="inline-block h-4 w-4 animate-spin rounded-full border border-muted/30 border-t-accent/60" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6 py-12">
       {/* Subtle gradient background accent */}
