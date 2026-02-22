@@ -3,6 +3,7 @@ export type TabType =
   | 'output'
   | 'graph-builder'
   | 'summary'
+  | 'regression'
   | 'monte-carlo'
   | 'r-console'
   | 'welcome';
@@ -23,6 +24,7 @@ export const TAB_TYPE_LABELS: Record<TabType, string> = {
   output: 'Output',
   'graph-builder': 'Graph Builder',
   summary: 'Summary',
+  regression: 'Regression',
   'monte-carlo': 'Monte Carlo',
   'r-console': 'R Console',
   welcome: 'Welcome',

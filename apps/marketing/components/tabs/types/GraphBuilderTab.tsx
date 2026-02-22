@@ -22,6 +22,7 @@ interface ChartConfig {
   colorVar: string;
   title: string;
   theme: Theme;
+  showTrendLine: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -166,7 +167,7 @@ interface ChartSvgProps {
 }
 
 function ChartSvg({ columns, rows, config, width, height }: ChartSvgProps) {
-  const { chartType, xVar, yVar, colorVar, title, theme } = config;
+  const { chartType, xVar, yVar, colorVar, title, theme, showTrendLine } = config;
 
   const isDark = theme === 'dark';
   const bgColor = isDark ? '#1a1a1d' : '#ffffff';
@@ -465,6 +466,35 @@ function ChartSvg({ columns, rows, config, width, height }: ChartSvgProps) {
               </title>
             </circle>
           ))}
+        {/* Trend line (scatter only) */}
+        {chartType === 'scatter' && showTrendLine && scatterLinePoints.length >= 2 && (() => {
+          const pts = scatterLinePoints;
+          const n = pts.length;
+          const sumX = pts.reduce((a, p) => a + p.x, 0);
+          const sumY = pts.reduce((a, p) => a + p.y, 0);
+          const sumXY = pts.reduce((a, p) => a + p.x * p.y, 0);
+          const sumX2 = pts.reduce((a, p) => a + p.x * p.x, 0);
+          const denom = n * sumX2 - sumX * sumX;
+          if (Math.abs(denom) < 1e-10) return null;
+          const slope = (n * sumXY - sumX * sumY) / denom;
+          const intercept = (sumY - slope * sumX) / n;
+          const xMin = Math.min(...pts.map((p) => p.x));
+          const xMax = Math.max(...pts.map((p) => p.x));
+          const ty1 = intercept + slope * xMin;
+          const ty2 = intercept + slope * xMax;
+          return (
+            <line
+              x1={sx(xMin)}
+              y1={sy(ty1)}
+              x2={sx(xMax)}
+              y2={sy(ty2)}
+              stroke="#f59e0b"
+              strokeWidth="2"
+              strokeDasharray="6,3"
+              opacity={0.8}
+            />
+          );
+        })()}
         {/* Line chart paths + dots */}
         {chartType === 'line' &&
           lineGroups &&
@@ -849,6 +879,7 @@ export default function GraphBuilderTab({ tabId, datasetId, sourceUrl }: TabComp
     colorVar: '',
     title: '',
     theme: 'dark',
+    showTrendLine: false,
   });
 
   // Container sizing
@@ -1293,6 +1324,33 @@ export default function GraphBuilderTab({ tabId, datasetId, sourceUrl }: TabComp
             }`}
           />
         </div>
+
+        {/* Trend line toggle (scatter only) */}
+        {config.chartType === 'scatter' && (
+          <div className="space-y-1.5">
+            <label
+              className={`text-[10px] font-medium uppercase tracking-wider ${
+                config.theme === 'dark' ? 'text-white/40' : 'text-gray-500'
+              }`}
+            >
+              Trend Line
+            </label>
+            <button
+              onClick={() => updateConfig('showTrendLine', !config.showTrendLine)}
+              className={`w-full py-1.5 rounded-md text-[10px] font-medium transition-all ${
+                config.showTrendLine
+                  ? config.theme === 'dark'
+                    ? 'bg-amber-500/15 text-amber-400 ring-1 ring-amber-500/30'
+                    : 'bg-amber-50 text-amber-600 ring-1 ring-amber-200'
+                  : config.theme === 'dark'
+                    ? 'bg-white/[0.03] text-white/30 hover:bg-white/[0.06]'
+                    : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+              }`}
+            >
+              {config.showTrendLine ? 'Linear Fit: On' : 'Linear Fit: Off'}
+            </button>
+          </div>
+        )}
 
         {/* Theme toggle */}
         <div className="space-y-1.5">

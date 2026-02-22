@@ -53,7 +53,7 @@ export function WorkspaceSidebar({ activeSection, onSelect }: WorkspaceSidebarPr
   const { datasets, activeDataset, selectDataset, uploadDataset } = useWorkspace();
   const { features } = useSkillLevel();
   const { addTab, tabs } = useTabs();
-  const { data: sharedData } = useSpreadsheetData();
+  const { data: sharedData, savedSheets, deleteSavedSheet } = useSpreadsheetData();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isFriendly = features.terminology === 'friendly';
@@ -68,6 +68,12 @@ export function WorkspaceSidebar({ activeSection, onSelect }: WorkspaceSidebarPr
         hasData: sharedData[t.id]?.columns.length > 0,
       }));
   }, [tabs, sharedData]);
+
+  // Saved sheets that aren't currently open
+  const closedSavedSheets = useMemo(() => {
+    const openTabIds = new Set(tabs.map((t) => t.id));
+    return savedSheets.filter((s) => !openTabIds.has(s.id));
+  }, [savedSheets, tabs]);
 
   const handleUpload = () => fileInputRef.current?.click();
 
@@ -136,6 +142,47 @@ export function WorkspaceSidebar({ activeSection, onSelect }: WorkspaceSidebarPr
                 >
                   <span className={`h-1.5 w-1.5 rounded-full ${f.hasData ? 'bg-emerald-400/60' : 'bg-white/10'}`} />
                   <span className="truncate">{f.title}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Saved Sheets (from IndexedDB) */}
+        {closedSavedSheets.length > 0 && (
+          <div>
+            <button
+              onClick={() => onSelect('saved')}
+              className="flex w-full items-center gap-1.5 px-2 py-1 text-[10px] uppercase tracking-wider text-muted/50 hover:text-muted/70"
+            >
+              <FolderIcon open={activeSection === 'saved'} />
+              {isFriendly ? 'Recent Files' : 'Saved Sheets'}
+            </button>
+            <div className="mt-0.5 space-y-px">
+              {closedSavedSheets.map((sheet) => (
+                <div
+                  key={sheet.id}
+                  className="group flex w-full items-center gap-2 rounded-md px-3 py-1 text-left text-xs text-muted/50 hover:bg-white/[0.03] hover:text-foreground transition"
+                >
+                  <button
+                    onClick={() =>
+                      addTab('spreadsheet', { title: sheet.title, sourceUrl: undefined })
+                    }
+                    className="flex flex-1 items-center gap-2 truncate"
+                  >
+                    <FileIcon color="#6366f1" />
+                    <span className="truncate">{sheet.title}</span>
+                    <span className="text-[9px] text-muted/30 ml-auto shrink-0">
+                      {sheet.rows.length} rows
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => deleteSavedSheet(sheet.id)}
+                    className="flex h-4 w-4 items-center justify-center rounded text-[10px] text-muted/20 opacity-0 group-hover:opacity-100 hover:bg-red-500/20 hover:text-red-400 transition"
+                    title="Remove saved sheet"
+                  >
+                    ×
+                  </button>
                 </div>
               ))}
             </div>

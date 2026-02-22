@@ -21,12 +21,19 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
   const [sortDir, setSortDir] = useState<SortDir>(null);
   const [filterText, setFilterText] = useState('');
 
+  // Derive a title from props for persistence
+  const sheetTitle = sourceUrl
+    ? sourceUrl.split('/').pop() ?? tabId
+    : datasetId
+      ? datasets.find((d) => d.id === datasetId)?.filename ?? tabId
+      : tabId;
+
   // Register data in the shared store when it changes
   useEffect(() => {
     if (columns.length > 0 && rows.length > 0) {
-      setTabData(tabId, columns, rows);
+      setTabData(tabId, columns, rows, sheetTitle);
     }
-  }, [tabId, columns, rows, setTabData]);
+  }, [tabId, columns, rows, setTabData, sheetTitle]);
 
   // Load data from a direct URL (e.g. sample data)
   useEffect(() => {
@@ -269,6 +276,20 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
               <rect x="12" y="7" width="3" height="9" rx="0.5" fill="currentColor" />
             </svg>
             Graph
+          </span>
+        </button>
+        <button
+          onClick={() => addTab('regression', { title: 'Regression' })}
+          className="rounded border border-white/10 px-2 py-0.5 text-[10px] text-muted/60 hover:border-accent/30 hover:text-foreground transition"
+        >
+          <span className="flex items-center gap-1">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" className="opacity-60">
+              <circle cx="4" cy="11" r="0.8" fill="currentColor" />
+              <circle cx="7" cy="8" r="0.8" fill="currentColor" />
+              <circle cx="11" cy="5" r="0.8" fill="currentColor" />
+              <line x1="3" y1="12" x2="13" y2="4" strokeDasharray="2 1.5" />
+            </svg>
+            Regression
           </span>
         </button>
         <input

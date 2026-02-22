@@ -55,6 +55,16 @@ function TabIcon({ type, size = 12 }: { type: TabType; size?: number }) {
           <path d="M5 5h6M5 8h4M5 11h5" />
         </svg>
       );
+    case 'regression':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="4" cy="11" r="1" fill="currentColor" />
+          <circle cx="6" cy="9" r="1" fill="currentColor" />
+          <circle cx="8" cy="7.5" r="1" fill="currentColor" />
+          <circle cx="11" cy="5" r="1" fill="currentColor" />
+          <line x1="3" y1="12" x2="13" y2="4" strokeDasharray="2 1.5" />
+        </svg>
+      );
     case 'welcome':
       return (
         <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
@@ -86,6 +96,7 @@ export function TabBar() {
     { type: 'spreadsheet', label: 'Spreadsheet' },
     { type: 'graph-builder', label: 'Graph Builder' },
     { type: 'summary', label: 'Data Summary' },
+    { type: 'regression', label: 'Regression' },
     { type: 'output', label: 'Output' },
   ];
 

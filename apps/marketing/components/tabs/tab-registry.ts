@@ -14,6 +14,7 @@ const registry: Record<TabType, () => Promise<{ default: TabComponent }>> = {
   output: () => import('./types/OutputTab'),
   'graph-builder': () => import('./types/GraphBuilderTab'),
   summary: () => import('./types/SummaryTab'),
+  regression: () => import('./types/RegressionTab'),
   'monte-carlo': () => import('./types/MonteCarloTab'),
   'r-console': () => import('./types/RConsoleTab'),
   welcome: () => import('./types/WelcomeTab'),

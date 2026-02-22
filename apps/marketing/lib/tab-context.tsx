@@ -174,6 +174,7 @@ function typeToDefaultTitle(type: TabType): string {
     output: 'Output',
     'graph-builder': 'Graph Builder',
     summary: 'Summary',
+    regression: 'Regression',
     'monte-carlo': 'Monte Carlo',
     'r-console': 'R Console',
     welcome: 'Welcome',

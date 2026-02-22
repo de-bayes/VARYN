@@ -1,7 +1,8 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useRef, type ReactNode } from 'react';
 import React from 'react';
+import { saveSheet, getAllSheets, deleteSheet, type SavedSheet } from './storage';
 
 export interface ColumnStats {
   name: string;
@@ -27,8 +28,13 @@ export interface SpreadsheetData {
 interface SpreadsheetDataStore {
   /** Data keyed by tab ID */
   data: Record<string, SpreadsheetData>;
-  setTabData: (tabId: string, columns: string[], rows: Record<string, string>[]) => void;
+  setTabData: (tabId: string, columns: string[], rows: Record<string, string>[], title?: string) => void;
   getTabData: (tabId: string) => SpreadsheetData | undefined;
+  /** Saved sheets from IndexedDB */
+  savedSheets: SavedSheet[];
+  refreshSavedSheets: () => Promise<void>;
+  deleteSavedSheet: (id: string) => Promise<void>;
+  loadSavedSheet: (id: string) => Promise<SavedSheet | undefined>;
 }
 
 function computeColumnStats(columns: string[], rows: Record<string, string>[]): ColumnStats[] {
@@ -90,14 +96,52 @@ const SpreadsheetDataContext = createContext<SpreadsheetDataStore | null>(null);
 
 export function SpreadsheetDataProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<Record<string, SpreadsheetData>>({});
+  const [savedSheets, setSavedSheets] = useState<SavedSheet[]>([]);
+  const saveTimeoutRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  // Load saved sheets on mount
+  useEffect(() => {
+    getAllSheets().then(setSavedSheets).catch(() => {});
+  }, []);
+
+  const refreshSavedSheets = useCallback(async () => {
+    const sheets = await getAllSheets();
+    setSavedSheets(sheets);
+  }, []);
+
+  const deleteSavedSheet = useCallback(async (id: string) => {
+    await deleteSheet(id);
+    setSavedSheets((prev) => prev.filter((s) => s.id !== id));
+  }, []);
+
+  const loadSavedSheet = useCallback(async (id: string) => {
+    const sheets = await getAllSheets();
+    return sheets.find((s) => s.id === id);
+  }, []);
 
   const setTabData = useCallback(
-    (tabId: string, columns: string[], rows: Record<string, string>[]) => {
+    (tabId: string, columns: string[], rows: Record<string, string>[], title?: string) => {
       const columnStats = computeColumnStats(columns, rows);
       setData((prev) => ({
         ...prev,
         [tabId]: { columns, rows, columnStats },
       }));
+
+      // Debounced auto-save to IndexedDB (save 1s after last change)
+      if (saveTimeoutRef.current[tabId]) {
+        clearTimeout(saveTimeoutRef.current[tabId]);
+      }
+      saveTimeoutRef.current[tabId] = setTimeout(() => {
+        saveSheet({
+          id: tabId,
+          title: title || tabId,
+          columns,
+          rows,
+          savedAt: Date.now(),
+        }).then(() => {
+          getAllSheets().then(setSavedSheets).catch(() => {});
+        }).catch(() => {});
+      }, 1000);
     },
     [],
   );
@@ -109,7 +153,7 @@ export function SpreadsheetDataProvider({ children }: { children: ReactNode }) {
 
   return React.createElement(
     SpreadsheetDataContext.Provider,
-    { value: { data, setTabData, getTabData } },
+    { value: { data, setTabData, getTabData, savedSheets, refreshSavedSheets, deleteSavedSheet, loadSavedSheet } },
     children,
   );
 }
