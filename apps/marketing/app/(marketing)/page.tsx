@@ -17,9 +17,9 @@ export default function HomePage() {
               Varyn gives teams a clean statistical workspace for regression, simulation, and scalable job execution--without notebook chaos or gimmicks.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button href="/product">Explore Product</Button>
-              <Button href="/pricing" variant="ghost">
-                View Pricing
+              <Button href="/app/onboarding">Try VARYN Free</Button>
+              <Button href="/product" variant="ghost">
+                Explore Product
               </Button>
             </div>
           </div>

@@ -1345,6 +1345,61 @@ export default function GraphBuilderTab({ tabId, datasetId, sourceUrl }: TabComp
             {numericColumns.length} numeric &middot; {categoricalColumns.length} categorical
           </p>
         </div>
+
+        {/* Export */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              const svgEl = chartContainerRef.current?.querySelector('svg');
+              if (!svgEl) return;
+              const svgData = new XMLSerializer().serializeToString(svgEl);
+              const blob = new Blob([svgData], { type: 'image/svg+xml' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `${config.title || 'chart'}.svg`;
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
+            className={`flex-1 py-1.5 rounded-md text-[10px] font-medium transition-all ${
+              config.theme === 'dark'
+                ? 'bg-white/[0.05] text-white/50 hover:bg-white/[0.08] hover:text-white/70'
+                : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700'
+            }`}
+          >
+            Export SVG
+          </button>
+          <button
+            onClick={() => {
+              const svgEl = chartContainerRef.current?.querySelector('svg');
+              if (!svgEl) return;
+              const svgData = new XMLSerializer().serializeToString(svgEl);
+              const canvas = document.createElement('canvas');
+              const scale = 2; // 2x for high DPI
+              canvas.width = chartSize.width * scale;
+              canvas.height = chartSize.height * scale;
+              const ctx = canvas.getContext('2d');
+              if (!ctx) return;
+              const img = new Image();
+              img.onload = () => {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const url = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${config.title || 'chart'}.png`;
+                a.click();
+              };
+              img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+            }}
+            className={`flex-1 py-1.5 rounded-md text-[10px] font-medium transition-all ${
+              config.theme === 'dark'
+                ? 'bg-white/[0.05] text-white/50 hover:bg-white/[0.08] hover:text-white/70'
+                : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700'
+            }`}
+          >
+            Export PNG
+          </button>
+        </div>
       </div>
     </div>
   );
