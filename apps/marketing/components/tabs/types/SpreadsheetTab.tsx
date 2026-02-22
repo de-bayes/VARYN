@@ -4,24 +4,8 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useWorkspace } from '@/lib/workspace-context';
 import { useSpreadsheetData } from '@/lib/spreadsheet-data-store';
 import { useTabs } from '@/lib/tab-context';
+import { parseCsv } from '@/lib/csv-parser';
 import type { TabComponentProps } from '../tab-registry';
-
-function parseCsv(text: string): { columns: string[]; rows: Record<string, string>[] } {
-  const lines = text.split('\n').filter((l) => l.trim().length > 0);
-  if (lines.length === 0) return { columns: [], rows: [] };
-
-  const delimiter = lines[0].includes('\t') ? '\t' : ',';
-  const columns = lines[0].split(delimiter).map((c) => c.replace(/^"|"$/g, '').trim());
-  const rows = lines.slice(1).map((line) => {
-    const vals = line.split(delimiter).map((v) => v.replace(/^"|"$/g, '').trim());
-    const row: Record<string, string> = {};
-    columns.forEach((col, i) => {
-      row[col] = vals[i] ?? '';
-    });
-    return row;
-  });
-  return { columns, rows };
-}
 
 type SortDir = 'asc' | 'desc' | null;
 
@@ -231,6 +215,37 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
         <span className="text-white/10">|</span>
         <span className="text-[10px] text-muted/50">{columns.length} cols</span>
         <div className="flex-1" />
+        <button
+          onClick={() => {
+            const csvContent = [
+              columns.join(','),
+              ...displayRows.map((row) =>
+                columns.map((col) => {
+                  const val = row[col] ?? '';
+                  return val.includes(',') || val.includes('"') || val.includes('\n')
+                    ? `"${val.replace(/"/g, '""')}"`
+                    : val;
+                }).join(',')
+              ),
+            ].join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'export.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+          }}
+          className="rounded border border-white/10 px-2 py-0.5 text-[10px] text-muted/60 hover:border-accent/30 hover:text-foreground transition"
+        >
+          <span className="flex items-center gap-1">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" className="opacity-60">
+              <path d="M8 2v8M5 7l3 3 3-3" />
+              <path d="M3 12h10" />
+            </svg>
+            Export
+          </span>
+        </button>
         <button
           onClick={() => addTab('graph-builder', { title: `Graph` })}
           className="rounded border border-white/10 px-2 py-0.5 text-[10px] text-muted/60 hover:border-accent/30 hover:text-foreground transition"

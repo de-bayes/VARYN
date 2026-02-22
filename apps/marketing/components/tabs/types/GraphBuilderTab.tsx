@@ -5,6 +5,7 @@ import { useWorkspace } from '@/lib/workspace-context';
 import { useSkillLevel } from '@/lib/skill-level-context';
 import { useSpreadsheetData } from '@/lib/spreadsheet-data-store';
 import { useTabs } from '@/lib/tab-context';
+import { parseCsv } from '@/lib/csv-parser';
 import type { TabComponentProps } from '../tab-registry';
 
 // ---------------------------------------------------------------------------
@@ -21,26 +22,6 @@ interface ChartConfig {
   colorVar: string;
   title: string;
   theme: Theme;
-}
-
-// ---------------------------------------------------------------------------
-// CSV Parser
-// ---------------------------------------------------------------------------
-
-function parseCsv(text: string): { columns: string[]; rows: Record<string, string>[] } {
-  const lines = text.split('\n').filter((l) => l.trim().length > 0);
-  if (lines.length === 0) return { columns: [], rows: [] };
-  const delimiter = lines[0].includes('\t') ? '\t' : ',';
-  const columns = lines[0].split(delimiter).map((c) => c.replace(/^"|"$/g, '').trim());
-  const rows = lines.slice(1).map((line) => {
-    const vals = line.split(delimiter).map((v) => v.replace(/^"|"$/g, '').trim());
-    const row: Record<string, string> = {};
-    columns.forEach((col, i) => {
-      row[col] = vals[i] ?? '';
-    });
-    return row;
-  });
-  return { columns, rows };
 }
 
 // ---------------------------------------------------------------------------

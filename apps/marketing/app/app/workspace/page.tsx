@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 import { MenuBar } from '@/components/layout/MenuBar';
 import { ActivityBar } from '@/components/layout/ActivityBar';
@@ -19,7 +19,7 @@ export default function WorkspacePage() {
   const [activityItem, setActivityItem] = useState<'files' | 'search' | 'variables'>('files');
   const { features } = useSkillLevel();
   const { setActiveOutputTabId } = useWorkspace();
-  const { activeTab } = useTabs();
+  const { activeTab, addTab, closeTab, tabs, setActiveTab } = useTabs();
 
   // Track the active output tab for card routing
   useEffect(() => {
@@ -27,6 +27,51 @@ export default function WorkspacePage() {
       setActiveOutputTabId(activeTab.id);
     }
   }, [activeTab, setActiveOutputTabId]);
+
+  // Keyboard shortcuts
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      const isMeta = e.metaKey || e.ctrlKey;
+
+      // Cmd+N: New spreadsheet
+      if (isMeta && e.key === 'n') {
+        e.preventDefault();
+        addTab('spreadsheet');
+      }
+
+      // Cmd+G: New graph
+      if (isMeta && e.key === 'g' && !e.shiftKey) {
+        e.preventDefault();
+        addTab('graph-builder');
+      }
+
+      // Cmd+W: Close current tab
+      if (isMeta && e.key === 'w') {
+        e.preventDefault();
+        if (activeTab?.closable) {
+          closeTab(activeTab.id);
+        }
+      }
+
+      // Cmd+Tab / Ctrl+Tab: Next tab
+      if (isMeta && e.key === 'Tab') {
+        e.preventDefault();
+        const currentIdx = tabs.findIndex((t) => t.id === activeTab?.id);
+        if (currentIdx !== -1) {
+          const nextIdx = e.shiftKey
+            ? (currentIdx - 1 + tabs.length) % tabs.length
+            : (currentIdx + 1) % tabs.length;
+          setActiveTab(tabs[nextIdx].id);
+        }
+      }
+    },
+    [activeTab, addTab, closeTab, tabs, setActiveTab],
+  );
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
 
   return (
     <div className="flex h-screen flex-col">
