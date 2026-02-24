@@ -65,6 +65,57 @@ function TabIcon({ type, size = 12 }: { type: TabType; size?: number }) {
           <line x1="3" y1="12" x2="13" y2="4" strokeDasharray="2 1.5" />
         </svg>
       );
+    case 'logistic-regression':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 13c2-0 4-.5 6-5s4-5 6-5" />
+          <line x1="2" y1="8" x2="14" y2="8" strokeDasharray="1.5 1.5" opacity="0.3" />
+        </svg>
+      );
+    case 'hypothesis-test':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 12c1-3 2-8 5-8s4 5 5 8" />
+          <line x1="8" y1="4" x2="8" y2="12" strokeDasharray="2 1" />
+          <line x1="5" y1="10" x2="11" y2="10" opacity="0.4" />
+        </svg>
+      );
+    case 'cross-tab':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+          <rect x="2" y="2" width="12" height="12" rx="1.5" />
+          <line x1="2" y1="6" x2="14" y2="6" />
+          <line x1="6" y1="2" x2="6" y2="14" />
+          <line x1="10" y1="2" x2="10" y2="14" />
+          <line x1="2" y1="10" x2="14" y2="10" />
+        </svg>
+      );
+    case 'time-series':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 14V2" />
+          <path d="M2 14h12" />
+          <path d="M4 10l2-3 2 1 2-4 2 2 2-1" />
+          <circle cx="14" cy="5" r="1" fill="currentColor" />
+        </svg>
+      );
+    case 'data-cleaning':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 2l1 4h6l1-4" />
+          <path d="M5 6v7a1 1 0 001 1h4a1 1 0 001-1V6" />
+          <line x1="8" y1="8" x2="8" y2="12" />
+          <line x1="6" y1="8" x2="6" y2="11" />
+          <line x1="10" y1="8" x2="10" y2="11" />
+        </svg>
+      );
+    case 'data-join':
+      return (
+        <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+          <circle cx="6" cy="8" r="4" />
+          <circle cx="10" cy="8" r="4" />
+        </svg>
+      );
     case 'welcome':
       return (
         <svg width={s} height={s} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
@@ -92,20 +143,33 @@ export function TabBar() {
     }
   }, [showNewMenu]);
 
-  const availableTypes: { type: TabType; label: string }[] = [
-    { type: 'spreadsheet', label: 'Spreadsheet' },
-    { type: 'graph-builder', label: 'Graph Builder' },
-    { type: 'summary', label: 'Data Summary' },
-    { type: 'regression', label: 'Regression' },
-    { type: 'output', label: 'Output' },
+  const availableTypes: { type: TabType; label: string; section?: string }[] = [
+    { type: 'spreadsheet', label: 'Spreadsheet', section: 'Data' },
+    { type: 'graph-builder', label: 'Graph Builder', section: 'Data' },
+    { type: 'summary', label: 'Data Summary', section: 'Data' },
+    { type: 'data-cleaning', label: 'Data Cleaning', section: 'Data' },
+    { type: 'data-join', label: 'Join Datasets', section: 'Data' },
+    { type: 'cross-tab', label: 'Cross-Tabulation', section: 'Analysis' },
+    { type: 'hypothesis-test', label: 'Hypothesis Test', section: 'Analysis' },
+    { type: 'regression', label: 'Regression (OLS)', section: 'Analysis' },
+    { type: 'logistic-regression', label: 'Logistic Regression', section: 'Analysis' },
+    { type: 'time-series', label: 'Time Series', section: 'Analysis' },
+    { type: 'output', label: 'Output', section: 'Other' },
   ];
 
   if (features.showTabMonteCarlo) {
-    availableTypes.push({ type: 'monte-carlo', label: 'Monte Carlo' });
+    availableTypes.push({ type: 'monte-carlo', label: 'Monte Carlo', section: 'Analysis' });
   }
   if (features.showTabRConsole) {
-    availableTypes.push({ type: 'r-console', label: 'R Console' });
+    availableTypes.push({ type: 'r-console', label: 'R Console', section: 'Other' });
   }
+
+  // Group by section
+  const sections = ['Data', 'Analysis', 'Other'];
+  const grouped = sections.map((section) => ({
+    section,
+    items: availableTypes.filter((t) => t.section === section),
+  })).filter((g) => g.items.length > 0);
 
   return (
     <div className="flex h-9 shrink-0 items-center border-b border-white/5 bg-[#111113]">
@@ -150,21 +214,29 @@ export function TabBar() {
           +
         </button>
         {showNewMenu && (
-          <div className="absolute right-0 top-full z-50 mt-0.5 min-w-[180px] rounded-lg border border-white/10 bg-[#1a1a1d] py-1 shadow-premium">
-            {availableTypes.map((item) => (
-              <button
-                key={item.type}
-                onClick={() => {
-                  addTab(item.type);
-                  setShowNewMenu(false);
-                }}
-                className="flex w-full items-center gap-2 px-3 py-1.5 text-xs text-muted hover:bg-white/[0.06] hover:text-foreground"
-              >
-                <span className="text-muted/50">
-                  <TabIcon type={item.type} />
-                </span>
-                {item.label}
-              </button>
+          <div className="absolute right-0 top-full z-50 mt-0.5 min-w-[200px] rounded-lg border border-white/10 bg-[#1a1a1d] py-1 shadow-premium max-h-[400px] overflow-y-auto">
+            {grouped.map((group, gi) => (
+              <div key={group.section}>
+                {gi > 0 && <div className="my-1 border-t border-white/5" />}
+                <div className="px-3 py-1 text-[9px] uppercase tracking-wider text-muted/30">
+                  {group.section}
+                </div>
+                {group.items.map((item) => (
+                  <button
+                    key={item.type}
+                    onClick={() => {
+                      addTab(item.type);
+                      setShowNewMenu(false);
+                    }}
+                    className="flex w-full items-center gap-2 px-3 py-1.5 text-xs text-muted hover:bg-white/[0.06] hover:text-foreground"
+                  >
+                    <span className="text-muted/50">
+                      <TabIcon type={item.type} />
+                    </span>
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             ))}
           </div>
         )}

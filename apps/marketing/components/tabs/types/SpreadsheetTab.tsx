@@ -9,6 +9,31 @@ import type { TabComponentProps } from '../tab-registry';
 
 type SortDir = 'asc' | 'desc' | null;
 
+/** Evaluate a simple expression against a row. Supports: +, -, *, /, column refs, numbers. */
+function evaluateFormula(expr: string, row: Record<string, string>, cols: string[]): string {
+  try {
+    // Replace column references with their numeric values
+    let evaluated = expr;
+    // Sort columns by length desc so longer names get replaced first
+    const sortedCols = [...cols].sort((a, b) => b.length - a.length);
+    for (const col of sortedCols) {
+      // Use word boundary-like matching: replace col name with its value
+      const re = new RegExp(`\\b${col.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'g');
+      const val = row[col] ?? '';
+      const num = parseFloat(val.replace(/,/g, ''));
+      evaluated = evaluated.replace(re, isNaN(num) ? '0' : String(num));
+    }
+    // Only allow numbers, operators, parens, spaces, and decimal points
+    if (!/^[\d\s+\-*/().]+$/.test(evaluated)) return 'ERR';
+    // eslint-disable-next-line no-new-func
+    const result = new Function(`"use strict"; return (${evaluated})`)();
+    if (typeof result !== 'number' || !isFinite(result)) return 'ERR';
+    return Number.isInteger(result) ? String(result) : result.toFixed(4);
+  } catch {
+    return 'ERR';
+  }
+}
+
 export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabComponentProps) {
   const { currentProject, datasets, uploadDataset } = useWorkspace();
   const { setTabData } = useSpreadsheetData();
@@ -20,6 +45,10 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
   const [sortCol, setSortCol] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<SortDir>(null);
   const [filterText, setFilterText] = useState('');
+  const [showFormulaEditor, setShowFormulaEditor] = useState(false);
+  const [formulaName, setFormulaName] = useState('');
+  const [formulaExpr, setFormulaExpr] = useState('');
+  const [formulaError, setFormulaError] = useState<string | null>(null);
 
   // Derive a title from props for persistence
   const sheetTitle = sourceUrl
@@ -292,6 +321,22 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
             Regression
           </span>
         </button>
+        <button
+          onClick={() => setShowFormulaEditor(!showFormulaEditor)}
+          className={`rounded border px-2 py-0.5 text-[10px] transition ${
+            showFormulaEditor
+              ? 'border-indigo-500/30 text-indigo-400 bg-indigo-500/10'
+              : 'border-white/10 text-muted/60 hover:border-accent/30 hover:text-foreground'
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" className="opacity-60">
+              <line x1="8" y1="3" x2="8" y2="13" />
+              <line x1="3" y1="8" x2="13" y2="8" />
+            </svg>
+            Add Column
+          </span>
+        </button>
         <input
           type="text"
           value={filterText}
@@ -300,6 +345,83 @@ export default function SpreadsheetTab({ tabId, datasetId, sourceUrl }: TabCompo
           className="w-40 rounded border border-white/10 bg-transparent px-2 py-0.5 text-[11px] text-foreground placeholder:text-muted/30 focus:border-accent/40 focus:outline-none"
         />
       </div>
+
+      {/* Computed Column Formula Editor */}
+      {showFormulaEditor && (
+        <div className="flex items-center gap-2 border-b border-white/5 px-4 py-2 bg-[#111113]">
+          <span className="text-[10px] text-white/40 shrink-0">Name:</span>
+          <input
+            type="text"
+            value={formulaName}
+            onChange={(e) => setFormulaName(e.target.value)}
+            placeholder="new_column"
+            className="w-32 rounded border border-white/10 bg-transparent px-2 py-0.5 text-[11px] text-foreground placeholder:text-muted/30 focus:border-indigo-500/40 focus:outline-none"
+          />
+          <span className="text-[10px] text-white/40 shrink-0">=</span>
+          <input
+            type="text"
+            value={formulaExpr}
+            onChange={(e) => { setFormulaExpr(e.target.value); setFormulaError(null); }}
+            placeholder="e.g. dem_votes - rep_votes"
+            className="flex-1 rounded border border-white/10 bg-transparent px-2 py-0.5 text-[11px] text-foreground placeholder:text-muted/30 focus:border-indigo-500/40 focus:outline-none font-mono"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                // Apply formula
+                if (!formulaName.trim()) { setFormulaError('Name required'); return; }
+                if (!formulaExpr.trim()) { setFormulaError('Expression required'); return; }
+                if (columns.includes(formulaName.trim())) { setFormulaError('Column already exists'); return; }
+                // Test on first row
+                const testResult = evaluateFormula(formulaExpr, rows[0] ?? {}, columns);
+                if (testResult === 'ERR') { setFormulaError('Invalid expression'); return; }
+                // Apply to all rows
+                const newCol = formulaName.trim();
+                const newRows = rows.map((row) => ({
+                  ...row,
+                  [newCol]: evaluateFormula(formulaExpr, row, columns),
+                }));
+                setColumns([...columns, newCol]);
+                setRows(newRows);
+                setFormulaName('');
+                setFormulaExpr('');
+                setShowFormulaEditor(false);
+                setFormulaError(null);
+              }
+            }}
+          />
+          <button
+            onClick={() => {
+              if (!formulaName.trim()) { setFormulaError('Name required'); return; }
+              if (!formulaExpr.trim()) { setFormulaError('Expression required'); return; }
+              if (columns.includes(formulaName.trim())) { setFormulaError('Column already exists'); return; }
+              const testResult = evaluateFormula(formulaExpr, rows[0] ?? {}, columns);
+              if (testResult === 'ERR') { setFormulaError('Invalid expression'); return; }
+              const newCol = formulaName.trim();
+              const newRows = rows.map((row) => ({
+                ...row,
+                [newCol]: evaluateFormula(formulaExpr, row, columns),
+              }));
+              setColumns([...columns, newCol]);
+              setRows(newRows);
+              setFormulaName('');
+              setFormulaExpr('');
+              setShowFormulaEditor(false);
+              setFormulaError(null);
+            }}
+            className="rounded bg-indigo-500/20 px-3 py-0.5 text-[10px] font-medium text-indigo-300 hover:bg-indigo-500/30 transition shrink-0"
+          >
+            Apply
+          </button>
+          <button
+            onClick={() => { setShowFormulaEditor(false); setFormulaError(null); }}
+            className="text-[10px] text-muted/40 hover:text-foreground transition shrink-0"
+          >
+            ×
+          </button>
+          {formulaError && (
+            <span className="text-[10px] text-red-400 shrink-0">{formulaError}</span>
+          )}
+        </div>
+      )}
 
       {/* Table */}
       <div className="flex-1 overflow-auto">

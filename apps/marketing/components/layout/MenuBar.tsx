@@ -4,10 +4,13 @@ import { useRouter } from 'next/navigation';
 import { MenuDropdown, type MenuItem } from './MenuDropdown';
 import { useSkillLevel } from '@/lib/skill-level-context';
 import { useTabs } from '@/lib/tab-context';
+import { useSpreadsheetData } from '@/lib/spreadsheet-data-store';
+import { generateReport, openReport } from '@/lib/report-export';
 
 export function MenuBar() {
   const { features, setSkillLevel } = useSkillLevel();
-  const { addTab } = useTabs();
+  const { addTab, tabs } = useTabs();
+  const { data: spreadsheetData } = useSpreadsheetData();
   const router = useRouter();
 
   const fileItems: MenuItem[] = [
@@ -24,6 +27,14 @@ export function MenuBar() {
     {
       label: 'New Output',
       action: () => addTab('output'),
+    },
+    { label: '', separator: true },
+    {
+      label: 'Export Report',
+      action: () => {
+        const html = generateReport({ tabs, spreadsheetData });
+        openReport(html);
+      },
     },
     { label: '', separator: true },
     {

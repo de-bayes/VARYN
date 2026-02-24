@@ -4,6 +4,12 @@ export type TabType =
   | 'graph-builder'
   | 'summary'
   | 'regression'
+  | 'logistic-regression'
+  | 'hypothesis-test'
+  | 'cross-tab'
+  | 'time-series'
+  | 'data-cleaning'
+  | 'data-join'
   | 'monte-carlo'
   | 'r-console'
   | 'welcome';
@@ -25,6 +31,12 @@ export const TAB_TYPE_LABELS: Record<TabType, string> = {
   'graph-builder': 'Graph Builder',
   summary: 'Summary',
   regression: 'Regression',
+  'logistic-regression': 'Logistic Regression',
+  'hypothesis-test': 'Hypothesis Test',
+  'cross-tab': 'Cross-Tabulation',
+  'time-series': 'Time Series',
+  'data-cleaning': 'Data Cleaning',
+  'data-join': 'Data Join',
   'monte-carlo': 'Monte Carlo',
   'r-console': 'R Console',
   welcome: 'Welcome',

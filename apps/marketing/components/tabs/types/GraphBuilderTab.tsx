@@ -25,6 +25,15 @@ interface ChartConfig {
   showTrendLine: boolean;
 }
 
+interface Annotation {
+  id: string;
+  type: 'hline' | 'vline' | 'label';
+  value: number; // y-value for hline, x-value for vline, x-position for label
+  value2?: number; // y-position for label
+  text: string;
+  color: string;
+}
+
 // ---------------------------------------------------------------------------
 // Color palette
 // ---------------------------------------------------------------------------
@@ -164,9 +173,10 @@ interface ChartSvgProps {
   config: ChartConfig;
   width: number;
   height: number;
+  annotations: Annotation[];
 }
 
-function ChartSvg({ columns, rows, config, width, height }: ChartSvgProps) {
+function ChartSvg({ columns, rows, config, width, height, annotations }: ChartSvgProps) {
   const { chartType, xVar, yVar, colorVar, title, theme, showTrendLine } = config;
 
   const isDark = theme === 'dark';
@@ -326,6 +336,99 @@ function ChartSvg({ columns, rows, config, width, height }: ChartSvgProps) {
             </text>
           </g>
         ))}
+      </g>
+    );
+  }
+
+  // Annotation renderer — needs scale functions so it's called inside each chart branch
+  function renderAnnotations(
+    sx: (v: number) => number,
+    sy: (v: number) => number,
+  ) {
+    if (annotations.length === 0) return null;
+    return (
+      <g className="annotations">
+        {annotations.map((ann) => {
+          if (ann.type === 'hline') {
+            const y = sy(ann.value);
+            return (
+              <g key={ann.id}>
+                <line
+                  x1={margin.left}
+                  x2={margin.left + plotW}
+                  y1={y}
+                  y2={y}
+                  stroke={ann.color}
+                  strokeWidth="1.5"
+                  strokeDasharray="6,3"
+                  opacity={0.8}
+                />
+                <text
+                  x={margin.left + 4}
+                  y={y - 4}
+                  fill={ann.color}
+                  fontSize="9"
+                  fontWeight="500"
+                >
+                  {ann.text}
+                </text>
+              </g>
+            );
+          }
+          if (ann.type === 'vline') {
+            const x = sx(ann.value);
+            return (
+              <g key={ann.id}>
+                <line
+                  x1={x}
+                  x2={x}
+                  y1={margin.top}
+                  y2={margin.top + plotH}
+                  stroke={ann.color}
+                  strokeWidth="1.5"
+                  strokeDasharray="6,3"
+                  opacity={0.8}
+                />
+                <text
+                  x={x + 4}
+                  y={margin.top + 12}
+                  fill={ann.color}
+                  fontSize="9"
+                  fontWeight="500"
+                >
+                  {ann.text}
+                </text>
+              </g>
+            );
+          }
+          if (ann.type === 'label') {
+            const x = sx(ann.value);
+            const y = sy(ann.value2 ?? 0);
+            return (
+              <g key={ann.id}>
+                <rect
+                  x={x - 2}
+                  y={y - 12}
+                  width={ann.text.length * 6 + 8}
+                  height={16}
+                  rx="3"
+                  fill={ann.color}
+                  opacity={0.15}
+                />
+                <text
+                  x={x + 2}
+                  y={y}
+                  fill={ann.color}
+                  fontSize="10"
+                  fontWeight="500"
+                >
+                  {ann.text}
+                </text>
+              </g>
+            );
+          }
+          return null;
+        })}
       </g>
     );
   }
@@ -523,6 +626,8 @@ function ChartSvg({ columns, rows, config, width, height }: ChartSvgProps) {
           })}
         {/* Legend */}
         {colorGroups && renderLegend(colorGroups)}
+        {/* Annotations */}
+        {renderAnnotations(sx, sy)}
       </svg>
     );
   }
@@ -694,6 +799,11 @@ function ChartSvg({ columns, rows, config, width, height }: ChartSvgProps) {
           renderLegend(
             Object.fromEntries(allColorKeys.map((ck, i) => [ck, PALETTE[i % PALETTE.length]])),
           )}
+        {/* Annotations (hlines only for bar charts) */}
+        {renderAnnotations(
+          (v) => margin.left + (v / categories.length) * plotW,
+          sy,
+        )}
       </svg>
     );
   }
@@ -839,6 +949,8 @@ function ChartSvg({ columns, rows, config, width, height }: ChartSvgProps) {
         >
           Frequency
         </text>
+        {/* Annotations */}
+        {renderAnnotations(sx, sy)}
       </svg>
     );
   }
@@ -881,6 +993,33 @@ export default function GraphBuilderTab({ tabId, datasetId, sourceUrl }: TabComp
     theme: 'dark',
     showTrendLine: false,
   });
+
+  // Annotations
+  const [annotations, setAnnotations] = useState<Annotation[]>([]);
+  const [showAnnotationForm, setShowAnnotationForm] = useState(false);
+  const [newAnnotation, setNewAnnotation] = useState<{ type: 'hline' | 'vline' | 'label'; value: string; value2: string; text: string; color: string }>({
+    type: 'hline', value: '', value2: '', text: '', color: '#f59e0b',
+  });
+
+  const addAnnotation = () => {
+    const val = parseFloat(newAnnotation.value);
+    if (isNaN(val)) return;
+    const ann: Annotation = {
+      id: `ann-${Date.now()}`,
+      type: newAnnotation.type,
+      value: val,
+      value2: newAnnotation.type === 'label' ? parseFloat(newAnnotation.value2) || 0 : undefined,
+      text: newAnnotation.text || (newAnnotation.type === 'hline' ? `y=${val}` : newAnnotation.type === 'vline' ? `x=${val}` : ''),
+      color: newAnnotation.color,
+    };
+    setAnnotations((prev) => [...prev, ann]);
+    setNewAnnotation({ type: 'hline', value: '', value2: '', text: '', color: '#f59e0b' });
+    setShowAnnotationForm(false);
+  };
+
+  const removeAnnotation = (id: string) => {
+    setAnnotations((prev) => prev.filter((a) => a.id !== id));
+  };
 
   // Container sizing
   const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -1141,6 +1280,7 @@ export default function GraphBuilderTab({ tabId, datasetId, sourceUrl }: TabComp
           config={config}
           width={chartSize.width}
           height={chartSize.height}
+          annotations={annotations}
         />
       </div>
 
@@ -1351,6 +1491,156 @@ export default function GraphBuilderTab({ tabId, datasetId, sourceUrl }: TabComp
             </button>
           </div>
         )}
+
+        {/* Annotations */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label
+              className={`text-[10px] font-medium uppercase tracking-wider ${
+                config.theme === 'dark' ? 'text-white/40' : 'text-gray-500'
+              }`}
+            >
+              Annotations
+            </label>
+            <button
+              onClick={() => setShowAnnotationForm(!showAnnotationForm)}
+              className={`text-[10px] px-2 py-0.5 rounded transition-colors ${
+                config.theme === 'dark'
+                  ? 'text-indigo-400/70 hover:text-indigo-400 hover:bg-indigo-500/10'
+                  : 'text-indigo-500 hover:bg-indigo-50'
+              }`}
+            >
+              + Add
+            </button>
+          </div>
+
+          {/* Annotation list */}
+          {annotations.length > 0 && (
+            <div className="space-y-1">
+              {annotations.map((ann) => (
+                <div
+                  key={ann.id}
+                  className={`flex items-center gap-2 px-2 py-1 rounded text-[10px] group ${
+                    config.theme === 'dark' ? 'bg-white/[0.03]' : 'bg-gray-50'
+                  }`}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full shrink-0"
+                    style={{ backgroundColor: ann.color }}
+                  />
+                  <span
+                    className={`truncate flex-1 ${
+                      config.theme === 'dark' ? 'text-white/50' : 'text-gray-500'
+                    }`}
+                  >
+                    {ann.type === 'hline' ? 'H' : ann.type === 'vline' ? 'V' : 'L'}:{' '}
+                    {ann.text}
+                  </span>
+                  <button
+                    onClick={() => removeAnnotation(ann.id)}
+                    className="opacity-0 group-hover:opacity-100 text-red-400/60 hover:text-red-400 transition-all"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Add annotation form */}
+          {showAnnotationForm && (
+            <div
+              className={`rounded-md p-2.5 space-y-2 border ${
+                config.theme === 'dark'
+                  ? 'bg-white/[0.02] border-white/10'
+                  : 'bg-white border-gray-200'
+              }`}
+            >
+              <div className="flex gap-1">
+                {(['hline', 'vline', 'label'] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setNewAnnotation((p) => ({ ...p, type: t }))}
+                    className={`flex-1 py-1 rounded text-[9px] font-medium transition-all ${
+                      newAnnotation.type === t
+                        ? config.theme === 'dark'
+                          ? 'bg-indigo-500/15 text-indigo-400 ring-1 ring-indigo-500/30'
+                          : 'bg-indigo-50 text-indigo-600 ring-1 ring-indigo-200'
+                        : config.theme === 'dark'
+                          ? 'bg-white/[0.03] text-white/30'
+                          : 'bg-gray-100 text-gray-400'
+                    }`}
+                  >
+                    {t === 'hline' ? 'H-Line' : t === 'vline' ? 'V-Line' : 'Label'}
+                  </button>
+                ))}
+              </div>
+              <input
+                type="text"
+                value={newAnnotation.value}
+                onChange={(e) => setNewAnnotation((p) => ({ ...p, value: e.target.value }))}
+                placeholder={newAnnotation.type === 'hline' ? 'Y value' : 'X value'}
+                className={`w-full rounded px-2 py-1 text-[10px] outline-none ${
+                  config.theme === 'dark'
+                    ? 'bg-white/[0.05] text-white/80 border border-white/10 focus:border-indigo-500/40'
+                    : 'bg-white text-gray-800 border border-gray-200 focus:border-indigo-300'
+                }`}
+              />
+              {newAnnotation.type === 'label' && (
+                <input
+                  type="text"
+                  value={newAnnotation.value2}
+                  onChange={(e) => setNewAnnotation((p) => ({ ...p, value2: e.target.value }))}
+                  placeholder="Y value"
+                  className={`w-full rounded px-2 py-1 text-[10px] outline-none ${
+                    config.theme === 'dark'
+                      ? 'bg-white/[0.05] text-white/80 border border-white/10 focus:border-indigo-500/40'
+                      : 'bg-white text-gray-800 border border-gray-200 focus:border-indigo-300'
+                  }`}
+                />
+              )}
+              <input
+                type="text"
+                value={newAnnotation.text}
+                onChange={(e) => setNewAnnotation((p) => ({ ...p, text: e.target.value }))}
+                placeholder="Label text (optional)"
+                className={`w-full rounded px-2 py-1 text-[10px] outline-none ${
+                  config.theme === 'dark'
+                    ? 'bg-white/[0.05] text-white/80 border border-white/10 focus:border-indigo-500/40'
+                    : 'bg-white text-gray-800 border border-gray-200 focus:border-indigo-300'
+                }`}
+              />
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={newAnnotation.color}
+                  onChange={(e) => setNewAnnotation((p) => ({ ...p, color: e.target.value }))}
+                  className="w-6 h-6 rounded cursor-pointer border-0 bg-transparent"
+                />
+                <button
+                  onClick={addAnnotation}
+                  className={`flex-1 py-1 rounded text-[10px] font-medium transition-all ${
+                    config.theme === 'dark'
+                      ? 'bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30'
+                      : 'bg-indigo-500 text-white hover:bg-indigo-600'
+                  }`}
+                >
+                  Add
+                </button>
+                <button
+                  onClick={() => setShowAnnotationForm(false)}
+                  className={`py-1 px-2 rounded text-[10px] transition-all ${
+                    config.theme === 'dark'
+                      ? 'text-white/30 hover:text-white/50'
+                      : 'text-gray-400 hover:text-gray-600'
+                  }`}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Theme toggle */}
         <div className="space-y-1.5">
